@@ -9,21 +9,80 @@
         />
       </div>
       <div class="card-text-container">
+        <div class="card-price">{{ card.price }} ₽</div>
         <div class="card-title">{{ card.title }}</div>
         <div class="card-text">{{ card.text }}</div>
-        <div class="card-price">{{ card.price }}₽</div>
+      </div>
+      <div class="center-product">
+        <button-component :name="'В корзину'"></button-component>
+        <button-component :name="'В избранное'"></button-component>
       </div>
     </div>
+  </div>
+  <div class="center" v-if="totalElements != cards.length">
+    <button-component @click="loadMore" :name="buttonName"></button-component>
   </div>
 </template>
 
 <script>
+import ButtonComponent from "@/components/ButtonComponent.vue";
+import axios from "axios";
+
 export default {
+  components: {
+    ButtonComponent,
+  },
+
   data() {
-    return {};
+    return {
+      buttonName: "Загрузить ещё",
+      currentPage: 0, // Текущая страница
+      totalPages: 0, // Общее количество страниц
+      loading: false, // Индикатор загрузки
+      newCards: [],
+      infoCards: [],
+      pageCount: 1,
+
+    };
   },
   props: {
     cards: Array,
+    ulr: String,
+    totalElements: Number,
+  },
+  methods: {
+    loadMore() {
+      // if (this.loading || this.currentPage >= this.totalPages) return;
+      this.currentPage++;
+      this.pageCount++;
+
+      this.loading = true;
+      axios
+        .get(`http://localhost:8080/products?size=6&page=${this.currentPage}`)
+        .then((response) => {
+          // Извлекаем данные из объекта ответа
+          const data = response.data;
+
+          // Присваиваем данные массиву newCards
+          this.newCards = data.content;
+
+          // Получаем общее кол-во страниц
+          this.totalPages = data.totalPages;
+
+          // Объединяем новые карты с существующими
+          this.cards.splice(this.cards.length, 0, ...this.newCards);
+
+          // Обновляем состояние загрузки
+          this.loading = false;
+
+          // Обновляем общее количество страниц
+          // this.totalPages = data.totalPages;
+        })
+        .catch((error) => {
+          console.error(error);
+          this.loading = false;
+        });
+    },
   },
 };
 </script>
@@ -42,8 +101,12 @@ export default {
 }
 
 .card-container {
-  width: 32%;
+  width: 30%;
   margin-top: 30px;
+  -webkit-box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
+  border-radius: 10px;
 }
 
 .products {
@@ -53,10 +116,31 @@ export default {
 .card-text-container {
   /* max-width: 300px; */
   font-size: 20px;
+  margin: 0 10px 15px 10px;
 }
 
 .card-title {
   margin-top: 10px;
   font-weight: 600;
+  text-align: center;
 }
+
+img {
+  border-radius: 10px;
+}
+
+.card-price {
+  font-size: 21px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: end;
+}
+
+/* Отображение кнопок */
+.center-product {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
 </style>

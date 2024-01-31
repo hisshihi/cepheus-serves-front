@@ -23,8 +23,8 @@
     <!-- Блок с товарами -->
     <h2>Товары</h2>
     <div class="products">
-      <cards-component :cards="products"></cards-component>
-      <button @click="loadMore">Загрузить ещё</button>
+      <cards-component :cards="products" :url="url" :totalElements="totalElements"></cards-component>
+      
     </div>
   </div>
   
@@ -36,10 +36,11 @@ import Slider from "@/components/Slider";
 import axios from "axios";
 import CardsComponent from "@/components/CardsComponent.vue";
 
+
 export default {
   components: {
     Slider,
-    CardsComponent
+    CardsComponent,
   },
 
   data() {
@@ -47,6 +48,8 @@ export default {
       name: "Hello",
       products: [],
       currentPage: 0,
+      url: "products",
+      totalElements: 0,
     };
   },
 
@@ -57,41 +60,15 @@ export default {
   methods: {
     addPosts() {
       axios
-        .get("http://localhost:8080/products?size=6&page=0")
-        .then((response) => (this.products = response.data))
-        .then((data) => {
+        .get("http://localhost:8080/" + this.url + "?size=6&page=0")
+        .then((response) => {
+          const data = response.data;
+
+          this.totalElements = data.totalElements;
+
           this.products = data.content;
-          // this.totalPages = data.totalPages; // Сохраните общее количество страниц
         })
         .catch((error) => console.log(error));
-    },
-    loadMore() {
-      // Проверяем, есть ли еще страницы для загрузки
-      if (this.currentPage < this.totalPages) {
-        // Увеличиваем номер текущей страницы
-        this.currentPage++;
-
-        // Получаем товары для текущей страницы
-        axios
-          .get("http://localhost:8080/products?size=6&page=" + this.currentPage)
-          .then((response) => {
-            // Получаем индекс первого товара для текущей страницы
-            const startIndex = (this.currentPage - 1) * 6;
-
-            // Получаем индекс последнего товара для текущей страницы
-            const endIndex = startIndex + 6;
-
-            // Получаем товары для текущей страницы
-            const newProducts = response.data.slice(
-              startIndex,
-              endIndex
-            );
-
-            // Объединяем новые товары с существующими
-            this.products = this.products.concat(newProducts);
-          })
-          .catch((error) => console.log(error));
-      }
     },
   },
 };
@@ -124,6 +101,8 @@ h2 {
 .products {
   margin-bottom: 50px;
 }
+
+
 
 
 </style>

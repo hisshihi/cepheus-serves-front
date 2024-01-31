@@ -78,8 +78,13 @@ export default {
   padding: 20px;
 }
 
-.li {
-  margin-left: 10px;
+.li:nth-child(2) {
+  margin: 0 10px;
+}
+
+.li > .link {
+  font-size: 20px;
+  font-weight: 600;
 }
 
 img {

@@ -42,5 +42,13 @@ export default {
 
 .container {
   max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Центрирование объекта */
+.center {
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 </style>

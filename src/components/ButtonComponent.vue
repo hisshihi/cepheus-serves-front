@@ -1,21 +1,15 @@
 <template>
-    <div>
-        <button class="btn" :value="name"></button>
-    </div>
+  <input class="btn btn-success" type="button" :value="name" />
 </template>
 
 <script>
 export default {
-    props: {
-        name: String
-    }
-}
+  props: {
+    name: String,
+  },
+};
 </script>
 
 <style scoped>
-
-.btn {
-    
-}
 
 </style>
