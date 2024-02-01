@@ -14,13 +14,13 @@
         <div class="card-text">{{ card.text }}</div>
       </div>
       <div class="center-product">
-        <button-component :name="'В корзину'"></button-component>
-        <button-component :name="'В избранное'"></button-component>
+        <button-component :name="'В корзину'" :type="button"></button-component>
+        <button-component :name="'В избранное'" :type="button"></button-component>
       </div>
     </div>
   </div>
   <div class="center" v-if="totalElements != cards.length">
-    <button-component @click="loadMore" :name="buttonName"></button-component>
+    <button-component @click="loadMore" :name="buttonName" :type="button"></button-component>
   </div>
 </template>
 
@@ -58,7 +58,7 @@ export default {
 
       this.loading = true;
       axios
-        .get(`http://localhost:8080/products?size=6&page=${this.currentPage}`)
+        .get(`http://localhost:8080/?size=6&page=${this.currentPage}`)
         .then((response) => {
           // Извлекаем данные из объекта ответа
           const data = response.data;
@@ -107,6 +107,7 @@ export default {
   -moz-box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
   border-radius: 10px;
+  padding: 2px;
 }
 
 .products {
@@ -116,11 +117,11 @@ export default {
 .card-text-container {
   /* max-width: 300px; */
   font-size: 20px;
-  margin: 0 10px 15px 10px;
+  margin: 0 10px 5px 10px;
 }
 
 .card-title {
-  margin-top: 10px;
+  margin-top: 5px;
   font-weight: 600;
   text-align: center;
 }

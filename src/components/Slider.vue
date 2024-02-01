@@ -43,6 +43,7 @@ export default {
         :scrollbar="{ draggable: true }"
         @swiper="onSwiper"
         @slideChange="onSlideChange"
+        :loop="true"
 
     >
         <swiper-slide><img style="width: 300px" src="../assets/logo.png"></swiper-slide>
