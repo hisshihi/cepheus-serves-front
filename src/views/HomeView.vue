@@ -60,7 +60,7 @@ export default {
   methods: {
     addPosts() {
       axios
-        .get("http://localhost:8080/?size=6&page=0")
+        .get("http://localhost:8080/" + this.url + "?size=6&page=0")
         .then((response) => {
           const data = response.data;
 

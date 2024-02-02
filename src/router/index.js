@@ -52,7 +52,7 @@ const routes = [
     path: "/admin",
     name: "admin",
     component: () =>
-      import(/* webpackChunkName: "basket" */ "../views/AdminView.vue"),
+      import(/* webpackChunkName: "admin" */ "../views/AdminView.vue"),
     meta: { 
       requiresAuth: true,
 
@@ -60,12 +60,20 @@ const routes = [
      beforeEnter: (to, from, next) => {
       const token = localStorage.getItem('token')
       const tokenDecoder = jwtDecode(token);
-      const role = tokenDecoder.aud
+      const role = tokenDecoder.role
       if (role != "[ADMIN]") {
         next({path: '/'});
       } else next();
     }
   },
+  {
+    path: "/user",
+    name: "user",
+    component: () => import(/* webpackChunkName: "user" */ "../views/UserView.vue"),
+    meta: {
+      requiresAuth: true,
+    }
+  }
 ];
 
 const router = createRouter({
@@ -79,7 +87,6 @@ router.beforeEach((to, from, next) => {
 
   if (token) {
     const tokenDecoder = jwtDecode(token);
-    console.log(tokenDecoder.aud);
     if (tokenDecoder.exp * 1000 < Date.now()) {
       localStorage.removeItem("token");
     }

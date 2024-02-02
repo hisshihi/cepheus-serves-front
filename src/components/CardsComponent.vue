@@ -47,7 +47,7 @@ export default {
   },
   props: {
     cards: Array,
-    ulr: String,
+    url: String,
     totalElements: Number,
   },
   methods: {
@@ -58,7 +58,7 @@ export default {
 
       this.loading = true;
       axios
-        .get(`http://localhost:8080/?size=6&page=${this.currentPage}`)
+        .get(`http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`)
         .then((response) => {
           // Извлекаем данные из объекта ответа
           const data = response.data;
