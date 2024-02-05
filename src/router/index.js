@@ -30,50 +30,53 @@ const routes = [
     name: "register",
     component: () =>
       import(/* webpackChunkName: "register" */ "../views/RegisterView.vue"),
-      beforeEnter: (to, from, next) => {
-        const token = localStorage.getItem('token')
-        if (token) {
-          next({path: '/'});
-        } else next();
-      }
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        next({ path: "/" });
+      } else next();
+    },
   },
   {
     path: "/authenticate",
     name: "authenticate",
-    component: () => import(/* webpackChunkName: "authenticate" */ "../views/AuthenticateVuew.vue"),
+    component: () =>
+      import(
+        /* webpackChunkName: "authenticate" */ "../views/AuthenticateVuew.vue"
+      ),
     beforeEnter: (to, from, next) => {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem("token");
       if (token) {
-        next({path: '/'});
+        next({ path: "/" });
       } else next();
-    }
+    },
   },
   {
     path: "/admin",
     name: "admin",
     component: () =>
       import(/* webpackChunkName: "admin" */ "../views/AdminView.vue"),
-    meta: { 
+    meta: {
       requiresAuth: true,
-
-     }, // Укажите, что требуется авторизация
-     beforeEnter: (to, from, next) => {
-      const token = localStorage.getItem('token')
+    }, // Укажите, что требуется авторизация
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
       const tokenDecoder = jwtDecode(token);
-      const role = tokenDecoder.role
+      const role = tokenDecoder.role;
       if (role != "[ADMIN]") {
-        next({path: '/'});
+        next({ path: "/user" });
       } else next();
-    }
+    },
   },
   {
     path: "/user",
     name: "user",
-    component: () => import(/* webpackChunkName: "user" */ "../views/UserView.vue"),
+    component: () =>
+      import(/* webpackChunkName: "user" */ "../views/UserView.vue"),
     meta: {
       requiresAuth: true,
-    }
-  }
+    },
+  },
 ];
 
 const router = createRouter({

@@ -13,6 +13,7 @@
         :type="submit"
       ></button-component>
     </form>
+    <p class="text-danger">{{ message }}</p>
   </div>
 </template>
 
@@ -29,6 +30,7 @@ export default {
     return {
       email: "",
       password: "",
+      message: "",
     };
   },
 
@@ -48,7 +50,7 @@ export default {
           this.password = "";
           window.location.href = "/"
         })
-        .catch((error) => console.log(error));
+        .catch((error) => this.message = "Такой пользователь не найден");
     },
   },
 };

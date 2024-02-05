@@ -21,7 +21,7 @@
       </div>
     </div>
     <!-- Блок с товарами -->
-    <h2>Товары</h2>
+    <h2>Популярные товары</h2>
     <div class="products">
       <cards-component :cards="products" :url="url" :totalElements="totalElements"></cards-component>
       
@@ -48,7 +48,7 @@ export default {
       name: "Hello",
       products: [],
       currentPage: 0,
-      url: "products",
+      url: "products/hot",
       totalElements: 0,
     };
   },
