@@ -128,6 +128,7 @@ export default {
 
 img {
   border-radius: 10px;
+  width: 364px;
 }
 
 .card-price {

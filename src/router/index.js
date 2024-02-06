@@ -52,10 +52,10 @@ const routes = [
     },
   },
   {
-    path: "/admin",
-    name: "admin",
+    path: "/admin/user",
+    name: "adminUser",
     component: () =>
-      import(/* webpackChunkName: "admin" */ "../views/AdminView.vue"),
+      import(/* webpackChunkName: "admin" */ "../views/AdminUserView.vue"),
     meta: {
       requiresAuth: true,
     }, // Укажите, что требуется авторизация
@@ -64,7 +64,7 @@ const routes = [
       const tokenDecoder = jwtDecode(token);
       const role = tokenDecoder.role;
       if (role != "[ADMIN]") {
-        next({ path: "/user" });
+        next({ path: "/" });
       } else next();
     },
   },
@@ -76,6 +76,11 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "notFound",
+    component: () => import(/* webpackChunkName: "notFound" */ "../views/NotFoundView.vue")
   },
 ];
 

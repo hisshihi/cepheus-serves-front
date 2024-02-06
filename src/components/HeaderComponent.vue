@@ -2,17 +2,23 @@
   <header>
     <div class="container">
       <nav class="nav">
-        <router-link to="/"><img src="../assets/logo.png" alt="" /></router-link>
-        <ul class="ul">
+        <router-link to="/"
+          ><img src="../assets/logo.png" alt=""
+        /></router-link>
+        <ul class="ul" v-if="role != '[ADMIN]'">
           <li class="li"><a class="link" href="#">О нас</a></li>
           <li class="li"><a class="link" href="#">Товары</a></li>
           <li class="li"><a class="link" href="#">Контакты</a></li>
         </ul>
+        <ul class="ul" v-else>
+          <li class="li"><a class="link" href="#">Пользователи</a></li>
+          <li class="li"><a class="link" href="#">Товары</a></li>
+          <li class="li"><a class="link" href="#">Заказы</a></li>
+          <li class="li"><a class="link" href="#">Статистика</a></li>
+        </ul>
         <ul class="ul">
           <li class="li">
-            <a class="link" href="#">
-              
-            </a>
+            <a class="link" href="#"> </a>
             <router-link to="/basket">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,14 +84,21 @@
 export default {
   name: "Header",
 
+  props: {
+    role: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
-      token: true
-    }
+      token: true,
+    };
   },
 
   mounted() {
-    this.checkToken()
+    this.checkToken();
   },
 
   methods: {
@@ -94,25 +107,33 @@ export default {
       if (isExistsToken) {
         this.token = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .ul {
   display: flex;
+  padding: 0;
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   padding: 20px;
 }
 
 .li:nth-child(2) {
-  margin: 0 10px;
+  /* margin: 0 10px; */
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.li:nth-child(3) {
+  /* margin: 0 10px; */
+  margin-right: 10px;
 }
 
 .li > .link {

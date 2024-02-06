@@ -9,7 +9,6 @@
           <th scope="col">Email</th>
           <th scope="col">Телефон</th>
           <th scope="col">Роль</th>
-          <th scope="col">Обновить</th>
           <th scope="col">Удалить</th>
         </tr>
       </thead>
@@ -31,12 +30,6 @@
                 {{ userRole }}
               </option>
             </select>
-          </td>
-          <td>
-            <button-component
-              :name="'Обновить'"
-              :type="'button'"
-            ></button-component>
           </td>
           <td>
             <button-component

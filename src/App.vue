@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <nav>
-      <header-component></header-component>
+      <header-component :role="$store.state.role"></header-component>
       <div class="container">
         <!-- <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link> -->
@@ -15,16 +15,43 @@
 <script>
 import HeaderComponent from "@/components/HeaderComponent";
 import FooterComponent from "@/components/FooterComponent";
+import { jwtDecode } from "jwt-decode";
 
 export default {
   components: {
     HeaderComponent,
     FooterComponent,
   },
+  data() {
+    return {};
+  },
+  methods: {
+    getToken() {
+      if (localStorage.getItem("token")) {
+        const token = localStorage.getItem("token");
+        const tokenDecoder = jwtDecode(token);
+        const role = tokenDecoder.role;
+        this.$store.state.role = role;
+      }
+    },
+  },
+  mounted() {
+    this.getToken()
+  }
 };
 </script>
 
 <style>
+
+@font-face {
+  font-family: "Play";
+  src: url('../src/assets/fonts/play/Play-Regular.ttf');
+}
+
+body {
+  font-family: play;
+}
+
 .link {
   text-decoration: none;
   color: black;
