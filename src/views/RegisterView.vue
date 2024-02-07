@@ -25,6 +25,7 @@
         :name="'Зарегестрироваться'"
         :type="submit"
       ></button-component>
+      <p>{{ message }}</p>
     </form>
   </div>
 </template>
@@ -47,6 +48,7 @@ export default {
       password: "",
       repeatPassword: "",
       checkPasswordReturn: 0,
+      message: "",
     };
   },
 
@@ -84,7 +86,10 @@ export default {
           this.repeatPassword = "";
           window.location.href = "/"
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          this.message = "Пользователь с таким Email уже существует"
+        });
     },
     checkPassword() {
       if (this.password.length !== 0) {

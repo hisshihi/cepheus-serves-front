@@ -15,12 +15,19 @@
       </div>
       <div class="center-product">
         <button-component :name="'В корзину'" :type="button"></button-component>
-        <button-component :name="'В избранное'" :type="button"></button-component>
+        <button-component
+          :name="'В избранное'"
+          :type="button"
+        ></button-component>
       </div>
     </div>
   </div>
   <div class="center" v-if="totalElements != cards.length">
-    <button-component @click="loadMore" :name="buttonName" :type="button"></button-component>
+    <button-component
+      @click="loadMore"
+      :name="buttonName"
+      :type="button"
+    ></button-component>
   </div>
 </template>
 
@@ -42,7 +49,6 @@ export default {
       newCards: [],
       infoCards: [],
       pageCount: 1,
-
     };
   },
   props: {
@@ -55,10 +61,13 @@ export default {
       // if (this.loading || this.currentPage >= this.totalPages) return;
       this.currentPage++;
       this.pageCount++;
+      console.log(this.currentPage);
 
       this.loading = true;
       axios
-        .get(`http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`)
+        .get(
+          `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
+        )
         .then((response) => {
           // Извлекаем данные из объекта ответа
           const data = response.data;
@@ -144,5 +153,4 @@ img {
   justify-content: space-around;
   margin-bottom: 20px;
 }
-
 </style>

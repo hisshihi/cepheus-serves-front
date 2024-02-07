@@ -55,10 +55,27 @@ const routes = [
     path: "/admin/user",
     name: "adminUser",
     component: () =>
-      import(/* webpackChunkName: "admin" */ "../views/AdminUserView.vue"),
+      import(/* webpackChunkName: "adminUser" */ "../views/AdminUserView.vue"),
     meta: {
       requiresAuth: true,
     }, // Укажите, что требуется авторизация
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      const tokenDecoder = jwtDecode(token);
+      const role = tokenDecoder.role;
+      if (role != "[ADMIN]") {
+        next({ path: "/" });
+      } else next();
+    },
+  },
+  {
+    path: "/admin/products",
+    name: "adminProducts",
+    component: () =>
+      import(/* webpackChunkName: "adminProducts" */ "../views/AdminProductsView.vue"),
+    meta: {
+      requiresAuth: true
+    },
     beforeEnter: (to, from, next) => {
       const token = localStorage.getItem("token");
       const tokenDecoder = jwtDecode(token);

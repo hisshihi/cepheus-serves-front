@@ -11,8 +11,14 @@
           <li class="li"><a class="link" href="#">Контакты</a></li>
         </ul>
         <ul class="ul" v-else>
-          <li class="li"><a class="link" href="#">Пользователи</a></li>
-          <li class="li"><a class="link" href="#">Товары</a></li>
+          <router-link to="/admin/user" class="li"
+            ><li class="li">
+              <a class="link" href="#">Пользователи</a>
+            </li></router-link
+          >
+          <router-link to="/admin/products" class="li">
+            <li class="li"><a class="link" href="#">Товары</a></li>
+          </router-link>
           <li class="li"><a class="link" href="#">Заказы</a></li>
           <li class="li"><a class="link" href="#">Статистика</a></li>
         </ul>
@@ -74,6 +80,7 @@
               </svg>
             </a>
           </li>
+          <li v-if="!token" class="li" @click="logout()">Выйти</li>
         </ul>
       </nav>
     </div>
@@ -107,6 +114,10 @@ export default {
       if (isExistsToken) {
         this.token = false;
       }
+    },
+    logout() {
+      localStorage.removeItem("token");
+      window.location.href = "/";
     },
   },
 };

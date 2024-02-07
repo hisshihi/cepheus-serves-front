@@ -12,6 +12,7 @@
         :name="'Войти'"
         :type="submit"
       ></button-component>
+      <router-link to="register"><p>Зарегистрироваться</p></router-link>
     </form>
     <p class="text-danger">{{ message }}</p>
   </div>

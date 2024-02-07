@@ -52,10 +52,15 @@ body {
   font-family: play;
 }
 
-.link {
+a {
   text-decoration: none;
   color: black;
 }
+
+/* .link {
+  text-decoration: none;
+  color: black;
+} */
 
 .li {
   list-style-type: none;
