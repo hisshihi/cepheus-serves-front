@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <div class="center" v-if="totalElements != cards.length">
+  <div class="center" v-if="buttonLogics()">
     <button-component
       @click="loadMore"
       :name="buttonName"
@@ -61,7 +61,6 @@ export default {
       // if (this.loading || this.currentPage >= this.totalPages) return;
       this.currentPage++;
       this.pageCount++;
-      console.log(this.currentPage);
 
       this.loading = true;
       axios
@@ -91,6 +90,18 @@ export default {
           console.error(error);
           this.loading = false;
         });
+    },
+    buttonLogics() {
+      if (this.url == "products/hot") {
+        this.totalPages = 1;
+        if (this.totalPages != this.currentPage) {
+          console.log(this.currentPage);
+          return true;
+        } else return false;
+      }
+      if (this.totalElements != this.cards.length) {
+        return true;
+      } else return false;
     },
   },
 };
