@@ -95,7 +95,6 @@ export default {
       if (this.url == "products/hot") {
         this.totalPages = 1;
         if (this.totalPages != this.currentPage) {
-          console.log(this.currentPage);
           return true;
         } else return false;
       }
