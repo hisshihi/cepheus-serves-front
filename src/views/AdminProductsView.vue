@@ -29,7 +29,7 @@ export default {
   methods: {
     addProducts() {
       axios
-        .get(`http://localhost:8080/${this.url}?size=6&page=0`)
+        .get(`https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=0`)
         .then((response) => {
           console.log(console.log(response));
           const data = response.data;

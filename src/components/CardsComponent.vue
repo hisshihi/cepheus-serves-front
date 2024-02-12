@@ -65,7 +65,7 @@ export default {
       this.loading = true;
       axios
         .get(
-          `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
+          `https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=${this.currentPage}`
         )
         .then((response) => {
           // Извлекаем данные из объекта ответа
