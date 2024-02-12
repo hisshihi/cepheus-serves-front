@@ -24,7 +24,7 @@
   </div>
   <div class="center" v-if="buttonLogics()">
     <button-component
-      @click="loadMore"
+      @click="loadMore()"
       :name="buttonName"
       :type="button"
     ></button-component>
@@ -44,11 +44,8 @@ export default {
     return {
       buttonName: "Загрузить ещё",
       currentPage: 0, // Текущая страница
-      totalPages: 0, // Общее количество страниц
       loading: false, // Индикатор загрузки
       newCards: [],
-      infoCards: [],
-      pageCount: 1,
     };
   },
   props: {
@@ -60,7 +57,6 @@ export default {
     loadMore() {
       // if (this.loading || this.currentPage >= this.totalPages) return;
       this.currentPage++;
-      this.pageCount++;
 
       this.loading = true;
       axios
@@ -93,10 +89,10 @@ export default {
     },
     buttonLogics() {
       if (this.url == "products/hot") {
-        this.totalPages = 1;
-        if (this.totalPages != this.currentPage) {
-          return true;
-        } else return false;
+        // this.totalPages = 1;
+        if (this.cards.length == 12) {
+          return false;
+        } else return true;
       }
       if (this.totalElements != this.cards.length) {
         return true;
