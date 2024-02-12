@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkfront"]=self["webpackChunkfront"]||[]).push([[449],{2676:function(n,r,t){function e(n,r,t,e,u,f){return" 404 NOT FOUND "}t.r(r),t.d(r,{default:function(){return o}});var u={},f=t(89);const c=(0,f.Z)(u,[["render",e]]);var o=c}}]);
+//# sourceMappingURL=notFound.90fb4321.js.map
