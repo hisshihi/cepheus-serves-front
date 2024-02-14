@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 50px">
+  <div style="margin-bottom: 50px" class="center-form">
     <form action="" method="post">
       <label for="">Имя</label>
       <input
@@ -154,7 +154,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 form {
   display: grid;
 }
@@ -167,5 +167,10 @@ input {
   color: red;
   font-weight: 400;
   font-size: 18px;
+}
+
+.center-form {
+  max-width: 700px;
+  margin: 0 auto;
 }
 </style>

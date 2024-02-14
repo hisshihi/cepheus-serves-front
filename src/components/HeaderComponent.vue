@@ -222,11 +222,11 @@ svg {
   align-items: center;
   justify-content: center;
   margin-right: 8px;
+  transition: background-color 0.2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
 }
 
 .svg-container:hover {
   background-color: rgba(13, 127, 242, 0.5);
-  transition: background-color 0.3s linear;
 }
 
 header {

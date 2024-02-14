@@ -80,10 +80,10 @@ export default {
 </script>
 
 <style scoped>
-.center-form {
+/* .center-form {
   max-width: 900px;
   margin: 0 auto;
-}
+} */
 
 .error {
   color: red;
