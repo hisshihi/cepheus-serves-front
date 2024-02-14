@@ -82,10 +82,6 @@ export default {
   justify-content: space-between;
   margin-bottom: 50px;
 }
-/* Настройка стилей для слайдера */
-.slider {
-  margin-top: 50px;
-}
 
 /* Стили для блока "о нас" */
 .about-text {

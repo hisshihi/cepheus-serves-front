@@ -36,20 +36,21 @@ export default {
     },
   },
   mounted() {
-    this.getToken()
-  }
+    this.getToken();
+  },
 };
 </script>
 
 <style>
-
 @font-face {
   font-family: "Play";
-  src: url('../src/assets/fonts/play/Play-Regular.ttf');
+  src: url("../src/assets/fonts/play/Play-Regular.ttf");
 }
 
 body {
   font-family: play;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -82,5 +83,14 @@ a {
   display: grid;
   align-items: center;
   justify-items: center;
+}
+
+/* Стили для слайдера */
+.swiper-button-next, .swiper-button-prev {
+  color: white !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: white !important;
 }
 </style>

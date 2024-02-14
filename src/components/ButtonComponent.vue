@@ -12,16 +12,15 @@ export default {
 </script>
 
 <style scoped>
-
 .button {
-  background-color: rgb(227, 227, 227);
-  border-radius: 7px;
+  background-color: #0d80f2;
+  border-radius: 12px;
   border: none;
   text-align: center;
   padding: 10px 0;
   cursor: pointer;
   max-width: 160px;
   padding: 10px;
+  color: #F7FAFC;
 }
-
 </style>

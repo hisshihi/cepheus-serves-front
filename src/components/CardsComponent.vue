@@ -131,14 +131,15 @@ export default {
 
 .card-text-container {
   /* max-width: 300px; */
-  font-size: 20px;
-  margin: 0 10px 5px 10px;
+  font-size: 14px;
+  margin: 0 10px 15px 10px;
 }
 
 .card-title {
   margin-top: 5px;
+  margin-bottom: 5px;
   font-weight: 600;
-  text-align: center;
+  font-size: 24px;
 }
 
 img {
@@ -147,7 +148,7 @@ img {
 }
 
 .card-price {
-  font-size: 21px;
+  font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
   text-align: end;
