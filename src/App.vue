@@ -86,11 +86,51 @@ a {
 }
 
 /* Стили для слайдера */
-.swiper-button-next, .swiper-button-prev {
+.swiper-button-next,
+.swiper-button-prev {
   color: white !important;
 }
 
 .swiper-pagination-bullet {
   background-color: white !important;
+}
+
+/* Стили для формы */
+input {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px #6583a2 solid;
+  padding: 20px 10px;
+}
+
+input::placeholder {
+  color: #6583a2;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #6583a2;
+  outline: none;
+  color: #6583a2;
+}
+
+label {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+form {
+  display: grid;
+  align-items: center;
+  margin-top: 50px;
+  /* max-width: 900px; */
+}
+
+/* Просто текст */
+.text {
+  margin-top: 50px;
+  font-size: 18px;
+  font-weight: 500;
 }
 </style>

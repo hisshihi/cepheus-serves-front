@@ -1,23 +1,66 @@
 <template>
-  <div>
+  <div style="margin-bottom: 50px">
     <form action="" method="post">
       <label for="">Имя</label>
-      <input v-model="firstname" type="text" name="" id="" />
+      <input
+        v-model="firstname"
+        type="text"
+        name=""
+        id=""
+        autofocus
+        required
+        placeholder="Введите ваше имя"
+      />
 
       <label for="">Фамилия</label>
-      <input v-model="lastname" type="text" name="" id="" />
+      <input
+        v-model="lastname"
+        type="text"
+        name=""
+        id=""
+        required
+        placeholder="Введите вашу фамилию"
+      />
 
       <label for="">Электронная почта</label>
-      <input v-model="email" type="email" name="" id="" />
+      <input
+        v-model="email"
+        type="email"
+        name=""
+        id=""
+        required
+        placeholder="Введите ваш email"
+      />
 
       <label for="">Номер телефона</label>
-      <input v-model="phone" type="tel" name="" id="" />
+      <input
+        v-model="phone"
+        type="tel"
+        name=""
+        id=""
+        placeholder="Введите ваш телефон"
+        required
+      />
 
       <label for="">Пароль</label>
-      <input v-model="password" type="password" name="" id="" />
+      <input
+        v-model="password"
+        type="password"
+        name=""
+        id=""
+        placeholder="Введите пароль"
+        required
+      />
 
       <label for="">Повторите пароль</label>
-      <input v-model="repeatPassword" type="password" name="" id="" />
+      <input
+        v-model="repeatPassword"
+        type="password"
+        name=""
+        id=""
+        placeholder="Повторите ранее указанный пароль"
+        required
+      />
 
       <button-component
         @click.prevent="submitReg"
@@ -25,7 +68,14 @@
         :name="'Зарегестрироваться'"
         :type="submit"
       ></button-component>
-      <p>{{ message }}</p>
+      <p class="error">{{ message }}</p>
+      <div class="center"><p class="text">Уже есть аккаунт?</p></div>
+      <router-link to="/authenticate"
+        ><button-component
+          :name="'Войти'"
+          :class="'buttonGray'"
+        ></button-component
+      ></router-link>
     </form>
   </div>
 </template>
@@ -84,11 +134,11 @@ export default {
           this.phone = "";
           this.password = "";
           this.repeatPassword = "";
-          window.location.href = "/"
+          window.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
-          this.message = "Пользователь с таким Email уже существует"
+          this.message = "Пользователь с таким Email уже существует";
         });
     },
     checkPassword() {
@@ -111,5 +161,11 @@ form {
 
 input {
   margin-bottom: 20px;
+}
+
+.error {
+  color: red;
+  font-weight: 400;
+  font-size: 18px;
 }
 </style>

@@ -1,18 +1,40 @@
 <template>
-  <div>
+  <div class="center-form" style="margin-bottom: 300px">
     <form action="" method="post">
       <label for="">Электронная почта</label>
-      <input v-model="email" type="email" name="" id="" />
+      <input
+        v-model="email"
+        type="email"
+        name=""
+        id=""
+        placeholder="Введите свой email"
+        autofocus
+        required
+      />
 
       <label for="">Пароль</label>
-      <input v-model="password" type="password" name="" id="" />
+      <input
+        v-model="password"
+        type="password"
+        name=""
+        id=""
+        placeholder="Введите свой пароль"
+        required
+      />
 
       <button-component
         @click.prevent="submitAuth"
         :name="'Войти'"
         :type="submit"
       ></button-component>
-      <router-link to="register"><p>Зарегистрироваться</p></router-link>
+      <p class="error">{{ message }}</p>
+      <div class="center"><p class="text">Ещё нет аккаунта?</p></div>
+      <router-link to="/register"
+        ><button-component
+          :name="'Зарегистрироваться'"
+          :class="'buttonGray'"
+        ></button-component
+      ></router-link>
     </form>
     <p class="text-danger">{{ message }}</p>
   </div>
@@ -49,20 +71,23 @@ export default {
           localStorage.setItem("token", token);
           this.email = "";
           this.password = "";
-          window.location.href = "/"
+          window.location.href = "/";
         })
-        .catch((error) => this.message = "Такой пользователь не найден");
+        .catch((error) => (this.message = "Логин или пароль не верный"));
     },
   },
 };
 </script>
 
 <style scoped>
-form {
-  display: grid;
+.center-form {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-input {
-  margin-bottom: 20px;
+.error {
+  color: red;
+  font-weight: 400;
+  font-size: 18px;
 }
 </style>
