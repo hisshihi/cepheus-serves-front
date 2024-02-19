@@ -22,9 +22,11 @@
     </div>
     <!-- Блок с товарами -->
     <h2>Популярные товары</h2>
+    <div v-if="previewLoading">
+      <load-data-component/>
+    </div>
     <div class="products">
       <cards-component :cards="products" :url="url" :totalElements="totalElements"></cards-component>
-      
     </div>
   </div>
   
@@ -35,12 +37,14 @@
 import Slider from "@/components/Slider";
 import axios from "axios";
 import CardsComponent from "@/components/CardsComponent.vue";
+import LoadDataComponent from "@/components/LoadDataComponent.vue";
 
 
 export default {
   components: {
     Slider,
     CardsComponent,
+    LoadDataComponent
   },
 
   data() {
@@ -50,11 +54,14 @@ export default {
       currentPage: 0,
       url: "products/hot",
       totalElements: 0,
+      loading: false,
+      previewLoading: true,
     };
   },
 
   mounted() {
     this.addPosts();
+    this.progressLoading();
   },
 
   methods: {
@@ -62,6 +69,7 @@ export default {
       axios
         .get("http://localhost:8080/" + this.url + "?size=6&page=0")
         .then((response) => {
+          this.previewLoading = false;
           const data = response.data;
 
           this.totalElements = data.totalElements;
@@ -70,6 +78,11 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    progressLoading() {
+      if (this.products.length <= 0) {
+        this.loading = true
+      }
+    }
   },
 };
 </script>

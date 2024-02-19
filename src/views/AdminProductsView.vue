@@ -1,5 +1,8 @@
 <template>
-  This is products page
+  Добавить товар
+  <div v-if="previewLoading">
+    <load-data-component/>
+  </div>
   <cards-component
     :url="url"
     :totalElements="totalElements"
@@ -10,10 +13,12 @@
 <script>
 import axios from "axios";
 import CardsComponent from "@/components/CardsComponent.vue";
+import LoadDataComponent from "@/components/LoadDataComponent.vue";
 
 export default {
   components: {
     CardsComponent,
+    LoadDataComponent
   },
   data() {
     return {
@@ -21,6 +26,7 @@ export default {
       totalElements: 0,
       products: [],
       currentPage: 0,
+      previewLoading: true,
     };
   },
   mounted() {
@@ -31,7 +37,7 @@ export default {
       axios
         .get(`http://localhost:8080/${this.url}?size=6&page=0`)
         .then((response) => {
-          console.log(console.log(response));
+          this.previewLoading = false;
           const data = response.data;
           this.totalElements = data.totalElements;
           this.products = data.content;

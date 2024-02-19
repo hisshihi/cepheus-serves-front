@@ -37,7 +37,7 @@
       </div>
       <div class="card-image-container">
         <img
-          class="card-img"
+          class="card-img lazyload"
           :src="'data:image/png;base64,' + card.imageProductDto?.bytes"
           :alt="card.imageProductDto?.name"
         />
@@ -56,22 +56,31 @@
       </div>
     </div>
   </div>
-  <div class="center" v-if="buttonLogics()">
-    <button-component
-      @click="loadMore()"
-      :name="buttonName"
-      :type="button"
-    ></button-component>
+  <div v-if="loading">
+    <load-data-component/>
+  </div>
+  <div v-else>
+    <div class="center" v-if="buttonLogics()">
+      <button-component
+          @click="loadMore()"
+          :name="buttonName"
+          :type="button"
+      ></button-component>
+    </div>
   </div>
 </template>
 
 <script>
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import axios from "axios";
+import 'lazysizes'
+import 'lazysizes/plugins/parent-fit/ls.parent-fit'
+import LoadDataComponent from "@/components/LoadDataComponent.vue"
 
 export default {
   components: {
     ButtonComponent,
+    LoadDataComponent
   },
 
   data() {
@@ -98,6 +107,7 @@ export default {
           `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
         )
         .then((response) => {
+          this.previewLoading = false
           // Извлекаем данные из объекта ответа
           const data = response.data;
 
@@ -124,7 +134,7 @@ export default {
     buttonLogics() {
       if (this.url == "products/hot") {
         // this.totalPages = 1;
-        if (this.cards.length == 12) {
+        if (this.currentPage >= 1 || this.totalElements <= 6) {
           return false;
         } else return true;
       }
@@ -148,7 +158,7 @@ export default {
 
 .cards {
   display: flex;
-  justify-content: space-between;
+  //justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 50px;
 }
@@ -162,6 +172,7 @@ export default {
   border-radius: 12px;
   grid-template-columns: repeat(auto-fill, minmax(310px, 390px));
   display: grid;
+  margin-right: 10px;
 }
 
 .products {
