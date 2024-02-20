@@ -3,22 +3,28 @@
   <div v-if="previewLoading">
     <load-data-component/>
   </div>
-  <cards-component
-    :url="url"
-    :totalElements="totalElements"
-    :cards="products"
-  ></cards-component>
+<!--  <cards-component-->
+<!--      :url="url"-->
+<!--      :totalElements="totalElements"-->
+<!--      :cards="products"-->
+<!--  ></cards-component>-->
+  <table-component :url="url"
+                  :totalElements="totalElements"
+                  :cards="products"
+  ></table-component>
 </template>
 
 <script>
 import axios from "axios";
 import CardsComponent from "@/components/CardsComponent.vue";
 import LoadDataComponent from "@/components/LoadDataComponent.vue";
+import TableComponent from "@/components/TableComponent.vue";
 
 export default {
   components: {
     CardsComponent,
-    LoadDataComponent
+    LoadDataComponent,
+    TableComponent
   },
   data() {
     return {
@@ -35,14 +41,14 @@ export default {
   methods: {
     addProducts() {
       axios
-        .get(`http://localhost:8080/${this.url}?size=6&page=0`)
-        .then((response) => {
-          this.previewLoading = false;
-          const data = response.data;
-          this.totalElements = data.totalElements;
-          this.products = data.content;
-        })
-        .catch((error) => console.log(error));
+          .get(`http://localhost:8080/${this.url}?size=6&page=0`)
+          .then((response) => {
+            this.previewLoading = false;
+            const data = response.data;
+            this.totalElements = data.totalElements;
+            this.products = data.content;
+          })
+          .catch((error) => console.log(error));
     },
   },
 };

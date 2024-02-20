@@ -36,7 +36,6 @@
         ></button-component
       ></router-link>
     </form>
-    <p class="text-danger">{{ message }}</p>
   </div>
 </template>
 
