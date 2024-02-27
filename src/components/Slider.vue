@@ -121,6 +121,11 @@ img {
   position: relative;
 }
 
+.swiper {
+  padding-bottom: 30px !important;
+}
+
+
 .text {
   position: absolute;
   color: white;

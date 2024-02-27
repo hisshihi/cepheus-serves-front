@@ -114,12 +114,15 @@ html {
 /* Стили для слайдера */
 .swiper-button-next,
 .swiper-button-prev {
-  color: white !important;
+  color: black !important;
 }
 
 .swiper-pagination-bullet {
-  background-color: white !important;
+  background-color: black !important;
+  width: 12px !important;
+  height: 12px !important;;
 }
+
 
 /* Стили для формы */
 input {
