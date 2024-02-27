@@ -44,4 +44,38 @@ export default {
   margin-bottom: 10px;
   width: 100%;
 }
+
+.button-mini-default {
+  background-color: #26A8F2;
+  border-radius: 12px;
+  border: none;
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+  max-width: 160px;
+  height: 48px;
+  padding: 10px;
+  color: #f7fafc;
+  font-size: 16px;
+  margin-bottom: 10px;
+  //width: 100%;
+}
+
+.button-mini-default-gray {
+  background-color: #e8edf4;
+  border-radius: 12px;
+  border: none;
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+  max-width: 160px;
+  height: 48px;
+  padding: 10px;
+  color: black;
+  font-size: 16px;
+  margin-bottom: 10px;
+  //width: 100%;
+}
+
+
 </style>

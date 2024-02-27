@@ -21,7 +21,7 @@
       </div>
     </div>
     <!-- Блок с товарами -->
-    <h2>Популярные товары</h2>
+    <h2>Самые продаваемые продукты</h2>
     <div v-if="previewLoading">
       <load-data-component/>
     </div>
@@ -103,8 +103,9 @@ export default {
 
 /* Стили для заголовка h2 */
 h2 {
-  text-align: center;
+  text-align: start;
   margin-top: 50px;
+  font-size: 30px;
 }
 
 .products {

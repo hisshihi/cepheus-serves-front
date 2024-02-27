@@ -111,4 +111,61 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.table {
+  width: 100%;
+  border: none;
+  border-collapse: separate;
+  margin: 50px 0;
+}
+
+.table thead th {
+  font-weight: bold;
+  text-align: left;
+  border: none;
+  padding: 10px 15px;
+  background: #EDEDED;
+  font-size: 14px;
+  border-top: 1px solid #ddd;
+}
+
+.table tr th:first-child, .table tr td:first-child {
+  border-left: 1px solid #ddd;
+}
+
+.table tr th:last-child, .table tr td:last-child {
+  border-right: 1px solid #ddd;
+}
+
+.table thead tr th:first-child {
+  border-radius: 20px 0 0 0;
+}
+
+.table thead tr th:last-child {
+  border-radius: 0 20px 0 0;
+}
+
+.table tbody td {
+  text-align: left;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  vertical-align: top;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #F8F8F8;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 20px;
+}
+
+.table tbody tr:last-child td:last-child {
+  border-radius: 0 0 20px 0;
+}
+</style>

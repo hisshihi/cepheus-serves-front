@@ -166,22 +166,26 @@ export default {
 } */
 
 .cards {
-  display: flex;
-  //justify-content: space-between;
-  flex-wrap: wrap;
+  //display: flex;
+  ////justify-content: space-between;
+  //flex-wrap: wrap;
   margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2vw;
+  max-width: 1200px;
+  //margin: 0 auto;
 }
 
 .card-container {
   /* width: 30%; */
   margin-top: 30px;
-  -webkit-box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
-  -moz-box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
-  box-shadow: 0px 0px 8px 4px rgba(34, 60, 80, 0.2);
-  border-radius: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 390px));
-  display: grid;
-  margin-right: 10px;;
+  -webkit-box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.39);
+  -moz-box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.39);
+  box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.24);
+  border-radius: 20px;
+
+  background-color: #EFEEEE;
 }
 
 .products {
@@ -199,12 +203,13 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 19px;
+  word-break: break-word;
 }
 
 img {
   max-width: 100%;
-  height: 300px;
+  height: 184px;
   object-fit: cover;
   object-position: bottom;
   border-radius: 12px;

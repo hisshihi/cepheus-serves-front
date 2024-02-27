@@ -93,7 +93,7 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  display: flex;
+  //display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
