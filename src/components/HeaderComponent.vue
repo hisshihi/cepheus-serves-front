@@ -220,7 +220,7 @@ export default {
 }
 
 img {
-  width: 40px;
+  width: 60px;
 }
 
 svg {

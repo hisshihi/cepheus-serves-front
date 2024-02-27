@@ -5,21 +5,21 @@
       <slider></slider>
     </div>
     <!-- Раздел о нас -->
-    <h2>О нас</h2>
-    <div class="about">
-      <div class="about-img">
-        <img src="../assets/logo.png" alt="about image" />
-      </div>
-      <div class="about-text">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum id soluta,
-        eius a error unde eos commodi, cum incidunt sint libero autem
-        accusantium eveniet, reiciendis modi voluptatem quaerat quas neque?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil autem
-        placeat optio cum sunt ut expedita, ex mollitia blanditiis obcaecati! Et
-        sequi voluptatum suscipit reprehenderit rerum accusantium assumenda
-        repudiandae.
-      </div>
-    </div>
+<!--    <h2>О нас</h2>-->
+<!--    <div class="about">-->
+<!--      <div class="about-img">-->
+<!--        <img src="../assets/logo.png" alt="about image" />-->
+<!--      </div>-->
+<!--      <div class="about-text">-->
+<!--        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum id soluta,-->
+<!--        eius a error unde eos commodi, cum incidunt sint libero autem-->
+<!--        accusantium eveniet, reiciendis modi voluptatem quaerat quas neque?-->
+<!--        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil autem-->
+<!--        placeat optio cum sunt ut expedita, ex mollitia blanditiis obcaecati! Et-->
+<!--        sequi voluptatum suscipit reprehenderit rerum accusantium assumenda-->
+<!--        repudiandae.-->
+<!--      </div>-->
+<!--    </div>-->
     <!-- Блок с товарами -->
     <h2>Самые продаваемые продукты</h2>
     <div v-if="previewLoading">
@@ -28,6 +28,8 @@
     <div class="products">
       <cards-component :cards="products" :url="url" :totalElements="totalElements"></cards-component>
     </div>
+<!--    Раздел отзывов-->
+
   </div>
   
 </template>
