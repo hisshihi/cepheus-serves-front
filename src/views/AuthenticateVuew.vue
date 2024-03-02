@@ -64,7 +64,7 @@ export default {
       };
 
       axios
-        .post("https://cepheus-serves-spring-production.up.railway.app", data)
+        .post("https://cepheus-serves-spring-production.up.railway.app/authenticate", data)
         .then((response) => {
           const token = response.data.token;
           localStorage.setItem("token", token);
