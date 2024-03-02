@@ -28,6 +28,9 @@
     <div class="products">
       <cards-component :cards="products" :url="url" :totalElements="totalElements"></cards-component>
     </div>
+    <div class="reviews">
+      <h2 class="reviews-title">Ваши отзывы</h2>
+    </div>
 <!--    Раздел отзывов-->
 
   </div>
@@ -107,7 +110,14 @@ export default {
 h2 {
   text-align: start;
   margin-top: 50px;
-  font-size: 30px;
+  font-size: 33px;
+  max-width: 405px;
+  font-weight: 700;
+  line-height: 40.23px;
+}
+
+.reviews-title {
+  width: 202px;
 }
 
 .products {

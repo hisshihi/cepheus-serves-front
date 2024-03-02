@@ -215,7 +215,7 @@ export default {
 } */
 
 .li > .link {
-  font-size: 18px;
+  font-size: 23px;
   font-weight: 400;
 }
 
