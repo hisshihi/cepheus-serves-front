@@ -102,6 +102,7 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   flex-grow: 1;
+  min-height: 773px;
 }
 
 /* Центрирование объекта */

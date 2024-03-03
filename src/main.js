@@ -6,7 +6,6 @@ import { createStore } from "vuex";
 // const store = createStore({Vuex});
 
 
-
 const store = createStore({
   state() {
     return {
@@ -14,5 +13,6 @@ const store = createStore({
     };
   },
 });
+
 
 createApp(App).use(store).use(store).use(router).use(createStore).mount("#app");

@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="container">
+    <div class="container-footer">
       <div class="links">
         <div class="link">
           <img class="image" src="../assets/phone.svg" alt="phone image">
@@ -33,7 +33,7 @@ footer {
   flex-shrink: 0;
 }
 
-.container {
+.container-footer {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
