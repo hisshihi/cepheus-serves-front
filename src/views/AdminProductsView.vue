@@ -11,6 +11,7 @@
   <table-component :url="url"
                   :totalElements="totalElements"
                   :cards="products"
+                   style="margin-bottom: 434px;"
   ></table-component>
 </template>
 

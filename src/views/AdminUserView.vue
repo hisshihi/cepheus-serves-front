@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="table">
+    <table class="table" style="margin-bottom: 600px;">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id">
-          <th scope="row">{{ user.id }}</th>
+          <td>{{ user.id }}</td>
           <td>{{ user.firstname }}</td>
           <td>{{ user.lastname }}</td>
           <td>{{ user.email }}</td>

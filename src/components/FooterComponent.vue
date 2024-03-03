@@ -37,6 +37,8 @@ footer {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .fixed {

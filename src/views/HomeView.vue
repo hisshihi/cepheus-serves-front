@@ -30,6 +30,7 @@
     </div>
     <div class="reviews">
       <h2 class="reviews-title">Ваши отзывы</h2>
+      <reviews-component/>
     </div>
 <!--    Раздел отзывов-->
 
@@ -43,13 +44,15 @@ import Slider from "@/components/Slider";
 import axios from "axios";
 import CardsComponent from "@/components/CardsComponent.vue";
 import LoadDataComponent from "@/components/LoadDataComponent.vue";
+import ReviewsComponent from "@/components/ReviewsComponent.vue";
 
 
 export default {
   components: {
     Slider,
     CardsComponent,
-    LoadDataComponent
+    LoadDataComponent,
+    ReviewsComponent
   },
 
   data() {
