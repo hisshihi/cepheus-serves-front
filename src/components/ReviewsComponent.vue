@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     getReviews() {
-      axios.get("http://localhost:8080/reviews")
+      axios.get("https://cepheus-serves-spring-production.up.railway.app/reviews")
           .then(response => {
             this.reviews = response.data;
             this.allReviews = this.reviews.length
