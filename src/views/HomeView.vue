@@ -2,7 +2,7 @@
   <div class="home">
     <!-- Слайдер -->
     <div class="slider">
-      <slider></slider>
+      <slider class="slider"></slider>
     </div>
     <!-- Раздел о нас -->
 <!--    <h2>О нас</h2>-->
@@ -126,8 +126,5 @@ h2 {
 .products {
   margin-bottom: 50px;
 }
-
-
-
 
 </style>

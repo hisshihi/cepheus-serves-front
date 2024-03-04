@@ -153,4 +153,12 @@ img {
 .swiper-button-next::before {
     
 }
+
+@media screen and (max-width: 1200px) {
+  img {
+    width: 1000px;
+    margin: 0 auto;
+    display: grid;
+  }
+}
 </style>
