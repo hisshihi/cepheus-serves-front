@@ -75,7 +75,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post("https://cepheus-serves-spring-production.up.railway.app/users/" + token, {}, { headers })
+        .post("http://localhost:8080/users/" + token, {}, { headers })
         .then((response) => {
             const user = response.data;
             this.firstname = user.firstname;

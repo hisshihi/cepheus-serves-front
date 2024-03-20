@@ -93,7 +93,7 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  //display: flex;
+  /* display: flex; */
   flex-direction: column;
   min-height: 100vh;
 }
@@ -102,7 +102,7 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   flex-grow: 1;
-  //min-height: 773px;
+  /* min-height: 773px; */
 }
 
 /* Центрирование объекта */

@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     getReviews() {
-      axios.get("https://cepheus-serves-spring-production.up.railway.app/reviews")
+      axios.get("http://localhost:8080/reviews")
           .then(response => {
             this.reviews = response.data;
             this.allReviews = this.reviews.length
@@ -148,7 +148,7 @@ export default {
     <div class="evaluations-users">
       <div class="users" v-for="review in reviews" :key="review.id">
         <div class="user">
-          <div class="name">{{ review.user.lastname }}</div>
+          <div class="name">{{ review.user.firstname }}</div>
           <div class="rating">
             <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-1.44 -1.44 50.82 50.82" xml:space="preserve"

@@ -52,7 +52,7 @@ setTimeout(() => {
 .box {
   width: 10rem;
   height: 1rem;
-  //margin-block-start: 0.5rem;
+  /* margin-block-start: 0.5rem; */
   background: #26A8F2;
   margin: 7px;
   border-radius: 12px;

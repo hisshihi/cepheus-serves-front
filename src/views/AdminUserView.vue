@@ -71,7 +71,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/users", { headers })
+        .get("http://localhost:8080/users", { headers })
         .then((response) => {
           this.users = response.data;
         })

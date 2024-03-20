@@ -107,7 +107,7 @@ export default {
       this.loading = true;
       axios
           .get(
-              `https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=${this.currentPage}`
+              `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
           )
           .then((response) => {
             this.previewLoading = false
@@ -166,15 +166,15 @@ export default {
 } */
 
 .cards {
-  //display: flex;
-  ////justify-content: space-between;
-  //flex-wrap: wrap;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* flex-wrap: wrap; */
   margin-bottom: 50px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2vw;
   max-width: 1200px;
-  //margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .card-container {
