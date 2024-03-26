@@ -6,9 +6,9 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
 
 // Import Swiper styles
-import 'swiper/css';
+import "swiper/css";
 // import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import "swiper/css/pagination";
 // import 'swiper/css/scrollbar';
 // import "swiper/css/bundle";
 
@@ -17,7 +17,7 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    ButtonComponent
+    ButtonComponent,
   },
   setup() {
     const onSwiper = (swiper) => {
@@ -51,62 +51,87 @@ export default {
       <img src="../assets/text.jpg" />
       <div class="text">
         <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами M.2, 8 каскадами питания, HDMI,
-          DisplayPort, USB 3.2 Gen 2 Type-A и Type-C</p>
-        <button-component name="Подробнее" type="button" style-button="button-mini-default"/>
+        <p>
+          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
+          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
+          Type-C
+        </p>
+        <button-component
+          name="Подробнее"
+          type="button"
+          style-button="button-mini-default"
+        />
       </div>
 
-    <div>
-
-    </div>
+      <div></div>
     </swiper-slide>
     <swiper-slide class="swiper-slide">
       <img src="../assets/text.jpg" />
       <div class="text">
         <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами M.2, 8 каскадами питания, HDMI,
-          DisplayPort, USB 3.2 Gen 2 Type-A и Type-C</p>
-        <button-component name="Подробнее" type="button" style-button="button-mini-default"/>
+        <p>
+          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
+          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
+          Type-C
+        </p>
+        <button-component
+          name="Подробнее"
+          type="button"
+          style-button="button-mini-default"
+        />
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </swiper-slide>
     <swiper-slide class="swiper-slide">
       <img src="../assets/text.jpg" />
       <div class="text">
         <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами M.2, 8 каскадами питания, HDMI,
-          DisplayPort, USB 3.2 Gen 2 Type-A и Type-C</p>
-        <button-component name="Подробнее" type="button" style-button="button-mini-default"/>
+        <p>
+          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
+          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
+          Type-C
+        </p>
+        <button-component
+          name="Подробнее"
+          type="button"
+          style-button="button-mini-default"
+        />
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </swiper-slide>
     <swiper-slide class="swiper-slide">
       <img src="../assets/text.jpg" />
       <div class="text">
         <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами M.2, 8 каскадами питания, HDMI,
-          DisplayPort, USB 3.2 Gen 2 Type-A и Type-C</p>
-        <button-component name="Подробнее" type="button" style-button="button-mini-default"/>
+        <p>
+          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
+          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
+          Type-C
+        </p>
+        <button-component
+          name="Подробнее"
+          type="button"
+          style-button="button-mini-default"
+        />
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </swiper-slide>
     <swiper-slide class="swiper-slide">
       <img src="../assets/text.jpg" />
       <div class="text">
         <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами M.2, 8 каскадами питания, HDMI,
-          DisplayPort, USB 3.2 Gen 2 Type-A и Type-C</p>
-        <button-component name="Подробнее" type="button" style-button="button-mini-default"/>
+        <p>
+          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
+          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
+          Type-C
+        </p>
+        <button-component
+          name="Подробнее"
+          type="button"
+          style-button="button-mini-default"
+        />
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </swiper-slide>
   </swiper>
 </template>
@@ -115,6 +140,7 @@ export default {
 img {
   max-width: 1200px;
   border-radius: 12px;
+  cursor: grab;
 }
 
 .swiper-slide {
@@ -124,7 +150,6 @@ img {
 .swiper {
   padding-bottom: 30px !important;
 }
-
 
 .text {
   position: absolute;
@@ -146,12 +171,10 @@ img {
   border-radius: 12px;
 }
 
-
 .swiper-button-next {
-    color: white !important;
+  color: white !important;
 }
 .swiper-button-next::before {
-    
 }
 
 @media screen and (max-width: 1200px) {
