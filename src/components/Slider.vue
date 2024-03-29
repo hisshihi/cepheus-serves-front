@@ -59,7 +59,7 @@ export default {
         <button-component
           name="Подробнее"
           type="button"
-          style-button="button-mini-default"
+          class="buttonMiniDefault"
         />
       </div>
 
@@ -77,7 +77,7 @@ export default {
         <button-component
           name="Подробнее"
           type="button"
-          style-button="button-mini-default"
+          class="buttonMiniDefault"
         />
       </div>
       <div></div>
@@ -94,7 +94,7 @@ export default {
         <button-component
           name="Подробнее"
           type="button"
-          style-button="button-mini-default"
+          class="buttonMiniDefault"
         />
       </div>
       <div></div>
@@ -111,7 +111,7 @@ export default {
         <button-component
           name="Подробнее"
           type="button"
-          style-button="button-mini-default"
+          class="buttonMiniDefault"
         />
       </div>
       <div></div>
@@ -128,7 +128,7 @@ export default {
         <button-component
           name="Подробнее"
           type="button"
-          style-button="button-mini-default"
+          class="buttonMiniDefault"
         />
       </div>
       <div></div>
