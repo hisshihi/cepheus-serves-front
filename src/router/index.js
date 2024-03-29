@@ -52,6 +52,15 @@ const routes = [
     },
   },
   {
+    path: "/company",
+    name: "company",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "company" */ "../views/CompanyViews.vue"),
+  },
+  {
     path: "/admin/user",
     name: "adminUser",
     component: () =>
@@ -72,9 +81,11 @@ const routes = [
     path: "/admin/products",
     name: "adminProducts",
     component: () =>
-      import(/* webpackChunkName: "adminProducts" */ "../views/AdminProductsView.vue"),
+      import(
+        /* webpackChunkName: "adminProducts" */ "../views/AdminProductsView.vue"
+      ),
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
     },
     beforeEnter: (to, from, next) => {
       const token = localStorage.getItem("token");
@@ -97,7 +108,8 @@ const routes = [
   {
     path: "/:catchAll(.*)",
     name: "notFound",
-    component: () => import(/* webpackChunkName: "notFound" */ "../views/NotFoundView.vue")
+    component: () =>
+      import(/* webpackChunkName: "notFound" */ "../views/NotFoundView.vue"),
   },
 ];
 

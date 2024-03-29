@@ -27,7 +27,9 @@
           <div v-if="role != '[ADMIN]'" class="navigation">
             <li class="li"><a class="link" href="#">О нас</a></li>
             <li class="li"><a class="link" href="#">Товары</a></li>
-            <li class="li"><a class="link" href="#">Контакты</a></li>
+            <router-link to="/company" class="li">
+              <p>Компания</p>
+            </router-link>
           </div>
           <!-- Админ -->
           <div v-else class="navigation">
@@ -186,6 +188,8 @@ export default {
 .ul {
   display: flex;
   padding: 0;
+  margin: 0;
+  align-items: center;
 }
 
 .nav {
@@ -201,6 +205,8 @@ export default {
 
 .navigation > .li {
   margin-right: 36px;
+  font-size: 23px;
+  font-weight: 400;
 }
 
 /* .li:nth-child(2) {
