@@ -196,6 +196,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 10px;
+  padding-bottom: 6px;
 }
 
 .navigation {
@@ -253,6 +255,6 @@ svg {
 
 header {
   border-bottom: 1px #e5e8eb solid;
-  max-height: 65px;
+  /* max-height: 65px; */
 }
 </style>

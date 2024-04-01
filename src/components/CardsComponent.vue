@@ -227,6 +227,8 @@ export default {
 .title {
   font-size: 26px;
   margin-bottom: 5px;
+  word-break: break-word;
+  max-width: 454px;
 }
 
 .sub-title {
@@ -254,7 +256,7 @@ svg {
   height: 40px;
   cursor: pointer;
   fill: white;
-  transition: fill cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s;;
+  transition: fill cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s;
 }
 
 .favorite-button {
