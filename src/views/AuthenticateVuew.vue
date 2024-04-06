@@ -7,6 +7,7 @@
         type="email"
         name=""
         id=""
+        autocomplete="email"
         placeholder="Введите свой email"
         autofocus
         required
