@@ -12,6 +12,8 @@
     "gsap": "^3.12.5",
     "jwt-decode": "^4.0.0",
     "lazysizes": "^5.3.2",
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
     "splitting": "^1.0.6",
     "swiper": "^11.0.5",
     "vue": "^3.2.13",
@@ -23,7 +25,9 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "gulp-gh-pages": "^0.5.4"
+    "gulp-gh-pages": "^0.5.4",
+    "sass": "^1.74.1",
+    "sass-loader": "^10.5.2"
   },
   "browserslist": [
     "> 1%",

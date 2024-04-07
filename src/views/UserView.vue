@@ -1,48 +1,60 @@
 <template>
-  <div>
+  <div class="user-container">
+    <!-- Панель навигации -->
+    <div class="nav-bar">
+      <navbar-pure-component></navbar-pure-component>
+    </div>
+    <!-- Информация о пользователе -->
     <div class="user">
+      <!-- Изображение и другие данные -->
       <div class="user-data">
-        <div class="user-data-case"><p class="user-data-text">{{firstname}}</p></div>
-        <div class="user-data-case"><p class="user-data-text">{{lastname}}</p></div>
-        <div class="user-data-case"><p class="user-data-text">{{email}}</p></div>
-        <div class="user-data-case"><p class="user-data-text">{{phone}}</p></div>
-      </div>
-      <div class="user-settings">
-        <div class="dropdown">
-          <button class="dropbtn" @click="toggleDropdown">Настройки <img :class="{imageBtnRotate: dropdownVisible}" class="imageBtn" src="../assets/arrow.png" alt="arrow"></button>
-          <div class="dropdown-content" v-if="dropdownVisible">
-            <a href="#">Изменить данные</a>
-            <a href="#">Сменить пароль</a>
-            <a href="#">Удалить аккаунт</a>
+        <div class="user-image">
+          <img src="../assets/user.png" alt="user" />
+        </div>
+        <div class="user-info">
+          <div class="name">{{ firstname }} {{ lastname }}</div>
+          <div class="user-change-data">
+            <button-component :name="'Редактировать'"></button-component>
           </div>
         </div>
       </div>
-    </div>
-    <!--      Заказы-->
-    <h2>Мои заказы</h2>
-    <div class="orders">
-      <div class="dropdown">
-        <button class="dropbtn dropbtn-width" @click="">Выполненные <img class="imageBtn imageBtn-static" src="../assets/arrow.png" alt="arrow"></button>
-        <div class="dropdown-content" v-if="false">
-<!--          <a href="#">Изменить данные</a>-->
-<!--          <a href="#">Сменить пароль</a>-->
-<!--          <a href="#">Удалить аккаунт</a>-->
+      <!-- Заказы пользователя -->
+      <div class="user-orders">
+        <div class="orders orders-success">
+          <div class="order-number">3</div>
+          <div class="order-text">Выполненные</div>
+        </div>
+        <div class="orders orders-in-waiting">
+          <div class="order-number">5</div>
+          <div class="order-text">В ожидании</div>
+        </div>
+        <div class="orders orders-rejected">
+          <div class="order-number">1</div>
+          <div class="order-text">Отклонённые</div>
         </div>
       </div>
-      <div class="dropdown">
-        <button class="dropbtn dropbtn-width" @click="">В ожидании <img class="imageBtn imageBtn-static" src="../assets/arrow.png" alt="arrow"></button>
-        <div class="dropdown-content" v-if="false">
-<!--          <a href="#">Изменить данные</a>-->
-<!--          <a href="#">Сменить пароль</a>-->
-<!--          <a href="#">Удалить аккаунт</a>-->
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="dropbtn dropbtn-width" @click="">Отклонённые <img class="imageBtn imageBtn-static" src="../assets/arrow.png" alt="arrow"></button>
-        <div class="dropdown-content" v-if="false">
-<!--          <a href="#">Изменить данные</a>-->
-<!--          <a href="#">Сменить пароль</a>-->
-<!--          <a href="#">Удалить аккаунт</a>-->
+      <!-- Контакты пользователя -->
+      <div class="user-contact">
+        <div class="title-contact">Контактная информация</div>
+        <div class="contact-info">
+          <div class="contant-container">
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact">{{ email }}</div>
+            </div>
+            <div class="contact-button">
+              <button-component :name="'Редактировать'"></button-component>
+            </div>
+          </div>
+          <div class="contant-container">
+            <div>
+              <div class="contact-label">Телефон</div>
+              <div class="contact">{{ phone }}</div>
+            </div>
+            <div class="contact-button">
+              <button-component :name="'Редактировать'"></button-component>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -51,18 +63,24 @@
 
 <script>
 import axios from "axios";
+import NavbarPureComponent from "@/components/NavbarPureComponent.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
+  components: {
+    NavbarPureComponent,
+    ButtonComponent,
+  },
 
-    data() {
-        return {
-            firstname: "",
-            lastname: "",
-            email: "",
-            phone: "",
-            dropdownVisible: false,
-        }
-    },
+  data() {
+    return {
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      dropdownVisible: false,
+    };
+  },
 
   mounted() {
     this.getUser();
@@ -77,11 +95,11 @@ export default {
       axios
         .post("http://localhost:8080/users/" + token, {}, { headers })
         .then((response) => {
-            const user = response.data;
-            this.firstname = user.firstname;
-            this.lastname = user.lastname;
-            this.email = user.email;
-            this.phone = user.phone;
+          const user = response.data;
+          this.firstname = user.firstname;
+          this.lastname = user.lastname;
+          this.email = user.email;
+          this.phone = user.phone;
         })
         .catch((error) => console.log(error));
     },
@@ -93,138 +111,83 @@ export default {
 </script>
 
 <style scoped>
-
-.user {
-  border-radius: 15px;
-  background-color: #EFEEEE;
-  -webkit-box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.39);
-  -moz-box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.39);
-  box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.24);
+.user-container {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-top: 24px;
+}
+
+/* Стили пользователя */
+.user {
+  display: grid;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 
 .user-data {
   display: grid;
-}
-
-.user-data-text {
-  font-size: 23px;
-  font-weight: 400;
-  color: black;
-  display: grid;
   justify-items: center;
 }
 
-.user-data-case {
-  width: 372px;
-  background-color: #26A9F3;
-  margin-left: 30px;
-  margin-bottom: 16px;
-  border-radius: 10px;
-
+.user-image > img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 13px;
 }
 
-.user-data-case:nth-child(1) {
-  margin-top: 58px;
-}
-
-.user-data-case:nth-child(4) {
-  margin-bottom: 94px;
-}
-
-.user-settings {
-  margin-right: 110px;
-  margin-top: 51px;
-}
-
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
+.name {
+  font-weight: 700;
   text-align: center;
+  font-size: 23px;
+  margin-bottom: 11px;
+}
+
+/* Стили заказов */
+
+.orders {
+  width: 211px;
+  height: 76px;
+  border: 1px solid black;
+  margin: 0 21.5px;
+  border-radius: 10px;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.user-orders {
+  display: flex;
+}
+
+.order-number {
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.order-text {
+  font-size: 23px;
+  font-weight: 400;
+}
+
+/* Стили для блока с контактами */
+.title-contact {
   font-size: 23px;
   font-weight: 700;
-  padding: 0 10px;
-  height: 60px;
-  width: 301px;
-  line-height: 30px;
-  background-color: #FFFFFF;
-  color: black;
-  cursor: pointer;
-  border: 1px black solid;
-  border-radius: 10px;
+  margin-bottom: 38px;
+}
+
+.contant-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dropdown-content {
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  -webkit-box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.39);
-  -moz-box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.39);
-  box-shadow: 0px 7px 4px 0px rgba(0,0,0,0.24);
-  z-index: 1;
-  display: block;
-  width: 301px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px black solid;
-}
-
-.imageBtn {
-  position: relative;
-  left: 55px;
-}
-
-.imageBtnRotate {
-  transform: rotate(180deg);
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  transition: 0.3s;
-  border-bottom: 1px black solid;
-  text-align: center;
-  font-weight: 300;
-  font-size: 23px;
-}
-
-.dropdown-content a:nth-child(1) {
-  border-radius: 10px 10px 0 0;
-}
-
-.dropdown-content a:nth-child(3) {
-  border-radius: 0 0 10px 10px;
-  border-bottom: none;
-}
-
-.dropdown-content a:hover {background-color: #26A9F3}
-
-/* Заказы */
-.orders {
-  display: grid;
-}
-
-.dropbtn-width {
-  width: 100%;
-  margin-bottom: 32px;
   justify-content: space-between;
+  margin-bottom: 28px;
 }
 
-.imageBtn-static {
-  left: 0;
+.contact-label {
+  font-size: 18px;
+  font-weight: 500;
 }
 
+.contact {
+  font-size: 16px;
+  font-weight: 400;
+}
 </style>
