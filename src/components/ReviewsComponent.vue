@@ -85,7 +85,7 @@ export default {
       };
       axios
         .post(
-          "http://localhost:8080/reviews",
+          "https://cepheus-serves-spring-production.up.railway.app/reviews",
           { text: this.userText, rating: this.userRating },
           { headers }
         )
@@ -100,7 +100,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/reviews/exists", { headers })
+        .get("https://cepheus-serves-spring-production.up.railway.app/reviews/exists", { headers })
         .then((response) => (this.reviewsUserBoolean = response.data))
         .catch((error) => console.log(error));
     },

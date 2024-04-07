@@ -71,7 +71,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/users", { headers })
+        .get("https://cepheus-serves-spring-production.up.railway.app/users", { headers })
         .then((response) => {
           this.users = response.data;
         })
@@ -101,7 +101,7 @@ export default {
       };
       const role = event.target.value;
       axios
-        .patch("http://localhost:8080/users/" + id, {role: role}, { headers })
+        .patch("https://cepheus-serves-spring-production.up.railway.app/users/" + id, {role: role}, { headers })
         .then((response) => {
           // console.log(response);
         })

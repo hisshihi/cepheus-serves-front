@@ -40,7 +40,7 @@ export default {
       const container = document.querySelector(".wrapper")
       // console.log(container.clientHeight)
 
-    }
+    },
   },
   mounted() {
     this.getToken();

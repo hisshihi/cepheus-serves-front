@@ -102,7 +102,7 @@ export default {
   methods: {
     addProducts() {
       axios
-          .get(`http://localhost:8080/${this.url}?size=6&page=0`)
+          .get(`https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=0`)
           .then((response) => {
             this.previewLoading = false;
             const data = response.data;
@@ -123,7 +123,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/category", { headers })
+        .get("https://cepheus-serves-spring-production.up.railway.app/category", { headers })
         .then((response) => {
           this.categories = response.data;
         })
@@ -136,7 +136,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post("http://localhost:8080/products", {
+        .post("https://cepheus-serves-spring-production.up.railway.app/products", {
           title: this.title,
           text: this.text,
           price: this.price,
