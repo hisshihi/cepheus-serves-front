@@ -117,6 +117,7 @@ ul {
 }
 a {
   text-decoration: none;
+  padding: 12px 20px 12px 12px !important;
 }
 ul li:not(:last-child) {
   padding-bottom: 40px;
@@ -184,7 +185,7 @@ body.dark .toggle-dark-theme .icon::before {
   transition: all 0.4s ease;
 }
 .sidebar.shrink_sidebar {
-  max-width: 100px;
+  max-width: 110px;
   transition: max-width 0.5s;
 }
 

@@ -20,6 +20,7 @@
         name=""
         id=""
         placeholder="Введите свой пароль"
+        autocomplete="current-password"
         required
       />
 

@@ -10,6 +10,7 @@
         autofocus
         required
         placeholder="Введите ваше имя"
+        autocomplete="firstname"
       />
 
       <label for="">Фамилия</label>
@@ -20,6 +21,7 @@
         id=""
         required
         placeholder="Введите вашу фамилию"
+        autocomplete="lastname"
       />
 
       <label for="">Электронная почта</label>
@@ -30,6 +32,7 @@
         id=""
         required
         placeholder="Введите ваш email"
+        autocomplete="email"
       />
 
       <label for="">Номер телефона</label>
@@ -40,6 +43,18 @@
         id=""
         placeholder="Введите ваш телефон"
         required
+        autocomplete="phone"
+      />
+
+      <label for="">Адрес</label>
+      <input
+        v-model="address"
+        type="address"
+        name=""
+        id=""
+        placeholder="Введите ваш телефон"
+        required
+        autocomplete="street-address"
       />
 
       <label for="">Пароль</label>
@@ -50,6 +65,7 @@
         id=""
         placeholder="Введите пароль"
         required
+        autocomplete="password"
       />
 
       <label for="">Повторите пароль</label>
@@ -96,6 +112,7 @@ export default {
       phone: "",
       email: "",
       password: "",
+      address: "",
       repeatPassword: "",
       checkPasswordReturn: 0,
       message: "",
@@ -118,6 +135,7 @@ export default {
         lastname: this.lastname,
         email: this.email,
         phone: this.phone,
+        address: this.address,
         password: this.password,
       };
 
@@ -132,6 +150,7 @@ export default {
           this.lastname = "";
           this.email = "";
           this.phone = "";
+          this.address = "";
           this.password = "";
           this.repeatPassword = "";
           window.location.href = "/";
