@@ -25,6 +25,8 @@ export default {
       userRating: 0,
       userText: "",
       token: null,
+      reviewsUserBoolean: false,
+      isSendReviews: false,
     };
   },
   methods: {
@@ -75,12 +77,18 @@ export default {
       this.userRating = newUserRating;
     },
     sendData() {
+      this.isSendReviews = true;
+      this.reviewsUserBoolean = true;
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post("http://localhost:8080/reviews", {text: this.userText, rating: this.userRating}, { headers })
+        .post(
+          "http://localhost:8080/reviews",
+          { text: this.userText, rating: this.userRating },
+          { headers }
+        )
         .then((response) => {
           console.log(response);
         })
@@ -91,10 +99,11 @@ export default {
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      axios.get("http://localhost:8080/reviews/exists", {headers})
-      .then(response => console.log(response))
-      .catch(error => console.log(error))
-    }
+      axios
+        .get("http://localhost:8080/reviews/exists", { headers })
+        .then((response) => (this.reviewsUserBoolean = response.data))
+        .catch((error) => console.log(error));
+    },
   },
   mounted() {
     this.getReviews();
@@ -223,9 +232,10 @@ export default {
         </div>
       </div>
     </div>
-    <div class="feedback" v-if="token">
-      <div class="stars">
-        <!-- <svg
+    <div v-if="!reviewsUserBoolean">
+      <div class="feedback" v-if="token || reviewsUserBoolean">
+        <div class="stars">
+          <!-- <svg
           height="200px"
           width="200px"
           version="1.1"
@@ -251,34 +261,39 @@ export default {
             ></path>
           </g>
         </svg> -->
-        <add-star-rating-component
-          @update-rating="handeRatingChange"
-        ></add-star-rating-component>
-        <div class="rating-form">
-          <form action="" method="post">
-            <label for="">Оставьте свой отзыв</label>
-            <textarea
-              v-model="userText"
-              type="text"
-              name=""
-              id=""
-              placeholder="Ваши впечатления (минимум 10 символов)"
-              required
-              minlength="10"
-            ></textarea>
-          </form>
+          <add-star-rating-component
+            @update-rating="handeRatingChange"
+          ></add-star-rating-component>
+          <div class="rating-form">
+            <form action="" method="post">
+              <label for="">Оставьте свой отзыв</label>
+              <textarea
+                v-model="userText"
+                type="text"
+                name=""
+                id=""
+                placeholder="Ваши впечатления (минимум 10 символов)"
+                required
+                minlength="10"
+                maxlength="1000"
+              ></textarea>
+            </form>
+          </div>
+        </div>
+        <div
+          class="button-reviews"
+          v-if="this.userRating > 0 && this.userText.length > 10"
+        >
+          <button-component
+            @click="sendData"
+            :name="'Отправить'"
+            :type="button"
+          ></button-component>
         </div>
       </div>
-      <div
-        class="button-reviews"
-        v-if="this.userRating > 0 && this.userText.length > 10"
-      >
-        <button-component
-          @click="sendData"
-          :name="'Отправить'"
-          :type="button"
-        ></button-component>
-      </div>
+    </div>
+    <div class="feedback" v-if="isSendReviews">
+      <h2>Спасибо за отзыв!</h2>
     </div>
   </div>
 </template>
@@ -467,6 +482,7 @@ textarea {
   margin: 0 auto;
   border-radius: 12px;
   border: 1px #6583a2 solid;
+  margin-bottom: 10px;
 }
 
 textarea::placeholder {
