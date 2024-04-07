@@ -101,7 +101,7 @@ export default {
       };
       const role = event.target.value;
       axios
-        .patch("https://cepheus-serves-spring-production.up.railway.app/users/" + id, {role: role}, { headers })
+        .patch("http://localhost:8080/users/" + id, {role: role}, { headers })
         .then((response) => {
           // console.log(response);
         })
