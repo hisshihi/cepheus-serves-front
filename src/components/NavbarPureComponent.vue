@@ -1,37 +1,52 @@
 <template>
   <main>
-    <div id="mysidebar" class="sidebar" :class="{'shrink_sidebar': isOpen}">
-        <div class="sidebar-arrow">
-            <img :class="{'slidebar-arrow-180': isOpen}" src="../assets/arrow2.png" alt="arrow" @click="toggleSidebar()">
-        </div>
+    <div id="mysidebar" class="sidebar" :class="{ shrink_sidebar: isOpen }">
+      <div class="sidebar-arrow">
+        <img
+          :class="{ 'slidebar-arrow-180': isOpen }"
+          src="../assets/arrow2.png"
+          alt="arrow"
+          @click="toggleSidebar()"
+        />
+      </div>
       <ul class="sidebar-navlink">
         <li>
           <a href="#">
-            <i class="fa-solid fa-house"><img src="../assets/acc.svg" alt="acc"></i>
+            <i class="fa-solid fa-house"
+              ><img src="../assets/acc.svg" alt="acc"
+            /></i>
             <span>Профиль</span>
           </a>
         </li>
         <li>
           <a href="#">
-            <i class="fa-solid fa-chart-simple"><img src="../assets/favorite.png" alt="favorite"></i>
+            <i class="fa-solid fa-chart-simple"
+              ><img src="../assets/favorite.png" alt="favorite"
+            /></i>
             <span>Избранное</span>
           </a>
         </li>
         <li>
           <a href="#">
-            <i class="fa-solid fa-clock-rotate-left"><img src="../assets/busket.png" alt="busket"></i>
+            <i class="fa-solid fa-clock-rotate-left"
+              ><img src="../assets/busket.png" alt="busket"
+            /></i>
             <span>Корзина</span>
           </a>
         </li>
         <li>
           <a href="#">
-            <i class="fa-solid fa-list-check"><img src="../assets/img.png" alt="notifications"></i>
+            <i class="fa-solid fa-list-check"
+              ><img src="../assets/img.png" alt="notifications"
+            /></i>
             <span>Уведомления</span>
           </a>
         </li>
         <li>
-          <a href="#">
-            <i class="fa-solid fa-users"><img src="../assets/logout.png" alt="notifications"></i>
+          <a href="#" @click="logout()">
+            <i class="fa-solid fa-users"
+              ><img src="../assets/logout.png" alt="notifications"
+            /></i>
             <span>Выход</span>
           </a>
         </li>
@@ -42,22 +57,24 @@
 
 <script>
 export default {
-    data() {
-        return {
-            isOpen: false
-        }
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
+  methods: {
+    toggleSidebar() {
+      this.isOpen = !this.isOpen;
     },
-    methods: {
-        toggleSidebar() {
-            this.isOpen = !this.isOpen
-        }
-    }
-}
-
+    logout() {
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 main {
   display: flex;
 }
@@ -109,7 +126,6 @@ section {
 .sidebar-navlink {
   padding: 26px;
   /* padding-top: 100px; */
-  
 }
 ul {
   list-style: none;
@@ -194,20 +210,20 @@ body.dark .toggle-dark-theme .icon::before {
 }
 
 a {
-    display: flex !important;
+  display: flex !important;
 }
 
 img {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .sidebar-arrow {
-    display: flex;
-    justify-content: flex-end;
-    margin: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
 }
 
 .slidebar-arrow-180 {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 </style>
