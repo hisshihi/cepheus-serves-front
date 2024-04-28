@@ -32,7 +32,7 @@ export default {
   methods: {
     getReviews() {
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/reviews")
+        .get("http://localhost:8080/reviews")
         .then((response) => {
           this.reviews = response.data;
           this.allReviews = this.reviews.length;
@@ -85,7 +85,7 @@ export default {
       };
       axios
         .post(
-          "https://cepheus-serves-spring-production.up.railway.app/reviews",
+          "http://localhost:8080/reviews",
           { text: this.userText, rating: this.userRating },
           { headers }
         )
@@ -100,7 +100,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/reviews/exists", { headers })
+        .get("http://localhost:8080/reviews/exists", { headers })
         .then((response) => (this.reviewsUserBoolean = response.data))
         .catch((error) => console.log(error));
     },
@@ -193,6 +193,7 @@ export default {
               :rating="review.rating"
             ></star-rating-component>
           </div>
+          <!-- todo: добавить вывод страницы -->
           <div class="date">Июль 9, 2023</div>
           <div class="evaluations-text">{{ review.text }}</div>
           <div class="reaction">

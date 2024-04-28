@@ -71,7 +71,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/users", { headers })
+        .get("http://localhost:8080/users", { headers })
         .then((response) => {
           this.users = response.data;
         })
@@ -85,7 +85,7 @@ export default {
       };
       this.userId = id;
       axios
-        .delete("https://cepheus-serves-spring-production.up.railway.app/users/" + this.userId, { headers })
+        .delete("http://localhost:8080/users/" + this.userId, { headers })
         .then((response) => {
           this.users = this.users.filter((user) => user.id !== this.userId);
           const userToken = response.data;
@@ -101,7 +101,7 @@ export default {
       };
       const role = event.target.value;
       axios
-        .patch("https://cepheus-serves-spring-production.up.railway.app/users/" + id, {role: role}, { headers })
+        .patch("http://localhost:8080/users/" + id, {role: role}, { headers })
         .then((response) => {
           // console.log(response);
         })

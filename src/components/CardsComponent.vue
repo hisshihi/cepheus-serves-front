@@ -115,7 +115,7 @@ export default {
       this.loading = true;
       axios
         .get(
-          `https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=${this.currentPage}`
+          `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
         )
         .then((response) => {
           this.previewLoading = false;
