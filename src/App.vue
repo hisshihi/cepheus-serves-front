@@ -48,7 +48,7 @@ export default {
   },
   watch: {
     '$route.path': 'handleHeight'
-  }
+  },
 
 };
 </script>
@@ -122,6 +122,11 @@ html {
   background-color: black !important;
   width: 12px !important;
   height: 12px !important;;
+}
+
+.swiper-slide {
+  display: grid !important;
+  justify-content: center;
 }
 
 

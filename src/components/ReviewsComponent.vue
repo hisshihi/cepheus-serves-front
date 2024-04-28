@@ -34,42 +34,53 @@ export default {
       axios
         .get("http://localhost:8080/reviews")
         .then((response) => {
-          this.reviews = response.data;
-          this.allReviews = this.reviews.length;
+          console.log(response);
 
-          let sum = 0;
-          let count5 = 0;
-          let count4 = 0;
-          let count3 = 0;
-          let count2 = 0;
-          let count1 = 0;
+          if (response.data === "") {
+            this.reviews = [];
+            this.allReviews = 0;
+          } else {
+            this.reviews = response.data;
+            this.allReviews = this.reviews.length; // <--- Add a check here
+            if (this.allReviews === 0) {
+              this.allReviews = 0;
+            } else {
+              // Your original code here
+              let sum = 0;
+              let count5 = 0;
+              let count4 = 0;
+              let count3 = 0;
+              let count2 = 0;
+              let count1 = 0;
 
-          for (let i = 0; i < this.allReviews; i++) {
-            sum += this.reviews[i].rating;
-            if (this.reviews[i].rating == 5) count5++;
-            if (this.reviews[i].rating == 4) count4++;
-            if (this.reviews[i].rating == 3) count3++;
-            if (this.reviews[i].rating == 2) count2++;
-            if (this.reviews[i].rating == 1) count1++;
+              for (let i = 0; i < this.allReviews; i++) {
+                sum += this.reviews[i].rating;
+                if (this.reviews[i].rating == 5) count5++;
+                if (this.reviews[i].rating == 4) count4++;
+                if (this.reviews[i].rating == 3) count3++;
+                if (this.reviews[i].rating == 2) count2++;
+                if (this.reviews[i].rating == 1) count1++;
+              }
+
+              this.rating = Number((sum / this.allReviews).toFixed(1));
+
+              this.percentageCount5 = Number(
+                ((count5 / this.allReviews) * 100).toFixed(2)
+              );
+              this.percentageCount4 = Number(
+                ((count4 / this.allReviews) * 100).toFixed(2)
+              );
+              this.percentageCount3 = Number(
+                ((count3 / this.allReviews) * 100).toFixed(2)
+              );
+              this.percentageCount2 = Number(
+                ((count2 / this.allReviews) * 100).toFixed(2)
+              );
+              this.percentageCount1 = Number(
+                ((count1 / this.allReviews) * 100).toFixed(2)
+              );
+            }
           }
-
-          this.rating = Number((sum / this.allReviews).toFixed(1));
-
-          this.percentageCount5 = Number(
-            ((count5 / this.allReviews) * 100).toFixed(2)
-          );
-          this.percentageCount4 = Number(
-            ((count4 / this.allReviews) * 100).toFixed(2)
-          );
-          this.percentageCount3 = Number(
-            ((count3 / this.allReviews) * 100).toFixed(2)
-          );
-          this.percentageCount2 = Number(
-            ((count2 / this.allReviews) * 100).toFixed(2)
-          );
-          this.percentageCount1 = Number(
-            ((count1 / this.allReviews) * 100).toFixed(2)
-          );
         })
         .catch((error) => console.log(error));
     },
@@ -103,6 +114,15 @@ export default {
         .get("http://localhost:8080/reviews/exists", { headers })
         .then((response) => (this.reviewsUserBoolean = response.data))
         .catch((error) => console.log(error));
+    },
+    formattedDate(date) {
+      const inputDate = new Date(date);
+      const day = inputDate.getDate().toString().padStart(2, "0");
+      const month = (inputDate.getMonth() + 1).toString().padStart(2, "0");
+      const hours = inputDate.getHours().toString().padStart(2, "0");
+      const minutes = inputDate.getMinutes().toString().padStart(2, "0");
+      const formattedDate = `${day}.${month} ${hours}:${minutes}`;
+      return formattedDate;
     },
   },
   mounted() {
@@ -194,7 +214,7 @@ export default {
             ></star-rating-component>
           </div>
           <!-- todo: добавить вывод страницы -->
-          <div class="date">Июль 9, 2023</div>
+          <div class="date">{{ formattedDate(review.created_at) }}</div>
           <div class="evaluations-text">{{ review.text }}</div>
           <div class="reaction">
             <div class="like">
@@ -379,6 +399,7 @@ svg {
   color: #4f7396;
   font-weight: 400;
   font-size: 14px;
+  margin: 5px 0;
 }
 
 .evaluations-text {

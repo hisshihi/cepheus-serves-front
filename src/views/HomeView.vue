@@ -96,6 +96,7 @@ export default {
 </script>
 
 <style scoped>
+
 /* Настройка блока о нас */
 .about {
   display: flex;
@@ -125,6 +126,12 @@ h2 {
 
 .products {
   margin-bottom: 50px;
+}
+
+@media screen and (max-width: 1024px) {
+  .home {
+    padding: 0 20px;
+  }
 }
 
 </style>

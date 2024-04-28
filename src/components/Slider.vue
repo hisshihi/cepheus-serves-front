@@ -138,7 +138,7 @@ export default {
 
 <style scoped>
 img {
-  max-width: 1200px;
+  max-width: 900px;
   border-radius: 12px;
   cursor: grab;
 }
@@ -156,14 +156,19 @@ img {
   color: white;
   z-index: 1000;
   bottom: 100px;
-  left: 50px;
-  max-width: 1100px;
+  left: 170px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .text > h2 {
   font-size: 40px;
   font-weight: bold;
+  text-shadow: 0 0 7px black;
+}
+
+.text > p {
+  text-shadow: 0 0 7px black;
 }
 
 .swiper .swiper-slide {

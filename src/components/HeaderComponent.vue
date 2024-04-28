@@ -197,8 +197,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 10px;
-  padding-bottom: 6px;
+  padding: 10px 10px 6px 10px;
 }
 
 .navigation {
