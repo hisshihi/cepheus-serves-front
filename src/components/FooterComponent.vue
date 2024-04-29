@@ -23,6 +23,10 @@ export default {
   props: {
     hasScroll: Boolean
   },
+  mounted() {
+    
+  }
+
 };
 </script>
 
@@ -35,10 +39,11 @@ footer {
 
 .container-footer {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .fixed {
@@ -49,7 +54,7 @@ footer {
 }
 
 footer p {
-  margin-top: 30px;
+  /* margin-top: 30px; */
   margin-left: 5px;
   font-size: 19px;
   font-weight: 400;
@@ -65,6 +70,11 @@ footer p {
   display: flex;
   align-items: center;
   margin-right: 49px;
+  max-height: 30px;
+}
+
+.link > p {
+  margin-top: 0;
 }
 
 a {

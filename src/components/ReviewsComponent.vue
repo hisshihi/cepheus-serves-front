@@ -34,7 +34,7 @@ export default {
       axios
         .get("http://localhost:8080/reviews")
         .then((response) => {
-          console.log(response);
+          // console.log(response);
 
           if (response.data === "") {
             this.reviews = [];
@@ -141,7 +141,10 @@ export default {
         <div class="star-ratings">
           <star-rating-component :rating="rating"></star-rating-component>
         </div>
-        <template v-if="this.allReviews < 5">
+        <template v-if="this.allReviews === 1">
+          <p class="numbers">{{ this.allReviews }} отзыв</p>
+        </template>
+        <template v-else-if="this.allReviews < 5">
           <p class="numbers">{{ this.allReviews }} отзыва</p>
         </template>
         <template v-else>

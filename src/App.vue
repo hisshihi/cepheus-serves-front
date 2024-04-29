@@ -44,7 +44,7 @@ export default {
   },
   mounted() {
     this.getToken();
-    this.handleHeight()
+    this.handleHeight();
   },
   watch: {
     '$route.path': 'handleHeight'
@@ -61,8 +61,12 @@ export default {
 
 body {
   font-family: play;
+}
+
+*, ::after, ::before {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 main {
@@ -87,7 +91,13 @@ html {
   height: 100%;
 }
 
+h2 {
+  margin-bottom: 20px;
+}
 
+h1 {
+  margin-top: 20px;
+}
 
 .wrapper {
   box-sizing: border-box;
@@ -102,6 +112,7 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   flex-grow: 1;
+  padding: 0 10px;
   /* min-height: 773px; */
 }
 
@@ -170,5 +181,22 @@ form {
   font-weight: 500;
 }
 
+/* Кнопки для ссылок */
+.svg-container {
+  background-color: rgb(232, 237, 245);
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  transition: background-color 0.2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+  cursor: pointer;
+}
+
+.svg-container:hover {
+  background-color: rgba(13, 127, 242, 0.5);
+}
 
 </style>
