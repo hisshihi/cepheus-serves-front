@@ -71,6 +71,10 @@ label {
 
 /****** Style Star Rating Widget *****/
 
+.full {
+  cursor: pointer;
+}
+
 .rating {
   border: none;
   float: left;

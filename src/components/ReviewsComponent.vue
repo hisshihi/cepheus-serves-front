@@ -216,7 +216,7 @@ export default {
           <!-- todo: добавить вывод страницы -->
           <div class="date">{{ formattedDate(review.created_at) }}</div>
           <div class="evaluations-text">{{ review.text }}</div>
-          <div class="reaction">
+          <!-- <div class="reaction">
             <div class="like">
               <svg
                 width="18"
@@ -249,7 +249,7 @@ export default {
                 />
               </svg>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -414,6 +414,10 @@ svg {
 .like,
 .dislike {
   cursor: pointer;
+}
+
+.like::hover > svg {
+
 }
 
 .reaction {
