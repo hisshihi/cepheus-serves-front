@@ -11,6 +11,7 @@
         required
         placeholder="Введите ваше имя"
         autocomplete="firstname"
+        :oninput="onlyRussianInput"
       />
 
       <label for="">Фамилия</label>
@@ -22,6 +23,7 @@
         required
         placeholder="Введите вашу фамилию"
         autocomplete="lastname"
+        :oninput="onlyRussianInput"
       />
 
       <label for="">Электронная почта</label>
@@ -33,6 +35,7 @@
         required
         placeholder="Введите ваш email"
         autocomplete="email"
+        :oninput="onlyEmailInput"
       />
 
       <label for="">Номер телефона</label>
@@ -61,16 +64,33 @@
       <!-- Блок организации -->
       <div class="in-organization">
         <div class="checkbox-container">
-          <input type="checkbox" class="ui-checkbox" v-model="inOrganization">
+          <input type="checkbox" class="ui-checkbox" v-model="inOrganization" />
           <label for="">Организация</label>
         </div>
         <div class="organization" v-if="inOrganization">
           <label for="">Название организации</label>
-          <input type="text" placeholder="Введите название" required v-model="orgName">
+          <input
+            type="text"
+            placeholder="Введите название"
+            required
+            v-model="orgName"
+          />
           <label for="">Юридический адрес</label>
-          <input type="adderss" placeholder="Введите юридический адрес" v-model="orgAddress" required>
+          <input
+            type="adderss"
+            placeholder="Введите юридический адрес"
+            v-model="orgAddress"
+            required
+          />
           <label for="">ИНН</label>
-          <input-mask id="basic" mask="999999999999" type="text" placeholder="Введите ИНН" v-model="orgINN" required />
+          <input-mask
+            id="basic"
+            mask="999999999999"
+            type="text"
+            placeholder="Введите ИНН"
+            v-model="orgINN"
+            required
+          />
         </div>
       </div>
 
@@ -84,8 +104,8 @@
         required
         autocomplete="password"
         promptLabel="Пароль не должен быть меньше 8 символов"
-        weakLabel="Слабый" 
-        mediumLabel="Средний" 
+        weakLabel="Слабый"
+        mediumLabel="Средний"
         strongLabel="Сильный"
         toggleMask
       />
@@ -98,7 +118,9 @@
         id=""
         placeholder="Повторите ранее указанный пароль"
         promptLabel="Пароль не должен быть меньше 8 символов"
-        required
+        weakLabel="Слабый"
+        mediumLabel="Средний"
+        strongLabel="Сильный"
         toggleMask
       />
 
@@ -124,13 +146,13 @@
 import axios from "axios";
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import InputMask from "primevue/inputmask";
-import Password from "primevue/password"
+import Password from "primevue/password";
 
 export default {
   components: {
     ButtonComponent,
     InputMask,
-    Password
+    Password,
   },
 
   data() {
@@ -209,6 +231,20 @@ export default {
         }
       }
     },
+    onlyRussianInput(event) {
+      const input = event.target.value;
+      const russianRegex = /^[\u0400-\u04FF]*$/;
+      if (!russianRegex.test(input)) {
+        event.target.value = input.replace(/[^\u0400-\u04FF]/g, "");
+      }
+    },
+    onlyEmailInput(event) {
+      const input = event.target.value;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(input)) {
+        event.target.value = input.replace(/[^a-zA-Z0-9._%+-@]/g, "");
+      }
+    },
   },
 };
 </script>
@@ -246,7 +282,7 @@ input {
   height: 20px;
 }
 
-.p-inputtext{
+.p-inputtext {
   width: 100%;
 }
 
@@ -268,9 +304,9 @@ input {
   padding: 10px;
 }
 
-.ui-checkbox, 
-.ui-checkbox *, 
-.ui-checkbox *::before, 
+.ui-checkbox,
+.ui-checkbox *,
+.ui-checkbox *::before,
 .ui-checkbox *::after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -284,7 +320,8 @@ input {
   height: var(--checkbox-diameter);
   border-radius: var(--checkbox-border-radius);
   background: var(--secondary-color);
-  border: var(--checkbox-border-width) var(--checkbox-border-style) var(--checkbox-border-color);
+  border: var(--checkbox-border-width) var(--checkbox-border-style)
+    var(--checkbox-border-color);
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -299,7 +336,8 @@ input {
   left: 0;
   right: 0;
   bottom: 0;
-  -webkit-box-shadow: 0 0 0 calc(var(--checkbox-diameter) / 2.5) var(--primary-color);
+  -webkit-box-shadow: 0 0 0 calc(var(--checkbox-diameter) / 2.5)
+    var(--primary-color);
   box-shadow: 0 0 0 calc(var(--checkbox-diameter) / 2.5) var(--primary-color);
   border-radius: inherit;
   opacity: 0;
@@ -321,9 +359,10 @@ input {
   -ms-transform: translate(-50%, -50%) rotate(45deg) scale(0);
   transform: translate(-50%, -50%) rotate(45deg) scale(0);
   opacity: 0;
-  -webkit-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6),opacity 0.1s;
-  -o-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6),opacity 0.1s;
-  transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6),opacity 0.1s;
+  -webkit-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6),
+    opacity 0.1s;
+  -o-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+  transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
 }
 
 /* actions */
@@ -339,8 +378,10 @@ input {
 
 .ui-checkbox:checked::before {
   opacity: 1;
-  -webkit-transform: translate(-50%, -50%) rotate(45deg) scale(var(--checkmark-size));
-  -ms-transform: translate(-50%, -50%) rotate(45deg) scale(var(--checkmark-size));
+  -webkit-transform: translate(-50%, -50%) rotate(45deg)
+    scale(var(--checkmark-size));
+  -ms-transform: translate(-50%, -50%) rotate(45deg)
+    scale(var(--checkmark-size));
   transform: translate(-50%, -50%) rotate(45deg) scale(var(--checkmark-size));
   -webkit-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
   -o-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
@@ -375,5 +416,4 @@ input {
 .organization {
   margin-bottom: 20px;
 }
-
 </style>
