@@ -65,7 +65,7 @@
       <div class="in-organization">
         <div class="checkbox-container">
           <input type="checkbox" class="ui-checkbox" v-model="inOrganization" />
-          <label for="">Организация</label>
+          <label for="">Представитель организации</label>
         </div>
         <div class="organization" v-if="inOrganization">
           <label for="">Название организации</label>

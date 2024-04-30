@@ -117,6 +117,263 @@
             </div>
           </div>
         </div>
+        <div class="title-contact" v-if="inOrganization">Организация</div>
+        <div class="contact-info" v-if="inOrganization">
+          <div class="contant-container">
+            <div class="contact-container-data">
+              <div class="contact-img">
+                <div class="svg-container">
+                  <svg
+                    fill="#000000"
+                    width="800px"
+                    height="800px"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.25 12a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6.5 9.25a.75.75 0 01.75-.75h.5a.75.75 0 010 1.5h-.5a.75.75 0 01-.75-.75zM7.25 5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.75a.75.75 0 01.75-.75h.5a.75.75 0 010 1.5h-.5a.75.75 0 01-.75-.75zm.75-4.25a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 5.75a.75.75 0 01.75-.75h.5a.75.75 0 010 1.5h-.5a.75.75 0 01-.75-.75zM14.25 12a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm-.75-2.75a.75.75 0 01.75-.75h.5a.75.75 0 010 1.5h-.5a.75.75 0 01-.75-.75zM14.25 5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 20a2 2 0 002 2h3.75a.75.75 0 00.75-.75V19h3v2.25c0 .414.336.75.75.75H17c.092 0 .183-.006.272-.018a.758.758 0 00.166.018H21.5a2 2 0 002-2v-7.625a2 2 0 00-.8-1.6l-1-.75a.75.75 0 10-.9 1.2l1 .75a.5.5 0 01.2.4V20a.5.5 0 01-.5.5h-2.563c.041-.16.063-.327.063-.5V3a2 2 0 00-2-2H5a2 2 0 00-2 2v17zm2 .5a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5h12a.5.5 0 01.5.5v17a.5.5 0 01-.5.5h-3v-2.25a.75.75 0 00-.75-.75h-4.5a.75.75 0 00-.75.75v2.25H5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="contact-label">Название орагнизации</div>
+                <div class="contact">{{ orgName }}</div>
+              </div>
+            </div>
+            <div class="contact-button">
+              <button-component :name="'Редактировать'"></button-component>
+            </div>
+          </div>
+          <div class="contant-container">
+            <div class="contact-container-data">
+              <div class="contact-img">
+                <div class="svg-container">
+                  <svg
+                    width="800px"
+                    height="800px"
+                    viewBox="0 0 8.4666669 8.4666669"
+                    id="svg8"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:cc="http://creativecommons.org/ns#"
+                    xmlns:dc="http://purl.org/dc/elements/1.1/"
+                    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                    xmlns:svg="http://www.w3.org/2000/svg"
+                  >
+                    <defs id="defs2" />
+                    <g id="layer1" transform="translate(0,-288.53332)">
+                      <path
+                        d="m 4.2324219,288.79688 c -1.6042437,0 -2.9101556,1.30591 -2.9101563,2.91015 -10e-7,2.82277 2.7460938,4.96875 2.7460938,4.96875 a 0.26460978,0.26460978 0 0 0 0.3300781,0 c 0,0 2.7460996,-2.14598 2.7460937,-4.96875 -3.4e-6,-1.60424 -1.3078657,-2.91015 -2.9121093,-2.91015 z m 0,0.52929 c 1.3182605,0 2.3828097,1.0626 2.3828125,2.38086 4.8e-6,2.30926 -2.0910618,4.13374 -2.3808594,4.38086 -0.2884142,-0.24588 -2.3828134,-2.0707 -2.3828125,-4.38086 5e-7,-1.31826 1.0625988,-2.38086 2.3808594,-2.38086 z"
+                        id="path929"
+                        style="
+                          color: #000000;
+                          font-style: normal;
+                          font-variant: normal;
+                          font-weight: normal;
+                          font-stretch: normal;
+                          font-size: medium;
+                          line-height: normal;
+                          font-family: sans-serif;
+                          font-variant-ligatures: normal;
+                          font-variant-position: normal;
+                          font-variant-caps: normal;
+                          font-variant-numeric: normal;
+                          font-variant-alternates: normal;
+                          font-feature-settings: normal;
+                          text-indent: 0;
+                          text-align: start;
+                          text-decoration: none;
+                          text-decoration-line: none;
+                          text-decoration-style: solid;
+                          text-decoration-color: #000000;
+                          letter-spacing: normal;
+                          word-spacing: normal;
+                          text-transform: none;
+                          writing-mode: lr-tb;
+                          direction: ltr;
+                          text-orientation: mixed;
+                          dominant-baseline: auto;
+                          baseline-shift: baseline;
+                          text-anchor: start;
+                          white-space: normal;
+                          shape-padding: 0;
+                          clip-rule: nonzero;
+                          display: inline;
+                          overflow: visible;
+                          visibility: visible;
+                          opacity: 1;
+                          isolation: auto;
+                          mix-blend-mode: normal;
+                          color-interpolation: sRGB;
+                          color-interpolation-filters: linearRGB;
+                          solid-color: #000000;
+                          solid-opacity: 1;
+                          vector-effect: none;
+                          fill: #000000;
+                          fill-opacity: 1;
+                          fill-rule: nonzero;
+                          stroke: none;
+                          stroke-width: 0.52916664;
+                          stroke-linecap: round;
+                          stroke-linejoin: round;
+                          stroke-miterlimit: 4;
+                          stroke-dasharray: none;
+                          stroke-dashoffset: 0;
+                          stroke-opacity: 1;
+                          paint-order: stroke fill markers;
+                          color-rendering: auto;
+                          image-rendering: auto;
+                          shape-rendering: auto;
+                          text-rendering: auto;
+                          enable-background: accumulate;
+                        "
+                      />
+                      <path
+                        d="m 4.2324219,290.38477 c -0.7274912,0 -1.3222633,0.59477 -1.3222657,1.32226 -4.5e-6,0.7275 0.5947697,1.32422 1.3222657,1.32422 0.727496,0 1.3242233,-0.59672 1.3242187,-1.32422 -2.3e-6,-0.72749 -0.5967275,-1.32226 -1.3242187,-1.32226 z m 0,0.52929 c 0.4415089,0 0.7949204,0.35146 0.7949219,0.79297 2.7e-6,0.44151 -0.35341,0.79492 -0.7949219,0.79492 -0.441512,0 -0.7929715,-0.35341 -0.7929688,-0.79492 1.4e-6,-0.44151 0.3514598,-0.79297 0.7929688,-0.79297 z"
+                        id="circle931"
+                        style="
+                          color: #000000;
+                          font-style: normal;
+                          font-variant: normal;
+                          font-weight: normal;
+                          font-stretch: normal;
+                          font-size: medium;
+                          line-height: normal;
+                          font-family: sans-serif;
+                          font-variant-ligatures: normal;
+                          font-variant-position: normal;
+                          font-variant-caps: normal;
+                          font-variant-numeric: normal;
+                          font-variant-alternates: normal;
+                          font-feature-settings: normal;
+                          text-indent: 0;
+                          text-align: start;
+                          text-decoration: none;
+                          text-decoration-line: none;
+                          text-decoration-style: solid;
+                          text-decoration-color: #000000;
+                          letter-spacing: normal;
+                          word-spacing: normal;
+                          text-transform: none;
+                          writing-mode: lr-tb;
+                          direction: ltr;
+                          text-orientation: mixed;
+                          dominant-baseline: auto;
+                          baseline-shift: baseline;
+                          text-anchor: start;
+                          white-space: normal;
+                          shape-padding: 0;
+                          clip-rule: nonzero;
+                          display: inline;
+                          overflow: visible;
+                          visibility: visible;
+                          opacity: 1;
+                          isolation: auto;
+                          mix-blend-mode: normal;
+                          color-interpolation: sRGB;
+                          color-interpolation-filters: linearRGB;
+                          solid-color: #000000;
+                          solid-opacity: 1;
+                          vector-effect: none;
+                          fill: #000000;
+                          fill-opacity: 1;
+                          fill-rule: nonzero;
+                          stroke: none;
+                          stroke-width: 0.52916664;
+                          stroke-linecap: round;
+                          stroke-linejoin: round;
+                          stroke-miterlimit: 4;
+                          stroke-dasharray: none;
+                          stroke-dashoffset: 0;
+                          stroke-opacity: 1;
+                          paint-order: stroke fill markers;
+                          color-rendering: auto;
+                          image-rendering: auto;
+                          shape-rendering: auto;
+                          text-rendering: auto;
+                          enable-background: accumulate;
+                        "
+                      />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="contact-label">Адрес организации</div>
+                <div class="contact">{{ orgAddress }}</div>
+              </div>
+            </div>
+            <div class="contact-button">
+              <button-component :name="'Редактировать'"></button-component>
+            </div>
+          </div>
+          <div class="contant-container">
+            <div class="contact-container-data">
+              <div class="contact-img">
+                <div class="svg-container">
+                  <svg
+                    width="800px"
+                    height="800px"
+                    viewBox="0 -0.5 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M3.5 7V17C3.5 18.1046 4.39543 19 5.5 19H19.5C20.6046 19 21.5 18.1046 21.5 17V7C21.5 5.89543 20.6046 5 19.5 5H5.5C4.39543 5 3.5 5.89543 3.5 7Z"
+                      stroke="#000000"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M15.5 10H18.5"
+                      stroke="#000000"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M15.5 13H18.5"
+                      stroke="#000000"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M11.5 10C11.5 11.1046 10.6046 12 9.5 12C8.39543 12 7.5 11.1046 7.5 10C7.5 8.89543 8.39543 8 9.5 8C10.0304 8 10.5391 8.21071 10.9142 8.58579C11.2893 8.96086 11.5 9.46957 11.5 10Z"
+                      stroke="#000000"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M5.5 16C8.283 12.863 11.552 13.849 13.5 16"
+                      stroke="#000000"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="contact-label">ИНН организации</div>
+                <div class="contact">{{ orgINN }}</div>
+              </div>
+            </div>
+            <div class="contact-button">
+              <button-component :name="'Редактировать'"></button-component>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -141,6 +398,10 @@ export default {
       phone: "",
       address: "",
       dropdownVisible: false,
+      orgAddress: "",
+      orgINN: 0,
+      orgName: "",
+      inOrganization: false,
     };
   },
 
@@ -158,11 +419,16 @@ export default {
         .post("http://localhost:8080/users/" + token, {}, { headers })
         .then((response) => {
           const user = response.data;
+          console.log(user);
           this.firstname = user.firstname;
           this.lastname = user.lastname;
           this.email = user.email;
           this.phone = user.phone;
           this.address = user.address;
+          this.orgName = user.orgName;
+          this.orgAddress = user.orgAddress;
+          this.orgINN = user.orgINN;
+          this.inOrganization = user.inOrganization;
         })
         .catch((error) => console.log(error));
     },
@@ -176,6 +442,7 @@ export default {
 <style scoped>
 .user-container {
   display: flex;
+  margin-bottom: 40px;
 }
 
 /* Стили пользователя */
