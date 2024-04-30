@@ -280,6 +280,7 @@ input {
   right: 0;
   width: 20px;
   height: 20px;
+  margin-right: 20px;
 }
 
 .p-inputtext {

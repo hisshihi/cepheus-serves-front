@@ -21,7 +21,11 @@
           </div>
           <div class="title-and-subtitle">
             <div class="title">{{ card.title }}</div>
-            <div class="subtitle">{{ card.text }}</div>
+            <!-- <div class="subtitle">{{ card.text }}</div> -->
+            <button-component
+              :name="'Подробнее'"
+              :class="'buttonMiniDefaultGray'"
+            ></button-component>
           </div>
         </div>
 
@@ -212,6 +216,10 @@ export default {
   font-weight: 300;
   line-height: 20px;
   margin-bottom: 8px;
+}
+
+.subtitle {
+  display: none;
 }
 
 .id {

@@ -1,8 +1,17 @@
 <template>
   <div class="margin-button">
-    <button-component :name="'Добавить'"></button-component>
+    <button-component
+      :name="'Добавить товар'"
+      @click="showAddProduct = !showAddProduct"
+    ></button-component>
   </div>
-  <!-- <div class="add-product">
+  <div class="margin-button">
+    <button-component
+      :name="'Добавить категорию'"
+      @click="showAddCategory = !showAddCategory"
+    ></button-component>
+  </div>
+  <div class="add-product" v-if="showAddProduct">
     <form action="" method="post">
       <label for="">Название</label>
       <input
@@ -44,25 +53,97 @@
         @change="previewFile"
       />
       <label for="">Изображение</label>
-      <select name="" id="" v-for="category in categories" :key="category" v-model="getCategory">
-        <option value="" disabled >Категории</option>
-        <option :value="category.id">{{ category.title }}</option>
+      <select name="" id="" v-model="getCategory">
+        <option value="" disabled>Категории</option>
+        <option
+          v-for="category in categories"
+          :key="category"
+          :value="category.id"
+        >
+          {{ category.title }}
+        </option>
       </select>
     </form>
-    <button-component :name="'Создать'" @click.prevent="sendData"></button-component>
-  </div> -->
-  <div v-if="previewLoading">
-    <load-data-component/>
+    <button-component
+      :name="'Создать'"
+      @click.prevent="sendData"
+    ></button-component>
   </div>
-<!--  <cards-component-->
-<!--      :url="url"-->
-<!--      :totalElements="totalElements"-->
-<!--      :cards="products"-->
-<!--  ></cards-component>-->
-  <table-component :url="url"
-                  :totalElements="totalElements"
-                  :cards="products"
-                   style="margin-bottom: 434px;"
+
+  <div class="add-product" v-if="showAddCategory">
+    <form action="" method="post">
+      <label for="">Категория</label>
+      <input
+        v-model="inputCategory"
+        type="text"
+        name=""
+        id=""
+        autocomplete="title"
+        autofocus
+        required
+      />
+    </form>
+    <button-component
+      :name="'Создать'"
+      @click.prevent="sendCategory"
+    ></button-component>
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Обновить</th>
+            <th>Удалить</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="category in categories" :key="category.id">
+            <td>{{ category.id }}</td>
+            <td>{{ category.title }}</td>
+            <td class="button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 -960 960 960"
+                width="24"
+              >
+                <path
+                  d="M480-120q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-480q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-840q82 0 155.5 35T760-706v-94h80v240H600v-80h110q-41-56-101-88t-129-32q-117 0-198.5 81.5T200-480q0 117 81.5 198.5T480-200q105 0 183.5-68T756-440h82q-15 137-117.5 228.5T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z"
+                />
+              </svg>
+            </td>
+            <td class="button" @click="deleteCard(card.id)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 -960 960 960"
+                width="24"
+              >
+                <path
+                  d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                />
+              </svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div v-if="previewLoading">
+    <load-data-component />
+  </div>
+  <!--  <cards-component-->
+  <!--      :url="url"-->
+  <!--      :totalElements="totalElements"-->
+  <!--      :cards="products"-->
+  <!--  ></cards-component>-->
+  <table-component
+    :url="url"
+    :totalElements="totalElements"
+    :cards="products"
+    style="margin-bottom: 434px"
   ></table-component>
 </template>
 
@@ -71,14 +152,14 @@ import axios from "axios";
 import CardsComponent from "@/components/CardsComponent.vue";
 import LoadDataComponent from "@/components/LoadDataComponent.vue";
 import TableComponent from "@/components/TableComponent.vue";
-import ButtonComponent from '@/components/ButtonComponent'
+import ButtonComponent from "@/components/ButtonComponent";
 
 export default {
   components: {
     CardsComponent,
     LoadDataComponent,
     TableComponent,
-    ButtonComponent
+    ButtonComponent,
   },
   data() {
     return {
@@ -93,6 +174,9 @@ export default {
       categories: [],
       getCategory: "",
       file: {},
+      showAddProduct: false,
+      showAddCategory: false,
+      inputCategory: "",
     };
   },
   mounted() {
@@ -102,20 +186,20 @@ export default {
   methods: {
     addProducts() {
       axios
-          .get(`http://localhost:8080/${this.url}?size=6&page=0`)
-          .then((response) => {
-            this.previewLoading = false;
-            const data = response.data;
-            this.totalElements = data.totalElements;
-            this.products = data.content;
-          })
-          .catch((error) => console.log(error));
+        .get(`http://localhost:8080/${this.url}?size=6&page=0`)
+        .then((response) => {
+          this.previewLoading = false;
+          const data = response.data;
+          this.totalElements = data.totalElements;
+          this.products = data.content;
+        })
+        .catch((error) => console.log(error));
     },
     previewFile(event) {
       this.file = event.target.files[0];
     },
     previewSelect(event) {
-      this.category = event.target.value
+      this.category = event.target.value;
     },
     addCategory() {
       const token = localStorage.getItem("token");
@@ -132,24 +216,47 @@ export default {
     sendData() {
       console.log(this.file);
       const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("text", this.text);
+      formData.append("price", this.price);
+      formData.append("id", this.getCategory);
+      formData.append("image", this.file);
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      };
+
+      axios
+        .post("http://localhost:8080/products", formData, { headers })
+        .then((response) => {
+          const newCard = response.data;
+          this.products.push(newCard);
+          this.categories = response.data;
+          this.showAddProduct = false;
+        })
+        .catch((error) => console.log(error));
+    },
+    sendCategory() {
+      const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post("http://localhost:8080/products", {
-          title: this.title,
-          text: this.text,
-          price: this.price,
-          id: this.getCategory,
-          image: this.file
-        }, { headers })
+        .post(
+          "http://localhost:8080/category",
+          { title: this.inputCategory },
+          { headers }
+        )
         .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => console.log(error));
-    }
+          const newCategories = response.data;
+          this.categories.push(newCategories);
+        }).catch(error => {
+          console.log(error);
+        });
+    },
   },
-
 };
 </script>
 
@@ -175,5 +282,4 @@ select:focus {
   outline: none;
   color: #6583a2;
 }
-
 </style>

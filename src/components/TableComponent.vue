@@ -85,6 +85,22 @@ export default {
         return true;
       }
     },
+    deleteCard(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .delete("http://localhost:8080/products/" + id, { headers })
+        .then((response) => {
+          const index = this.cards.findIndex((card) => card.id === id);
+          if (index !== -1) {
+            this.cards.splice(index, 1);
+          }
+          console.log("delete");
+        })
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>
@@ -97,6 +113,7 @@ export default {
         <th>Название</th>
         <th>Категория</th>
         <th>Цена</th>
+        <th>Кол-во продаж</th>
         <th>Подробнее</th>
         <th>Обновить</th>
         <th>Удалить</th>
@@ -108,6 +125,7 @@ export default {
         <td>{{ card.title }}</td>
         <td>{{ card.categoryDto.title }}</td>
         <td>{{ card.price }} ₽</td>
+        <td>{{ card.count }}</td>
         <td class="button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +150,7 @@ export default {
             />
           </svg>
         </td>
-        <td class="button">
+        <td class="button" @click="deleteCard(card.id)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"
@@ -149,7 +167,7 @@ export default {
   </table>
 </template>
 
-<style scoped>
+<style>
 .table {
   width: 100%;
   border: none;
