@@ -97,6 +97,25 @@ const routes = [
     },
   },
   {
+    path: "/admin/slider",
+    name: "adminSlider",
+    component: () =>
+      import(
+        /* webpackChunkName: "adminProducts" */ "../views/SliderAdminView.vue"
+      ),
+    meta: {
+      requiresAuth: true,
+    },
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      const tokenDecoder = jwtDecode(token);
+      const role = tokenDecoder.role;
+      if (role != "[ADMIN]") {
+        next({ path: "/" });
+      } else next();
+    },
+  },
+  {
     path: "/user",
     name: "user",
     component: () =>

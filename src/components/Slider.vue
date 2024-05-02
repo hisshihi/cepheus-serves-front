@@ -4,6 +4,7 @@ import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
+import axios from "axios";
 
 // Import Swiper styles
 import "swiper/css";
@@ -32,6 +33,25 @@ export default {
       modules: [Navigation, Pagination, Scrollbar, A11y],
     };
   },
+  data() {
+    return {
+      sliderData: [],
+    };
+  },
+  methods: {
+    responseData() {
+      axios
+        .get("http://localhost:8080/slider")
+        .then((response) => {
+          const data = response.data;
+          this.sliderData = data;
+        })
+        .catch((error) => console.log(error));
+    },
+  },
+  mounted() {
+    this.responseData();
+  },
 };
 </script>
 
@@ -47,14 +67,20 @@ export default {
     @slideChange="onSlideChange"
     :loop="true"
   >
-    <swiper-slide class="swiper-slide">
-      <img src="../assets/text.jpg" />
+    <swiper-slide
+      class="swiper-slide"
+      v-for="item in sliderData"
+      :key="item.id"
+    >
+      <img
+        class="img"
+        :src="'data:image/png;base64,' + item?.bytes"
+        :alt="item?.name"
+      />
       <div class="text">
-        <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>
-          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
-          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
-          Type-C
+        <h2>{{ item.title }}</h2>
+        <p class="description">
+          {{ item.text }}
         </p>
         <button-component
           name="Подробнее"
@@ -63,74 +89,6 @@ export default {
         />
       </div>
 
-      <div></div>
-    </swiper-slide>
-    <swiper-slide class="swiper-slide">
-      <img src="../assets/text.jpg" />
-      <div class="text">
-        <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>
-          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
-          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
-          Type-C
-        </p>
-        <button-component
-          name="Подробнее"
-          type="button"
-          class="buttonMiniDefault"
-        />
-      </div>
-      <div></div>
-    </swiper-slide>
-    <swiper-slide class="swiper-slide">
-      <img src="../assets/text.jpg" />
-      <div class="text">
-        <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>
-          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
-          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
-          Type-C
-        </p>
-        <button-component
-          name="Подробнее"
-          type="button"
-          class="buttonMiniDefault"
-        />
-      </div>
-      <div></div>
-    </swiper-slide>
-    <swiper-slide class="swiper-slide">
-      <img src="../assets/text.jpg" />
-      <div class="text">
-        <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>
-          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
-          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
-          Type-C
-        </p>
-        <button-component
-          name="Подробнее"
-          type="button"
-          class="buttonMiniDefault"
-        />
-      </div>
-      <div></div>
-    </swiper-slide>
-    <swiper-slide class="swiper-slide">
-      <img src="../assets/text.jpg" />
-      <div class="text">
-        <h2>Материнская плата ASUS Prime Z590-P ATX</h2>
-        <p>
-          Материнская плата Intel Z590 (LGA 1200) ATX с PCIe 4.0, тремя слотами
-          M.2, 8 каскадами питания, HDMI, DisplayPort, USB 3.2 Gen 2 Type-A и
-          Type-C
-        </p>
-        <button-component
-          name="Подробнее"
-          type="button"
-          class="buttonMiniDefault"
-        />
-      </div>
       <div></div>
     </swiper-slide>
   </swiper>
@@ -139,6 +97,7 @@ export default {
 <style scoped>
 img {
   max-width: 900px;
+  max-height: 600px;
   border-radius: 12px;
   cursor: grab;
 }
@@ -167,8 +126,14 @@ img {
   text-shadow: 0 0 7px black;
 }
 
-.text > p {
+.description {
   text-shadow: 0 0 7px black;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  padding: 1px
 }
 
 .swiper .swiper-slide {

@@ -41,8 +41,15 @@
             <router-link to="/admin/products" class="li">
               <li class="li"><a class="link" href="#">Товары</a></li>
             </router-link>
-            <li class="li"><a class="link" href="#">Заказы</a></li>
-            <li class="li"><a class="link" href="#">Статистика</a></li>
+            <router-link to="/admin/products" class="li">
+              <li class="li"><a class="link" href="#">Заказы</a></li>
+            </router-link>
+            <router-link to="/admin/products" class="li">
+              <li class="li"><a class="link" href="#">Статистика</a></li>
+            </router-link>
+            <router-link to="/admin/slider" class="li">
+              <li class="li"><a class="link" href="#">Слайдер</a></li>
+            </router-link>
           </div>
 
           <li class="li">

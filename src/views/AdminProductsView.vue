@@ -24,7 +24,7 @@
         required
       />
       <label for="">Описание</label>
-      <input
+      <textarea
         v-model="text"
         type="text"
         name=""
@@ -32,7 +32,8 @@
         autocomplete="text"
         autofocus
         required
-      />
+        cols="1180"
+      ></textarea>
       <label for="">Цена</label>
       <input
         v-model="price"
@@ -52,7 +53,7 @@
         required
         @change="previewFile"
       />
-      <label for="">Изображение</label>
+      <label for="">Категория</label>
       <select name="" id="" v-model="getCategory">
         <option value="" disabled>Категории</option>
         <option

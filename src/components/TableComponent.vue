@@ -97,7 +97,6 @@ export default {
           if (index !== -1) {
             this.cards.splice(index, 1);
           }
-          console.log("delete");
         })
         .catch((error) => console.log(error));
     },
