@@ -17,6 +17,14 @@ export default {
       currentPage: 0, // Текущая страница
       loading: false, // Индикатор загрузки
       newCards: [],
+      show: false,
+      id: null,
+      card: [],
+      title: "",
+      text: "",
+      price: 0,
+      file: null,
+      getCategory: ""
     };
   },
   props: {
@@ -44,6 +52,7 @@ export default {
 
           // Присваиваем данные массиву newCards
           this.newCards = data.content;
+          console.log(this.newCards);
 
           // Получаем общее кол-во страниц
           this.totalPages = data.totalPages;
@@ -100,6 +109,73 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    showModal(id) {
+      this.show = true;
+      this.id = id;
+      console.log(this.id);
+      axios
+        .get("http://localhost:8080/products/" + this.id)
+        .then((response) => {
+          const data = response.data;
+          this.card = data;
+          this.title = this.card.title
+          this.text = this.card.text
+          this.price = this.card.price
+          this.file = this.card.imageProductDto
+          console.log(this.file);
+          this.image = this.card.imageProductDto
+
+        })
+        .catch((error) => console.log(error));
+    },
+    closeModal() {
+      this.show = false;
+    },
+    addCategory() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/category", { headers })
+        .then((response) => {
+          this.categories = response.data;
+        })
+        .catch((error) => console.log(error));
+    },
+    previewFile(event) {
+      this.file = event.target.files[0];
+    },
+    putData() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      };
+      const formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("text", this.text);
+      formData.append("price", this.price);
+      formData.append("id", this.getCategory);
+      formData.append("image", this.file);
+      axios
+        .patch("http://localhost:8080/products/" + this.id, formData, {
+          headers,
+        })
+        .then((response) => {
+          console.log(response);
+          this.title = "";
+          this.id = null;
+          this.text = "";
+          this.price = 0;
+          this.categoryDto = "";
+          this.file = null;
+        })
+        .catch((error) => console.log(error));
+    },
+  },
+  mounted() {
+    this.addCategory();
   },
 };
 </script>
@@ -137,7 +213,7 @@ export default {
             />
           </svg>
         </td>
-        <td class="button">
+        <td class="button" @click="showModal(card.id)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"
@@ -149,6 +225,70 @@ export default {
             />
           </svg>
         </td>
+
+        <div :style="style" class="modal-mask" v-if="show">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              <div class="modal-header">
+                <h2>Смена данных товара</h2>
+                <button @click="closeModal" class="modal-close-button">
+                  &times;
+                </button>
+              </div>
+              <form @submit.prevent="putData">
+                <label for="">Название</label>
+                <input
+                  v-model="title"
+                  type="text"
+                  name=""
+                  id=""
+                  autocomplete="title"
+                  autofocus
+                />
+                <label for="">Описание</label>
+                <textarea
+                  v-model="text"
+                  type="text"
+                  name=""
+                  id=""
+                  autocomplete="text"
+                  autofocus
+                  cols="1180"
+                ></textarea>
+                <label for="">Цена</label>
+                <input
+                  v-model="price"
+                  type="number"
+                  name=""
+                  id=""
+                  autocomplete="price"
+                  autofocus
+                />
+                <label for="">Изображение</label>
+                <input
+                  type="file"
+                  name=""
+                  id=""
+                  autofocus
+                  @change="previewFile"
+                />
+                <label for="">Категория</label>
+                <select name="" id="" v-model="getCategory">
+                  <option value="" disabled selected>Категории</option>
+                  <option
+                    v-for="category in categories"
+                    :key="category"
+                    :value="category.id"
+                  >
+                    {{ category.title }}
+                  </option>
+                </select>
+                <button-component :name="'Создать'"></button-component>
+              </form>
+            </div>
+          </div>
+        </div>
+
         <td class="button" @click="deleteCard(card.id)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -229,5 +369,61 @@ export default {
 .button {
   text-align: center !important;
   cursor: pointer;
+}
+
+/* Модальное окно */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-wrapper {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
 }
 </style>

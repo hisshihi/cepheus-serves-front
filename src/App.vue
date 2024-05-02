@@ -293,4 +293,23 @@ input[type="file"]::-webkit-file-upload-button {
   margin-bottom: 10px;
 }
 
+/* Выпадающий список */
+select {
+  margin: 10px 0 20px 0;
+}
+
+select {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px #6583a2 solid;
+  padding: 20px 10px;
+}
+
+select:focus {
+  border-color: #6583a2;
+  outline: none;
+  color: #6583a2;
+}
+
 </style>

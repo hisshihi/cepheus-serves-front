@@ -12,7 +12,7 @@
     ></button-component>
   </div>
   <div class="add-product" v-if="showAddProduct">
-    <form action="" method="post">
+    <form @submit.prevent="sendData">
       <label for="">Название</label>
       <input
         v-model="title"
@@ -64,12 +64,12 @@
           {{ category.title }}
         </option>
       </select>
+      <button-component :name="'Создать'"></button-component>
     </form>
-    <button-component
-      :name="'Создать'"
-      @click.prevent="sendData"
-    ></button-component>
+    
   </div>
+
+  
 
   <div class="add-product" v-if="showAddCategory">
     <form action="" method="post">
@@ -146,6 +146,9 @@
     :cards="products"
     style="margin-bottom: 434px"
   ></table-component>
+
+  
+
 </template>
 
 <script>
@@ -155,12 +158,14 @@ import LoadDataComponent from "@/components/LoadDataComponent.vue";
 import TableComponent from "@/components/TableComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent";
 
+
 export default {
   components: {
     CardsComponent,
     LoadDataComponent,
     TableComponent,
     ButtonComponent,
+    
   },
   data() {
     return {
@@ -193,6 +198,7 @@ export default {
           const data = response.data;
           this.totalElements = data.totalElements;
           this.products = data.content;
+          console.log(this.products);
         })
         .catch((error) => console.log(error));
     },
@@ -236,6 +242,10 @@ export default {
           this.products.push(newCard);
           this.categories = response.data;
           this.showAddProduct = false;
+          this.title = "";
+          this.text = "";
+          this.price = "";
+          this.getCategory = "";
         })
         .catch((error) => console.log(error));
     },
@@ -257,6 +267,7 @@ export default {
           console.log(error);
         });
     },
+    
   },
 };
 </script>
