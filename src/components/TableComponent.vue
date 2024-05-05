@@ -156,8 +156,9 @@ export default {
       formData.append("title", this.title);
       formData.append("text", this.text);
       formData.append("price", this.price);
-      formData.append("id", this.getCategory);
+      formData.append("category_id", this.getCategory);
       formData.append("image", this.file);
+      console.log(this.getCategory)
       axios
         .patch("http://localhost:8080/products/" + this.id, formData, {
           headers,
@@ -165,11 +166,11 @@ export default {
         .then((response) => {
           console.log(response);
           this.title = "";
-          this.id = null;
           this.text = "";
           this.price = 0;
           this.categoryDto = "";
           this.file = null;
+          this.show = false
         })
         .catch((error) => console.log(error));
     },

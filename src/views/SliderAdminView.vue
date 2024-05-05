@@ -13,7 +13,7 @@
     <label for="">Ссылка на товар</label>
     <input type="text" v-model="link" required />
     <label for="">Изображение</label>
-    <input type="file" @change="previewFile" required> 
+    <input type="file" @change="previewFile" required />
 
     <button-component :name="'Создать'"></button-component>
   </form>
@@ -45,7 +45,7 @@
         <td>{{ item?.title }}</td>
         <td>{{ item?.text }}</td>
         <td><a :href="item?.link">Product</a></td>
-        <td class="button">
+        <td class="button" @click="showModal(item.id)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"
@@ -72,6 +72,49 @@
       </tr>
     </tbody>
   </table>
+
+  <div :style="style" class="modal-mask" v-if="show">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2>Смена данных слайдера</h2>
+          <button @click="closeModal" class="modal-close-button">
+            &times;
+          </button>
+        </div>
+        <form @submit.prevent="putData">
+          <label for="">Название</label>
+          <input
+            v-model="modalTitle"
+            type="text"
+            name=""
+            id=""
+            autofocus
+          />
+          <label for="">Описание</label>
+          <textarea
+            v-model="modalText"
+            type="text"
+            name=""
+            id=""
+            autofocus
+            cols="1180"
+          ></textarea>
+          <label for="">Ссылка</label>
+          <input
+            v-model="modalLink"
+            type="text"
+            name=""
+            id=""
+            autofocus
+          />
+          <label for="">Изображение</label>
+          <input type="file" name="" id="" autofocus @change="previewFile" />
+          <button-component :name="'Создать'"></button-component>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -93,6 +136,10 @@ export default {
       text: "",
       file: {},
       link: "",
+      show: false,
+      modalText: "",
+      modalTitle: "",
+      modalLink: "",
     };
   },
   methods: {
@@ -145,6 +192,42 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    showModal(id) {
+      this.show = true;
+      this.id = id;
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      };
+      axios
+        .get("http://localhost:8080/admin/slider/" + this.id, {headers})
+        .then((response) => {
+          const data = response.data;
+          this.modalText = data.text;
+          this.modalTitle = data.title;
+          this.modalLink = data.link;
+        })
+        .catch((error) => console.log(error));
+    },
+    closeModal() {
+      this.show = false;
+    },
+    putData() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      }
+      const formData = new FormData();
+      formData.append("title", this.modalTitle);
+      formData.append("text", this.modalText);
+      formData.append("link", this.modalLink);
+      formData.append("image", this.file);
+      axios.patch('http://localhost:8080/admin/slider/' + this.id, formData, {headers})
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
+    }
   },
   mounted() {
     this.responseData();
@@ -161,5 +244,59 @@ export default {
   cursor: pointer;
 }
 
+/* Модальное окно */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.modal-wrapper {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
 </style>

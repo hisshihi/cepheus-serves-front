@@ -227,7 +227,7 @@ export default {
       formData.append("title", this.title);
       formData.append("text", this.text);
       formData.append("price", this.price);
-      formData.append("id", this.getCategory);
+      formData.append("category_id", this.getCategory);
       formData.append("image", this.file);
 
       const headers = {
