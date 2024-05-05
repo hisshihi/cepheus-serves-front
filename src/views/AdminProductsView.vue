@@ -73,7 +73,10 @@
       <div class="modal-container">
         <div class="modal-header">
           <h2>Смена данных категории</h2>
-          <button @click="showChangeCategory = false" class="modal-close-button">
+          <button
+            @click="showChangeCategory = false"
+            class="modal-close-button"
+          >
             &times;
           </button>
         </div>
@@ -291,39 +294,48 @@ export default {
     deleteCategory(id) {
       const token = localStorage.getItem("token");
       const headers = {
-        Authorization: `Bearer ${token}`
-      }
-      axios.delete("http://localhost:8080/category/" + id, {headers})
-      .then(response => {
-        const index = this.categories.findIndex((category) => category.id === id);
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .delete("http://localhost:8080/category/" + id, { headers })
+        .then((response) => {
+          const index = this.categories.findIndex(
+            (category) => category.id === id
+          );
           if (index !== -1) {
             this.categories.splice(index, 1);
           }
-      })
-      .catch(error => console.log(error))
+        })
+        .catch((error) => console.log(error));
     },
     requestAddCategory(id) {
       this.showAddCategory = !this.showAddCategory;
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
-      }
-      axios.get("http://localhost:8080/category/" + id, {headers})
-      .then(response => {
-        this.showChangeCategory = true
-        this.changeTitle = response.data.title
-        this.categoryId = id;
-      })
-      .catch(error => console.log(error))
+      };
+      axios
+        .get("http://localhost:8080/category/" + id, { headers })
+        .then((response) => {
+          this.showChangeCategory = true;
+          this.changeTitle = response.data.title;
+          this.categoryId = id;
+        })
+        .catch((error) => console.log(error));
     },
     putDataCategory() {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
-      }
-      axios.put("http://localhost:8080/category/" + this.categoryId, {title: this.changeTitle}, {headers})
-      .then(response => this.showChangeCategory = false)
-      .catch(error => console.log(error))
+      };
+      axios
+        .put(
+          "http://localhost:8080/category/" + this.categoryId,
+          { title: this.changeTitle },
+          { headers }
+        )
+        .then((response) => (this.showChangeCategory = false))
+        .catch((error) => console.log(error));
     },
   },
 };

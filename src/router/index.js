@@ -19,6 +19,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
+    path: "/show-card/:id",
+    name: "show-card",
+    component: () => 
+      import(/* webpackChunkName: "show-card" */ "../views/ShowCardView.vue"),
+  },
+  {
     path: "/basket",
     name: "basket",
     component: () =>
@@ -136,6 +142,8 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+
 export default router;
 
 router.beforeEach((to, from, next) => {

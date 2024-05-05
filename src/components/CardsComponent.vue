@@ -22,10 +22,13 @@
           <div class="title-and-subtitle">
             <div class="title">{{ card.title }}</div>
             <!-- <div class="subtitle">{{ card.text }}</div> -->
-            <button-component
-              :name="'Подробнее'"
-              :class="'buttonMiniDefaultGray'"
-            ></button-component>
+
+            <router-link :to="{ name: 'show-card', params: { id: card.id } }">
+              <button-component
+                :name="'Подробнее'"
+                :class="'buttonMiniDefaultGray'"
+              ></button-component>
+            </router-link>
           </div>
         </div>
 
