@@ -66,10 +66,32 @@
       </select>
       <button-component :name="'Создать'"></button-component>
     </form>
-    
   </div>
 
-  
+  <div :style="style" class="modal-mask" v-if="showChangeCategory">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2>Смена данных категории</h2>
+          <button @click="showChangeCategory = false" class="modal-close-button">
+            &times;
+          </button>
+        </div>
+        <form @submit.prevent="putDataCategory">
+          <label for="">Название</label>
+          <input
+            v-model="changeTitle"
+            type="text"
+            name=""
+            id=""
+            autocomplete="title"
+            autofocus
+          />
+          <button-component :name="'Создать'"></button-component>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <div class="add-product" v-if="showAddCategory">
     <form action="" method="post">
@@ -102,7 +124,7 @@
           <tr v-for="category in categories" :key="category.id">
             <td>{{ category.id }}</td>
             <td>{{ category.title }}</td>
-            <td class="button">
+            <td class="button" @click="requestAddCategory(category.id)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24"
@@ -114,7 +136,7 @@
                 />
               </svg>
             </td>
-            <td class="button" @click="deleteCard(card.id)">
+            <td class="button" @click="deleteCategory(category.id)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24"
@@ -146,9 +168,6 @@
     :cards="products"
     style="margin-bottom: 434px"
   ></table-component>
-
-  
-
 </template>
 
 <script>
@@ -158,14 +177,12 @@ import LoadDataComponent from "@/components/LoadDataComponent.vue";
 import TableComponent from "@/components/TableComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent";
 
-
 export default {
   components: {
     CardsComponent,
     LoadDataComponent,
     TableComponent,
     ButtonComponent,
-    
   },
   data() {
     return {
@@ -183,6 +200,9 @@ export default {
       showAddProduct: false,
       showAddCategory: false,
       inputCategory: "",
+      showChangeCategory: false,
+      changeTitle: "",
+      categoryId: null,
     };
   },
   mounted() {
@@ -263,11 +283,48 @@ export default {
         .then((response) => {
           const newCategories = response.data;
           this.categories.push(newCategories);
-        }).catch(error => {
+        })
+        .catch((error) => {
           console.log(error);
         });
     },
-    
+    deleteCategory(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`
+      }
+      axios.delete("http://localhost:8080/category/" + id, {headers})
+      .then(response => {
+        const index = this.categories.findIndex((category) => category.id === id);
+          if (index !== -1) {
+            this.categories.splice(index, 1);
+          }
+      })
+      .catch(error => console.log(error))
+    },
+    requestAddCategory(id) {
+      this.showAddCategory = !this.showAddCategory;
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+      axios.get("http://localhost:8080/category/" + id, {headers})
+      .then(response => {
+        this.showChangeCategory = true
+        this.changeTitle = response.data.title
+        this.categoryId = id;
+      })
+      .catch(error => console.log(error))
+    },
+    putDataCategory() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+      axios.put("http://localhost:8080/category/" + this.categoryId, {title: this.changeTitle}, {headers})
+      .then(response => this.showChangeCategory = false)
+      .catch(error => console.log(error))
+    },
   },
 };
 </script>
