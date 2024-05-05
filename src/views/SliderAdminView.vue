@@ -225,7 +225,7 @@ export default {
       formData.append("link", this.modalLink);
       formData.append("image", this.file);
       axios.patch('http://localhost:8080/admin/slider/' + this.id, formData, {headers})
-      .then(response => console.log(response))
+      .then(response => this.show = false)
       .catch(error => console.log(error))
     }
   },
