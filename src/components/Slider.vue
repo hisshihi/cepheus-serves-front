@@ -82,11 +82,14 @@ export default {
         <p class="description">
           {{ item.text }}
         </p>
-        <button-component
+        <router-link :to="{ name: 'show-card', params: { id: item.link_id } }">
+          <button-component
           name="Подробнее"
           type="button"
           class="buttonMiniDefault"
-        />
+        />  
+        </router-link>
+        
       </div>
 
       <div></div>

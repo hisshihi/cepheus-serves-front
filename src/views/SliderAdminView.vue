@@ -10,8 +10,15 @@
     <input type="text" v-model="title" required />
     <label for="">Описание</label>
     <textarea type="text" v-model="text" required></textarea>
-    <label for="">Ссылка на товар</label>
-    <input type="text" v-model="link" required />
+    <select name="" id="" v-model="link">
+      <option
+        :value="product.id"
+        v-for="product in allProducts"
+        :key="product.id"
+      >
+        ID - {{ product.id }} - Название - {{ product.title }}
+      </option>
+    </select>
     <label for="">Изображение</label>
     <input type="file" @change="previewFile" required />
 
@@ -44,7 +51,14 @@
         </td>
         <td>{{ item?.title }}</td>
         <td>{{ item?.text }}</td>
-        <td><a :href="item?.link">Product</a></td>
+        <td>
+          <router-link
+            :to="{ name: 'show-card', params: { id: item.link_id } }"
+          >
+            Ссылка на товар - {{ item?.link_id }}
+          </router-link>
+        </td>
+
         <td class="button" @click="showModal(item.id)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,13 +98,7 @@
         </div>
         <form @submit.prevent="putData">
           <label for="">Название</label>
-          <input
-            v-model="modalTitle"
-            type="text"
-            name=""
-            id=""
-            autofocus
-          />
+          <input v-model="modalTitle" type="text" name="" id="" autofocus />
           <label for="">Описание</label>
           <textarea
             v-model="modalText"
@@ -101,13 +109,17 @@
             cols="1180"
           ></textarea>
           <label for="">Ссылка</label>
-          <input
-            v-model="modalLink"
-            type="text"
-            name=""
-            id=""
-            autofocus
-          />
+          <!-- modalLink -->
+          {{ modalLink }}
+          <select name="" id="" v-model="modalLink">
+            <option
+              :value="product.id"
+              v-for="product in allProducts"
+              :key="product.id"
+            >
+              ID - {{ product.id }} - Название - {{ product.title }}
+            </option>
+          </select>
           <label for="">Изображение</label>
           <input type="file" name="" id="" autofocus @change="previewFile" />
           <button-component :name="'Создать'"></button-component>
@@ -140,6 +152,7 @@ export default {
       modalText: "",
       modalTitle: "",
       modalLink: "",
+      allProducts: [],
     };
   },
   methods: {
@@ -201,12 +214,12 @@ export default {
         "Content-Type": "multipart/form-data",
       };
       axios
-        .get("http://localhost:8080/admin/slider/" + this.id, {headers})
+        .get("http://localhost:8080/admin/slider/" + this.id, { headers })
         .then((response) => {
           const data = response.data;
           this.modalText = data.text;
           this.modalTitle = data.title;
-          this.modalLink = data.link;
+          // this.modalLink = data.link;
         })
         .catch((error) => console.log(error));
     },
@@ -218,19 +231,32 @@ export default {
       const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
-      }
+      };
       const formData = new FormData();
       formData.append("title", this.modalTitle);
       formData.append("text", this.modalText);
       formData.append("link", this.modalLink);
       formData.append("image", this.file);
-      axios.patch('http://localhost:8080/admin/slider/' + this.id, formData, {headers})
-      .then(response => this.show = false)
-      .catch(error => console.log(error))
-    }
+      axios
+        .patch("http://localhost:8080/admin/slider/" + this.id, formData, {
+          headers,
+        })
+        .then((response) => (this.show = false))
+        .catch((error) => console.log(error));
+    },
+    getAllProducts() {
+      axios
+        .get("http://localhost:8080/products")
+        .then((response) => {
+          this.allProducts = response.data.content;
+          console.log(this.allProducts);
+        })
+        .catch((error) => console.log(error));
+    },
   },
   mounted() {
     this.responseData();
+    this.getAllProducts();
   },
 };
 </script>
@@ -298,5 +324,9 @@ export default {
 .form-group label {
   display: block;
   margin-bottom: 5px;
+}
+
+select {
+  width: 100%;
 }
 </style>
