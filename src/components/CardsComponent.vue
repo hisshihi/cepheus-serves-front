@@ -35,13 +35,14 @@
         <div class="card-button-and-price">
           <div class="price">{{ makeMoney(card.price) }} ₽</div>
           <div class="card-button">
-            <button class="basket-button">
+            <button class="basket-button" @click="addBasket(card.id)">
               <img
                 class="img-button-basket"
                 src="../assets/image 49.png"
                 alt="basket"
               />
-              В корзину
+              <p v-if="!isAddInBasket">В корзину</p>
+              <p v-else-if="isAddInBasket">Добавлено</p>
             </button>
             <div class="favorite-button">
               <svg
@@ -104,6 +105,8 @@ export default {
       currentPage: 0, // Текущая страница
       loading: false, // Индикатор загрузки
       newCards: [],
+      isAddInBasket: false,
+      baskets: [],
     };
   },
   props: {
@@ -113,6 +116,7 @@ export default {
   },
   mounted() {
     this.checkAuth();
+    this.getResponseBasket();
   },
   methods: {
     loadMore() {
@@ -172,8 +176,36 @@ export default {
         return true;
       }
     },
+    // Добавление в корзину
+    addBasket(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      };
+      const formData = new FormData();
+      formData.append("productId", id);
+      axios
+        .post("http://localhost:8080/basket", formData, { headers })
+        .then((response) => {
+          this.isAddInBasket = true
+        })
+        .catch((error) => console.log(error));
+    },
+    getResponseBasket() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+      axios.get("http://localhost:8080/basket/in-basket", {headers})
+      .then(response => {
+        this.baskets = response.data;
+      })
+      .catch(error => console.log(error))
+    }
   },
 };
+// todo: Добавить сравнение id из коризны и id товара
 </script>
 
 <style scoped>

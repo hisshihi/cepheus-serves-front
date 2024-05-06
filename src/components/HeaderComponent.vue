@@ -56,6 +56,9 @@
             <a class="link" href="#"> </a>
             <router-link to="/basket">
               <div class="svg-container">
+                <div class="baskets-length">
+                  {{ basketsLength }}
+                </div>
                 <svg
                   width="18"
                   height="18"
@@ -156,6 +159,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "Header",
 
@@ -169,11 +174,13 @@ export default {
   data() {
     return {
       token: true,
+      basketsLength: []
     };
   },
 
   mounted() {
     this.checkToken();
+    this.getResponseBasket()
   },
 
   methods: {
@@ -186,6 +193,17 @@ export default {
     logout() {
       localStorage.removeItem("token");
       window.location.href = "/";
+    },
+    getResponseBasket() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+      axios.get("http://localhost:8080/basket/in-basket", {headers})
+      .then(response => {
+        this.basketsLength = response.data.length;
+      })
+      .catch(error => console.log(error))
     },
     
   },
@@ -254,10 +272,20 @@ svg {
   margin-right: 8px;
   transition: background-color 0.2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
   cursor: pointer;
+  position: relative;
 }
 
 .svg-container:hover {
   background-color: rgba(13, 127, 242, 0.5);
+}
+
+.baskets-length {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  color: #1A80E5;
+  border-radius: 50%;
 }
 
 header {
