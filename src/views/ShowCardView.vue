@@ -8,6 +8,7 @@
           :src="'data:image/png;base64,' + image?.bytes"
           :alt="image?.name"
         />
+        
       </div>
       <div class="data">
         <div class="price-and-count">
@@ -54,8 +55,7 @@ export default {
           this.category = data.categoryDto.title;
           this.price = data.price;
           this.count = data.count;
-          this.specifications = data.specifications.split('; ');
-          console.log(this.specifications);
+          this.specifications = data.specifications.split(';');
         })
         .catch((error) => console.log(error));
     },
@@ -73,15 +73,15 @@ export default {
 
 <style scoped>
 .img {
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 600px;
+  max-height: 600px;
   padding: 50px;
 }
 
 .image {
   box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 600px;
+  max-height: 600px;
   border-radius: 15px;
   margin-bottom: 20px;
 }
@@ -130,5 +130,6 @@ p {
 
 .specification {
     display: grid;
+    margin-bottom: 10px;
 }
 </style>

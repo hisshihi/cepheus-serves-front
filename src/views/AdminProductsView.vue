@@ -34,6 +34,20 @@
         required
         cols="1180"
       ></textarea>
+      
+      <label for="">Характеристики товара</label>
+      <span>Указывайте характеристики через ; (Название: содержание;)</span>
+      <textarea
+        v-model="specifications"
+        type="text"
+        name=""
+        id=""
+        autocomplete="text"
+        autofocus
+        required
+        cols="1180"
+      ></textarea>
+      
       <label for="">Цена</label>
       <input
         v-model="price"
@@ -196,6 +210,7 @@ export default {
       previewLoading: true,
       title: "",
       text: "",
+      specifications: "",
       price: "",
       categories: [],
       getCategory: "",
@@ -206,6 +221,7 @@ export default {
       showChangeCategory: false,
       changeTitle: "",
       categoryId: null,
+      
     };
   },
   mounted() {
@@ -249,6 +265,7 @@ export default {
       const formData = new FormData();
       formData.append("title", this.title);
       formData.append("text", this.text);
+      formData.append("specifications", this.specifications)
       formData.append("price", this.price);
       formData.append("category_id", this.getCategory);
       formData.append("image", this.file);
@@ -362,5 +379,11 @@ select:focus {
   border-color: #6583a2;
   outline: none;
   color: #6583a2;
+}
+
+span {
+  color: red;
+  font-weight: 700;
+  margin-top: 0;
 }
 </style>

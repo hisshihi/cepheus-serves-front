@@ -24,7 +24,8 @@ export default {
       text: "",
       price: 0,
       file: null,
-      getCategory: ""
+      getCategory: "",
+      specificationsProduct: "",
     };
   },
   props: {
@@ -118,13 +119,12 @@ export default {
         .then((response) => {
           const data = response.data;
           this.card = data;
-          this.title = this.card.title
-          this.text = this.card.text
-          this.price = this.card.price
-          this.file = this.card.imageProductDto
-          console.log(this.file);
-          this.image = this.card.imageProductDto
-
+          this.title = this.card.title;
+          this.text = this.card.text;
+          this.price = this.card.price;
+          this.file = this.card.imageProductDto;
+          this.specificationsProduct = this.card.specifications;
+          this.image = this.card.imageProductDto;
         })
         .catch((error) => console.log(error));
     },
@@ -155,10 +155,11 @@ export default {
       const formData = new FormData();
       formData.append("title", this.title);
       formData.append("text", this.text);
+      formData.append("specifications", this.specificationsProduct);
       formData.append("price", this.price);
       formData.append("category_id", this.getCategory);
       formData.append("image", this.file);
-      console.log(this.getCategory)
+      console.log(this.getCategory);
       axios
         .patch("http://localhost:8080/products/" + this.id, formData, {
           headers,
@@ -170,7 +171,7 @@ export default {
           this.price = 0;
           this.categoryDto = "";
           this.file = null;
-          this.show = false
+          this.show = false;
         })
         .catch((error) => console.log(error));
     },
@@ -203,16 +204,18 @@ export default {
         <td>{{ card.price }} ₽</td>
         <td>{{ card.count }}</td>
         <td class="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 -960 960 960"
-            width="24"
-          >
-            <path
-              d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"
-            />
-          </svg>
+          <router-link :to="{ name: 'show-card', params: { id: card.id } }">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 -960 960 960"
+              width="24"
+            >
+              <path
+                d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"
+              />
+            </svg>
+          </router-link>
         </td>
         <td class="button" @click="showModal(card.id)">
           <svg
@@ -254,6 +257,21 @@ export default {
                   id=""
                   autocomplete="text"
                   autofocus
+                  cols="1180"
+                ></textarea>
+                <label for="">Характеристики товара</label>
+                <span
+                  >Указывайте характеристики через ; (Название:
+                  содержание;)</span
+                >
+                <textarea
+                  v-model="specificationsProduct"
+                  type="text"
+                  name=""
+                  id=""
+                  autocomplete="text"
+                  autofocus
+                  required
                   cols="1180"
                 ></textarea>
                 <label for="">Цена</label>
