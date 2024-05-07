@@ -56,7 +56,7 @@
             <a class="link" href="#"> </a>
             <router-link to="/basket">
               <div class="svg-container">
-                <div class="baskets-length">
+                <div class="baskets-length" v-if="basketsLength > 0">
                   {{ basketsLength }}
                 </div>
                 <svg

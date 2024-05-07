@@ -41,8 +41,10 @@
                 src="../assets/image 49.png"
                 alt="basket"
               />
-              <p v-if="!isAddInBasket">В корзину</p>
-              <p v-else-if="isAddInBasket">Добавлено</p>
+              <!-- <p v-if="!isAddInBasket">В корзину</p> -->
+              <p v-if="isAddInBasket">Добавлено</p>
+              <p v-if="isProductInBasket(card.id)">В корзине</p>
+              <p v-else>В корзину</p>
             </button>
             <div class="favorite-button">
               <svg
@@ -106,7 +108,8 @@ export default {
       loading: false, // Индикатор загрузки
       newCards: [],
       isAddInBasket: false,
-      baskets: [],
+      baskets: new Set,
+      inBasket: false,
     };
   },
   props: {
@@ -199,10 +202,16 @@ export default {
       }
       axios.get("http://localhost:8080/basket/in-basket", {headers})
       .then(response => {
-        this.baskets = response.data;
+        this.baskets = new Set(response.data.map(basket => basket.productId));
+        console.log(this.baskets);
       })
       .catch(error => console.log(error))
+    },
+    isProductInBasket(productId) {
+      console.log(productId);
+      return this.baskets.has(productId);
     }
+    
   },
 };
 // todo: Добавить сравнение id из коризны и id товара
