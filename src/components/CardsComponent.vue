@@ -42,8 +42,8 @@
                 alt="basket"
               />
               <!-- <p v-if="!isAddInBasket">В корзину</p> -->
-              <p v-if="isAddInBasket">Добавлено</p>
-              <p v-if="isProductInBasket(card.id)">В корзине</p>
+              <p v-if="addedToBasket[card.id]">Добавлено</p>
+              <p v-else-if="baskets.has(card.id)">В корзине</p>
               <p v-else>В корзину</p>
             </button>
             <div class="favorite-button">
@@ -107,9 +107,12 @@ export default {
       currentPage: 0, // Текущая страница
       loading: false, // Индикатор загрузки
       newCards: [],
-      isAddInBasket: false,
-      baskets: new Set,
+      addedToBasket: {},
+      baskets: new Set(),
       inBasket: false,
+      isAddInFavorite: false,
+      favorites: new Set(),
+      inFavorite: false,
     };
   },
   props: {
@@ -184,14 +187,16 @@ export default {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       };
       const formData = new FormData();
       formData.append("productId", id);
       axios
         .post("http://localhost:8080/basket", formData, { headers })
         .then((response) => {
-          this.isAddInBasket = true
+          // Прямое присваивание для обновления реактивного объекта
+          this.addedToBasket[id] = true;
+          this.baskets.add(id); // Добавляем ID в набор
         })
         .catch((error) => console.log(error));
     },
@@ -199,19 +204,19 @@ export default {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
-      }
-      axios.get("http://localhost:8080/baskets", {headers})
-      .then(response => {
-        console.log(response.data._embedded.baskets)
-        this.baskets = new Set(response.data._embedded.baskets.map(basket => basket.productId));
-        console.log(this.baskets);
-      })
-      .catch(error => console.log(error))
+      };
+      axios
+        .get("http://localhost:8080/baskets", { headers })
+        .then((response) => {
+          this.baskets = new Set(
+            response.data._embedded.baskets.map((basket) => basket.productId)
+          );
+        })
+        .catch((error) => console.log(error));
     },
     isProductInBasket(productId) {
       return this.baskets.has(productId);
-    }
-    
+    },
   },
 };
 // todo: Добавить сравнение id из коризны и id товара
