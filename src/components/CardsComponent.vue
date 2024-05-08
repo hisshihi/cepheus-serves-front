@@ -200,15 +200,15 @@ export default {
       const headers = {
         Authorization: `Bearer ${token}`,
       }
-      axios.get("http://localhost:8080/basket/in-basket", {headers})
+      axios.get("http://localhost:8080/baskets", {headers})
       .then(response => {
-        this.baskets = new Set(response.data.map(basket => basket.productId));
+        console.log(response.data._embedded.baskets)
+        this.baskets = new Set(response.data._embedded.baskets.map(basket => basket.productId));
         console.log(this.baskets);
       })
       .catch(error => console.log(error))
     },
     isProductInBasket(productId) {
-      console.log(productId);
       return this.baskets.has(productId);
     }
     
