@@ -46,13 +46,36 @@
               <p v-else-if="baskets.has(card.id)">В корзине</p>
               <p v-else>В корзину</p>
             </button>
-            <div class="favorite-button">
+            <div class="favorite-button" @click="addFavorite(card.id)">
               <svg
                 viewBox="0 0 24 24"
-                fill="none"
+                :fill="favorites.has(card.id) ? '#26A9F3' : 'none'"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="#26A9F3"
                 stroke-width="1.8"
+                v-if="favorites.has(card.id)"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke="#CCCCCC"
+                  stroke-width="0.144"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
+                  ></path>
+                </g>
+              </svg>
+              <svg
+                viewBox="0 0 24 24"
+                :fill="isAddInFavorite[card.id] ? '#26A9F3' : 'none'"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#26A9F3"
+                stroke-width="1.8"
+                v-else
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g
@@ -109,10 +132,10 @@ export default {
       newCards: [],
       addedToBasket: {},
       baskets: new Set(),
-      inBasket: false,
-      isAddInFavorite: false,
+      inBasket: [],
+      isAddInFavorite: {},
       favorites: new Set(),
-      inFavorite: false,
+      inFavorite: false,      
     };
   },
   props: {
@@ -123,6 +146,7 @@ export default {
   mounted() {
     this.checkAuth();
     this.getResponseBasket();
+    this.getResponseFavorite();
   },
   methods: {
     loadMore() {
@@ -216,6 +240,36 @@ export default {
     },
     isProductInBasket(productId) {
       return this.baskets.has(productId);
+    },
+    // Добавление в избранное
+    addFavorite(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+      const formData = new FormData();
+      formData.append("productId", id);
+      axios.post('http://localhost:8080/favorite', formData, {headers})
+      .then(response => {
+        this.isAddInFavorite[id] = true;
+        this.favorites.add(id); // Добавляем ID в набор
+      })
+      .catch(error => console.log(error))
+    },
+    getResponseFavorite() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/favorites", { headers })
+        .then((response) => {
+          this.favorites = new Set(
+            response.data._embedded.favorites.map((favorite) => favorite.productId)
+          );
+        })
+        .catch((error) => console.log(error));
     },
   },
 };
@@ -312,7 +366,7 @@ svg {
   width: 40px;
   height: 40px;
   cursor: pointer;
-  fill: white;
+  /* fill: white; */
   transition: fill cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s;
 }
 
