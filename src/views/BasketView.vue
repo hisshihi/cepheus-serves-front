@@ -1,5 +1,7 @@
 <template>
-  <div class="basket">This is basket page</div>
+  <div class="basket" v-for="product in products" :key="product.id">
+    {{ product }}
+  </div>
 </template>
 
 <script>
@@ -15,33 +17,36 @@ export default {
     };
   },
   methods: {
-    responseData() {
-      const token = localStorage.getItem("token");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
+    async responseData() {
+      try {
+        const token = localStorage.getItem("token");
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
 
-      axios
-        .get("http://localhost:8080/baskets", { headers })
-        .then((response) => {
-          this.baskets = response.data._embedded.baskets;
-          this.baskets.forEach((item) => {
-            const productLink = item._links.product.href; // Получаем ссылку на товар
+        const response = await axios.get("http://localhost:8080/baskets", {
+          headers,
+        });
+        console.log(response.data.page)
+        const baskets = response.data._embedded.baskets;
 
-            // Выполняем запрос для каждого товара
-            axios
-              .get(productLink, { headers })
-              .then((productResponse) => {
-                // Обрабатываем данные товара
-                console.log("Данные товара:", productResponse.data);
-                // Здесь вы можете добавить данные товара в массив или объект
-              })
-              .catch((error) =>
-                console.log("Ошибка при получении данных товара:", error)
-              );
-          });
-        })
-        .catch((error) => console.log(error));
+        const products = await Promise.all(
+          baskets.map(async (item) => {
+            const productLink = item._links.product.href;
+            const productResponse = await axios.get(productLink, { headers });
+            return productResponse.data;
+          })
+        );
+
+        // Store the products in a Vuex store or a Pinia store
+        // For simplicity, I'll just assign it to a data property
+        this.products = products;
+
+        // You can now use this.products in your Vue 3 component
+      } catch (error) {
+        // Handle error more robustly, e.g., using a centralized error handler
+        console.error("Error fetching data:", error);
+      }
     },
   },
   mounted() {

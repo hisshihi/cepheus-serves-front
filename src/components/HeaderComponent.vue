@@ -174,7 +174,7 @@ export default {
   data() {
     return {
       token: true,
-      basketsLength: []
+      basketsLength: 0
     };
   },
 
@@ -199,9 +199,10 @@ export default {
       const headers = {
         Authorization: `Bearer ${token}`,
       }
-      axios.get("http://localhost:8080/basket/in-basket", {headers})
+      axios.get("http://localhost:8080/baskets", {headers})
       .then(response => {
-        this.basketsLength = response.data.length;
+        const data = response.data._embedded.baskets.length
+        this.basketsLength = data;
       })
       .catch(error => console.log(error))
     },
