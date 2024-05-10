@@ -1,18 +1,18 @@
 <template>
   <div class="basket">
-    <cards-basket-and-favorite-component :cards="nameCard" :url="url" :totalElemetns="2"></cards-basket-and-favorite-component>
+    <CardsBasketComponent :cards="nameCard" :url="url" :totalElemetns="2"></CardsBasketComponent>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import CardsBasketAndFavoriteComponent from "@/components/CardsBasketAndFavoriteComponent.vue";
+import CardsBasketComponent from './../components/CardsBasketComponent.vue'
 
 export default {
   name: "Basket",
 
   components: {
-    CardsBasketAndFavoriteComponent,
+    CardsBasketComponent,
   },
 
   data() {

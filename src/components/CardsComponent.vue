@@ -349,7 +349,7 @@ export default {
 
 /* Кнопки и цена карточки */
 .card-button-and-price {
-  margin-top: 105px;
+  /* margin-top: 105px; */
 }
 
 .card-button {

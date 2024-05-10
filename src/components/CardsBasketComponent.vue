@@ -13,7 +13,7 @@
         <div class="card-text">
           <div class="id-and-hot">
             <div class="id">ID:{{ card.id }}</div>
-            <div class="hot">Хит продаж</div>
+            <!-- <div class="hot">Хит продаж</div> -->
           </div>
           <div class="title-and-subtitle">
             <div class="title">{{ card.title }}</div>
@@ -116,7 +116,6 @@ export default {
             headers,
           }
         );
-        console.log(response.data.length);
         const cardPromises = response.data.map(card => {
           return axios.get(`http://localhost:8080/products/${card.productId}`);
         });
@@ -215,7 +214,7 @@ export default {
 
 /* Кнопки и цена карточки */
 .card-button-and-price {
-  margin-top: 105px;
+  /* margin-top: 105px; */
 }
 
 .card-button {

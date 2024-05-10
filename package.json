@@ -17,7 +17,7 @@
     "pug-plain-loader": "^1.1.0",
     "splitting": "^1.0.6",
     "swiper": "^11.0.5",
-    "vue": "^3.2.13",
+    "vue": "^3.4.27",
     "vue-router": "^4.0.3",
     "vuex": "^4.1.0"
   },

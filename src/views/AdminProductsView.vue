@@ -174,11 +174,11 @@
   <div v-if="previewLoading">
     <load-data-component />
   </div>
-  <!--  <cards-component-->
+   <!-- <cards-component-->
   <!--      :url="url"-->
   <!--      :totalElements="totalElements"-->
   <!--      :cards="products"-->
-  <!--  ></cards-component>-->
+  <!--  ></cards-component> -->
   <table-component
     :url="url"
     :totalElements="totalElements"
@@ -231,13 +231,13 @@ export default {
   methods: {
     addProducts() {
       axios
-        .get(`http://localhost:8080/${this.url}?size=6&page=0`)
+        .get(`http://localhost:8080/${this.url}`)
         .then((response) => {
           this.previewLoading = false;
           const data = response.data;
           this.totalElements = data.totalElements;
           this.products = data.content;
-          console.log(this.products);
+          // console.log(this.products);
         })
         .catch((error) => console.log(error));
     },

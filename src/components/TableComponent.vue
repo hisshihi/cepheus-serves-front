@@ -190,6 +190,7 @@ export default {
         <th>Название</th>
         <th>Категория</th>
         <th>Цена</th>
+        <th>Осталось</th>
         <th>Кол-во продаж</th>
         <th>Подробнее</th>
         <th>Обновить</th>
@@ -203,6 +204,7 @@ export default {
         <td>{{ card.categoryDto.title }}</td>
         <td>{{ card.price }} ₽</td>
         <td>{{ card.count }}</td>
+        <td>{{ card.countSales }}</td>
         <td class="button">
           <router-link :to="{ name: 'show-card', params: { id: card.id } }">
             <svg
@@ -397,7 +399,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.15);
   display: flex;
   justify-content: center;
   align-items: center;
