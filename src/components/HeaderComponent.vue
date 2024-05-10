@@ -117,7 +117,7 @@
             </router-link>
           </li>
           <li class="li">
-            <a class="link" href="#">
+            <router-link to="/favorites">
               <div class="svg-container">
                 <svg
                   width="18"
@@ -134,7 +134,7 @@
                   />
                 </svg>
               </div>
-            </a>
+            </router-link>
           </li>
           <li v-if="!token" class="li" @click="logout()">
             <a class="link" href="#">

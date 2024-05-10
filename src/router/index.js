@@ -32,6 +32,13 @@ const routes = [
     meta: { requiresAuth: true }, // Укажите, что требуется авторизация
   },
   {
+    path: "/favorites",
+    name: "favorites",
+    component: () => 
+      import(/* webpackChunkName: "favorites" */ "../views/FavoritesView.vue"),
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/register",
     name: "register",
     component: () =>
