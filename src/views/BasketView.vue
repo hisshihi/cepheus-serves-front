@@ -1,19 +1,28 @@
 <template>
-  <div class="basket" v-for="product in products" :key="product.id">
-    {{ product }}
+  <div class="basket">
+    <cards-basket-and-favorite-component :cards="nameCard" :url="url" :totalElemetns="2"></cards-basket-and-favorite-component>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import CardsBasketAndFavoriteComponent from "@/components/CardsBasketAndFavoriteComponent.vue";
 
 export default {
   name: "Basket",
+
+  components: {
+    CardsBasketAndFavoriteComponent,
+  },
+
   data() {
     return {
       links: [],
       baskets: [],
       products: [],
+      totalElemetns: 0,
+      url: "basket/in-basket",
+      nameCard: "baskets"
     };
   },
   methods: {
@@ -27,7 +36,8 @@ export default {
         const response = await axios.get("http://localhost:8080/baskets", {
           headers,
         });
-        console.log(response.data.page)
+        // console.log(response.data.page)
+        this.totalElemetns = response.data.page.totalElemetns
         const baskets = response.data._embedded.baskets;
 
         const products = await Promise.all(

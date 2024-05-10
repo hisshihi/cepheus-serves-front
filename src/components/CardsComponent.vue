@@ -118,6 +118,7 @@ import "lazysizes";
 import "lazysizes/plugins/parent-fit/ls.parent-fit";
 import LoadDataComponent from "@/components/LoadDataComponent.vue";
 
+// todo: сделать компонент для карточек из корзины и избранного
 export default {
   components: {
     ButtonComponent,
