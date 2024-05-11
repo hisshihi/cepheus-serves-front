@@ -42,18 +42,22 @@
                 alt="basket"
               />
               <!-- <p v-if="!isAddInBasket">В корзину</p> -->
-              <p v-if="addedToBasket[card.id]">Добавлено</p>
+              <!-- 
               <p v-else-if="baskets.has(card.id)">В корзине</p>
+              <p v-else>В корзину</p> -->
+              <p v-if="addedToBasket[card.id]">Добавлено</p>
+              <p v-else-if="inBasket.includes(card.id)">В корзине</p>
               <p v-else>В корзину</p>
             </button>
             <div class="favorite-button" @click="addFavorite(card.id)">
               <svg
                 viewBox="0 0 24 24"
-                :fill="favorites.has(card.id) ? '#26A9F3' : 'none'"
+                :fill="inFavorite.includes(card.id) ? '#26A9F3' : 'none'"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="#26A9F3"
                 stroke-width="1.8"
                 v-if="favorites.has(card.id)"
+                :class="{'svgFill': isAddInFavorite[card.id]}"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g
@@ -136,7 +140,8 @@ export default {
       inBasket: [],
       isAddInFavorite: {},
       favorites: new Set(),
-      inFavorite: false,      
+      inFavorite: false,
+      fillBoolean: false,
     };
   },
   props: {
@@ -148,6 +153,8 @@ export default {
     this.checkAuth();
     this.getResponseBasket();
     this.getResponseFavorite();
+    this.getProductsInBasket();
+    this.getProductsInFavorite();
   },
   methods: {
     loadMore() {
@@ -220,8 +227,10 @@ export default {
         .post("http://localhost:8080/basket", formData, { headers })
         .then((response) => {
           // Прямое присваивание для обновления реактивного объекта
-          this.addedToBasket[id] = true;
-          this.baskets.add(id); // Добавляем ID в набор
+          this.addedToBasket[id] = true; // Обновляем состояние для конкретного ID
+          if (!this.inBasket.includes(id)) {
+        this.inBasket.push(id);
+      }
         })
         .catch((error) => console.log(error));
     },
@@ -251,12 +260,14 @@ export default {
       };
       const formData = new FormData();
       formData.append("productId", id);
-      axios.post('http://localhost:8080/favorite', formData, {headers})
-      .then(response => {
-        this.isAddInFavorite[id] = true;
-        this.favorites.add(id); // Добавляем ID в набор
-      })
-      .catch(error => console.log(error))
+      axios
+        .post("http://localhost:8080/favorite", formData, { headers })
+        .then((response) => {
+          this.isAddInFavorite[id] = true;
+          this.favorites.add(id); // Добавляем ID в набор
+          this.inFavorite.add(id); // Обновляем inFavorite как множество
+        })
+        .catch((error) => console.log(error));
     },
     getResponseFavorite() {
       const token = localStorage.getItem("token");
@@ -267,14 +278,40 @@ export default {
         .get("http://localhost:8080/favorites", { headers })
         .then((response) => {
           this.favorites = new Set(
-            response.data._embedded.favorites.map((favorite) => favorite.productId)
+            response.data._embedded.favorites.map(
+              (favorite) => favorite.productId
+            )
           );
+        })
+        .catch((error) => console.log(error));
+    },
+    // Тестовые данные
+    getProductsInBasket() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/basket/in-basket", { headers })
+        .then((response) => {
+          this.inBasket = response.data.map((basket) => basket.productId);
+        })
+        .catch((error) => console.log(error));
+    },
+    getProductsInFavorite() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/favorite/in-favorite", { headers })
+        .then((response) => {
+          this.inFavorite = response.data.map((favorite) => favorite.productId);
         })
         .catch((error) => console.log(error));
     },
   },
 };
-// todo: Добавить сравнение id из коризны и id товара
 </script>
 
 <style scoped>
@@ -369,6 +406,10 @@ svg {
   cursor: pointer;
   /* fill: white; */
   transition: fill cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s;
+}
+
+.svgFill {
+  fill: #26a9f3;
 }
 
 .favorite-button {
