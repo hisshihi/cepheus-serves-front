@@ -146,9 +146,14 @@ input, textarea {
   margin-bottom: 20px;
   margin-top: 10px;
   border-radius: 12px;
-  border: 1px #6583a2 solid;
+  border: 1px #6583a280 solid;
   padding: 20px 10px;
   width: 100%;
+  transition: border 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+input:hover, textarea:hover {
+  border: 1px #6583a2 solid;
 }
 
 input::placeholder, textarea::placeholder {
@@ -302,8 +307,14 @@ select {
   margin-bottom: 20px;
   margin-top: 10px;
   border-radius: 12px;
-  border: 1px #6583a2 solid;
+  /* border: 1px #6583a2 solid; */
   padding: 20px 10px;
+  border: 1px #6583a280 solid;
+  transition: border 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+select:hover {
+  border: 1px #6583a2 solid;
 }
 
 select:focus {

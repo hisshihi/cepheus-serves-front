@@ -26,7 +26,7 @@
           <!-- не админ -->
           <div v-if="role != '[ADMIN]'" class="navigation">
             <li class="li"><a class="link" href="/">Главная</a></li>
-            <li class="li"><a class="link" href="#">Товары</a></li>
+            <li class="li"><a class="link" href="/products">Товары</a></li>
             <router-link to="/company" class="li">
               <p>Компания</p>
             </router-link>
