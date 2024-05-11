@@ -4,11 +4,11 @@
   <div class="filters">
     <div class="filters-select">
       <div class="container-select">
-        <select name="" id="">
-          <option value="">Все</option>
+        <select name="" id="" v-model="getBasicFilter" @change="getProductsByBasicFilter">
+          <option value="all">Все</option>
           <option value="popular">Сначала популярные</option>
-          <option value="">Цена: от меньшего</option>
-          <option value="">Цена: от большего</option>
+          <option value="asc">Цена: от меньшего</option>
+          <option value="desc">Цена: от большего</option>
         </select>
         <div class="selected">
           <!-- <label for="">Категории</label> -->
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="search-container">
-      <input type="text" placeholder="Поиск" class="search-input" />
+      <input type="text" placeholder="Поиск" class="search-input" v-model="getInputSearch" @keyup="getProductsBySearch"/>
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g
@@ -82,6 +82,10 @@ export default {
       categories: [],
       previewLoading: true,
       getCategory: "all",
+      getBasicFilter: "all",
+      getInputSearch: "",
+      debounceTimeout: null,
+      isRequestInProgress: false,
     };
   },
   methods: {
@@ -118,17 +122,55 @@ export default {
       } else {
         axios
           .get(
-            `http://localhost:8080/products/filter/category/${this.getCategory}`
+            `http://localhost:8080/products/filter/category/${this.getCategory}?size=6&page=${this.currentPage}`
           )
           .then((response) => {
             const data = response.data;
             this.products = data.content;
             this.totalElements = data.totalElements;
+            this.url = "products/filter/category/" + this.getCategory
             this.previewLoading = false;
           })
           .catch((error) => console.log(error));
       }
     },
+    getProductsByBasicFilter() {
+      this.previewLoading = true;
+      if (this.getBasicFilter === "all") {
+        this.url = "products";
+        this.getProducts(); // Загружаем все продукты
+        this.previewLoading = false;
+      } else {
+        axios.get(`http://localhost:8080/products/${this.getBasicFilter}?size=6&page=${this.currentPage}`)
+        .then(response => {
+            const data = response.data;
+            // console.log(data)
+            this.products = data.content;
+            this.totalElements = data.totalElements;
+            this.url = "products/" + this.getBasicFilter
+            this.previewLoading = false;
+        })
+      }
+    },
+    getProductsBySearch() {
+      this.previewLoading = true;
+    //   console.log(this.getInputSearch.length < 2);
+      if (this.getInputSearch.length == 0) {
+        this.getProducts(); // Загружаем все продукты
+        this.previewLoading = false;
+      } else {
+        axios.get(`http://localhost:8080/products/name/${this.getInputSearch}?size=6&page=${this.currentPage}`)
+        .then(response => {
+            const data = response.data;
+            console.log(data)
+            this.products = data.content;
+            this.totalElements = data.totalElements;
+            this.url = "products/name/" + this.getInputSearch
+            this.previewLoading = false;
+        })
+        .catch(error => console.log(error))
+      }
+    }
   },
   mounted() {
     this.getProducts();
