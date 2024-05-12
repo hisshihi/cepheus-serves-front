@@ -9,12 +9,12 @@
       <!-- Изображение и другие данные -->
       <div class="user-data">
         <div class="user-image">
-          <img src="../assets/user.png" alt="user" />
+          <img src="../assets/logo.png" alt="user" />
         </div>
         <div class="user-info">
           <div class="name">{{ firstname }} {{ lastname }}</div>
           <div class="user-change-data">
-            <button-component :name="'Редактировать'"></button-component>
+            <button-component :name="'Редактировать'" @click="modalLastAndFirstVisible = true"></button-component>
           </div>
         </div>
       </div>
@@ -377,17 +377,20 @@
       </div>
     </div>
   </div>
+  <modal-change-user-name v-if="modalLastAndFirstVisible" @modal-closed="handleModalClose"></modal-change-user-name>
 </template>
 
 <script>
 import axios from "axios";
 import NavbarPureComponent from "@/components/NavbarPureComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
+import ModalChangeUserName from './../components/ModalChangeUserName.vue'
 
 export default {
   components: {
     NavbarPureComponent,
     ButtonComponent,
+    ModalChangeUserName,
   },
 
   data() {
@@ -397,11 +400,11 @@ export default {
       email: "",
       phone: "",
       address: "",
-      dropdownVisible: false,
       orgAddress: "",
       orgINN: 0,
       orgName: "",
       inOrganization: false,
+      modalLastAndFirstVisible: false,
     };
   },
 
@@ -432,8 +435,10 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    toggleDropdown() {
-      this.dropdownVisible = !this.dropdownVisible;
+    handleModalClose(data) {
+      this.modalLastAndFirstVisible = data.show;
+      this.firstname = data.firstname;
+      this.lastname = data.lastname;
     },
   },
 };
@@ -459,9 +464,9 @@ export default {
 }
 
 .user-image > img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  max-width: 200px;
+  max-height: 200px;
+  /* border-radius: 50%; */
   margin-bottom: 13px;
 }
 
