@@ -3,7 +3,7 @@
     <div class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-header">
-          <h2>Смена данных товара</h2>
+          <h2>Смена данных имени и фамилии</h2>
           <button @click="closeModal" class="modal-close-button">
             &times;
           </button>

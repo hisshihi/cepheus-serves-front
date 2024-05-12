@@ -59,7 +59,7 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'"></button-component>
+              <button-component :name="'Редактировать'" @click="modalChangeInfo = true"></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -84,7 +84,7 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'"></button-component>
+              <button-component :name="'Редактировать'" @click="modalChangeInfo = true"></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -113,7 +113,7 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'"></button-component>
+              <button-component :name="'Редактировать'" @click="modalChangeInfo = true"></button-component>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'"></button-component>
+              <button-component :name="'Редактировать'" @click="modalChangeOrg = true"></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -311,7 +311,7 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'"></button-component>
+              <button-component :name="'Редактировать'" @click="modalChangeOrg = true"></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -370,7 +370,7 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'"></button-component>
+              <button-component :name="'Редактировать'" @click="modalChangeOrg = true"></button-component>
             </div>
           </div>
         </div>
@@ -378,6 +378,8 @@
     </div>
   </div>
   <modal-change-user-name v-if="modalLastAndFirstVisible" @modal-closed="handleModalClose"></modal-change-user-name>
+  <modal-change-user-info v-if="modalChangeInfo" @modal-closed-info="handleModalCloseInfo"></modal-change-user-info>
+  <modal-change-user-org v-if="modalChangeOrg" @modal-closed-org="handleModalCloseOrg"></modal-change-user-org>
 </template>
 
 <script>
@@ -385,12 +387,16 @@ import axios from "axios";
 import NavbarPureComponent from "@/components/NavbarPureComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
 import ModalChangeUserName from './../components/ModalChangeUserName.vue'
+import ModalChangeUserInfo from './../components/ModalChangeUserInfo.vue'
+import ModalChangeUserOrg from '@/components/ModalChangeUserOrg.vue';
 
 export default {
   components: {
     NavbarPureComponent,
     ButtonComponent,
     ModalChangeUserName,
+    ModalChangeUserInfo,
+    ModalChangeUserOrg
   },
 
   data() {
@@ -405,6 +411,8 @@ export default {
       orgName: "",
       inOrganization: false,
       modalLastAndFirstVisible: false,
+      modalChangeInfo: false,
+      modalChangeOrg: false,
     };
   },
 
@@ -440,6 +448,18 @@ export default {
       this.firstname = data.firstname;
       this.lastname = data.lastname;
     },
+    handleModalCloseInfo(data) {
+      this.modalChangeInfo = data.show;
+      this.email = data.email;
+      this.phone = data.phone;
+      this.address = data.address;
+    },
+    handleModalCloseOrg(data) {
+      this.modalChangeOrg = data.show;
+      this.orgName = data.orgName;
+      this.orgAddress = data.orgAddress;
+      this.orgINN = data.orgINN;
+    }
   },
 };
 </script>
