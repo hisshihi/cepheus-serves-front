@@ -52,12 +52,12 @@
             <div class="favorite-button" @click="addFavorite(card.id)">
               <svg
                 viewBox="0 0 24 24"
-                :fill="inFavorite.includes(card.id) ? '#26A9F3' : 'none'"
+                :fill="inFavorite.has(card.id) ? '#26A9F3' : 'none'"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="#26A9F3"
                 stroke-width="1.8"
                 v-if="favorites.has(card.id)"
-                :class="{'svgFill': isAddInFavorite[card.id]}"
+                :class="{ svgFill: isAddInFavorite[card.id] }"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g
@@ -140,7 +140,7 @@ export default {
       inBasket: [],
       isAddInFavorite: {},
       favorites: new Set(),
-      inFavorite: false,
+      inFavorite: new Set(),
       fillBoolean: false,
     };
   },
@@ -229,8 +229,8 @@ export default {
           // Прямое присваивание для обновления реактивного объекта
           this.addedToBasket[id] = true; // Обновляем состояние для конкретного ID
           if (!this.inBasket.includes(id)) {
-        this.inBasket.push(id);
-      }
+            this.inBasket.push(id);
+          }
         })
         .catch((error) => console.log(error));
     },
@@ -306,7 +306,9 @@ export default {
       axios
         .get("http://localhost:8080/favorite/in-favorite", { headers })
         .then((response) => {
-          this.inFavorite = response.data.map((favorite) => favorite.productId);
+          response.data.forEach((favorite) => {
+            this.inFavorite.add(favorite.productId);
+          });
         })
         .catch((error) => console.log(error));
     },

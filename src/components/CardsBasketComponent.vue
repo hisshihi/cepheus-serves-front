@@ -1,4 +1,5 @@
 <template>
+  <h1 class="title">Корзина</h1>
   <div class="cards">
     <div class="cards-container" v-for="card in cards" :key="card.id">
       <div class="card">
@@ -38,13 +39,37 @@
                 alt="basket"
               />
             </button>
-            <div class="favorite-button">
+            <div class="favorite-button" @click="addFavorite(card.id)">
               <svg
                 viewBox="0 0 24 24"
-                fill="#26A9F3"
+                :fill="inFavorite.includes(card.id) ? '#26A9F3' : 'none'"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="#26A9F3"
                 stroke-width="1.8"
+                v-if="favorites.has(card.id)"
+                :class="{'svgFill': isAddInFavorite[card.id]}"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke="#CCCCCC"
+                  stroke-width="0.144"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
+                  ></path>
+                </g>
+              </svg>
+              <svg
+                viewBox="0 0 24 24"
+                :fill="isAddInFavorite[card.id] ? '#26A9F3' : 'none'"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#26A9F3"
+                stroke-width="1.8"
+                v-else
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g
@@ -63,7 +88,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -99,6 +123,10 @@ export default {
       nameCards: this.cards,
       links: [],
       totalElemetnsCards: 0,
+      isAddInFavorite: {},
+      favorites: new Set(),
+      inFavorite: false,
+      fillBoolean: false,
     };
   },
 
@@ -116,17 +144,62 @@ export default {
             headers,
           }
         );
-        const cardPromises = response.data.map(card => {
+        const cardPromises = response.data.map((card) => {
           return axios.get(`http://localhost:8080/products/${card.productId}`);
         });
 
         const cards = await Promise.all(cardPromises);
 
-        this.cards = cards.map(card => card.data);
-
+        this.cards = cards.map((card) => card.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+    },
+    // Добавление в избранное
+    addFavorite(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+      const formData = new FormData();
+      formData.append("productId", id);
+      axios
+        .post("http://localhost:8080/favorite", formData, { headers })
+        .then((response) => {
+          this.isAddInFavorite[id] = true;
+          this.favorites.add(id); // Добавляем ID в набор
+          this.inFavorite.add(id); // Обновляем inFavorite как множество
+        })
+        .catch((error) => console.log(error));
+    },
+    getResponseFavorite() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/favorites", { headers })
+        .then((response) => {
+          this.favorites = new Set(
+            response.data._embedded.favorites.map(
+              (favorite) => favorite.productId
+            )
+          );
+        })
+        .catch((error) => console.log(error));
+    },
+    getProductsInFavorite() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/favorite/in-favorite", { headers })
+        .then((response) => {
+          this.inFavorite = response.data.map((favorite) => favorite.productId);
+        })
+        .catch((error) => console.log(error));
     },
 
     makeMoney(n) {
@@ -138,6 +211,8 @@ export default {
 
   mounted() {
     this.responseData();
+    this.getResponseFavorite();
+    this.getProductsInFavorite();
   },
 };
 </script>
@@ -270,5 +345,14 @@ svg:hover {
 
 .img-button-basket {
   margin-right: 3px;
+}
+
+h1 {
+  margin-top: 42px;
+  margin-bottom: 35px;
+}
+
+.svgFill {
+  fill: #26a9f3;
 }
 </style>

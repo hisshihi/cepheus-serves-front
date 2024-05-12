@@ -1,5 +1,5 @@
 <template>
-  <h2 class="title">Все товары</h2>
+  <h1 class="title">Избранное</h1>
   <!-- Фильтры -->
   <!-- <div class="filters">
     <div class="all-filters">
@@ -490,7 +490,7 @@ svg:hover {
   fill: #f22626;
 }
 
-.title {
+h1 {
   margin-top: 16px;
   margin-bottom: 26px;
 }
