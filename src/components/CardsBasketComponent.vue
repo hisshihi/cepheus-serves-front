@@ -1,7 +1,7 @@
 <template>
   <h1 class="title">Корзина</h1>
-  <div class="no-cards" v-if="cards.length === 0">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="no-cards">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="cards.length === 0">
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
@@ -32,7 +32,8 @@
         <circle cx="9" cy="20" r="1" fill="#33363F"></circle>
       </g>
     </svg>
-    <h1>Корзина пуста</h1>
+    <h1 v-if="cards.length === 0">Корзина пуста</h1>
+    <h1 v-if="isDelete">Спасибо за заказ!</h1>
   </div>
   <div class="cards">
     <div class="cards-container" v-for="(card, index) in cards" :key="card.id">
@@ -68,7 +69,10 @@
           <div class="card-button">
             <div class="card-count">
               <!-- Убавить -->
-              <button class="basket-button" @click="decreaseProduct(card.id, card.price)">
+              <button
+                class="basket-button"
+                @click="decreaseProduct(card.id, card.price)"
+              >
                 <svg
                   width="800px"
                   height="800px"
@@ -90,7 +94,10 @@
               <div class="quantity">{{ counts[index] }}</div>
 
               <!-- Прибавить -->
-              <button class="basket-button" @click="addBasket(card.id, card.price)">
+              <button
+                class="basket-button"
+                @click="addBasket(card.id, card.price)"
+              >
                 <svg
                   width="800px"
                   height="800px"
@@ -157,7 +164,10 @@
                 </g>
               </svg>
             </div>
-            <div class="delete-button" @click="deleteCard(card.id, card.price, card.count)">
+            <div
+              class="delete-button"
+              @click="deleteCard(card.id, card.price, card.count)"
+            >
               <svg
                 viewBox="0 0 1024 1024"
                 fill="#000000"
@@ -208,6 +218,7 @@ export default {
     cards: Array,
     url: String,
     totalElemetns: Number,
+    delete: Boolean,
   },
 
   data() {
@@ -226,6 +237,7 @@ export default {
       inFavorite: false,
       fillBoolean: false,
       counts: [],
+      isDelete: false,
     };
   },
 
@@ -334,7 +346,7 @@ export default {
           const findIndex = this.links.findIndex(
             (item) => item.productId == id
           );
-          let newCount = this.counts[findIndex] = this.counts[findIndex]
+          let newCount = (this.counts[findIndex] = this.counts[findIndex]);
           this.emitProductCountChanged(id, newCount, price, "delete");
         })
         .catch((error) => console.log(error));
@@ -355,7 +367,7 @@ export default {
           const findIndex = this.links.findIndex(
             (item) => item.productId == id
           );
-          let newCount = this.counts[findIndex] = this.counts[findIndex] + 1;
+          let newCount = (this.counts[findIndex] = this.counts[findIndex] + 1);
           this.emitProductCountChanged(id, newCount, price, "plus");
         })
         .catch((error) => console.log(error));
@@ -378,22 +390,32 @@ export default {
           const findIndex = this.links.findIndex(
             (item) => item.productId == id
           );
-          let newCount = this.counts[findIndex] = this.counts[findIndex] - 1;
+          let newCount = (this.counts[findIndex] = this.counts[findIndex] - 1);
           this.emitProductCountChanged(id, newCount, price, "minus");
-          if (newCount < 1) this.cards = this.cards.filter((card) => card.id !== id);
+          if (newCount < 1)
+            this.cards = this.cards.filter((card) => card.id !== id);
         })
         .catch((error) => console.log(error));
     },
     emitProductCountChanged(id, count, price, operation) {
-      this.$emit("product-count-changed", {id: id, count: count, price: price, operation: operation});
+      this.$emit("product-count-changed", {
+        id: id,
+        count: count,
+        price: price,
+        operation: operation,
+      });
     },
     getCardInfo() {
-      this.$emit("product-info", this.cards)
+      this.$emit("product-info", this.cards);
     },
     getCardCount(productId) {
-    const link = this.links.find(link => link.productId === productId);
-    return link ? link.count : 0;
-  },
+      const link = this.links.find((link) => link.productId === productId);
+      return link ? link.count : 0;
+    },
+    clearCards() {
+      this.cards = []; // Очистка массива cards
+      this.isDelete = true
+    },
   },
 
   mounted() {

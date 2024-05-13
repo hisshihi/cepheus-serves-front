@@ -1,9 +1,11 @@
 <template>
   <div class="basket">
     <CardsBasketComponent
+    ref="cardsBasket"
       :cards="products"
       :url="url"
       :totalElemetns="totalElemetns"
+      :delete="isDelete"
       @order-placed="handleOrderPlaced"
       @product-count-changed="handleProductCountChanged"
       @product-info="updateCardsData"
@@ -140,6 +142,7 @@ export default {
       user: [],
       deliveryMethod: "Самовывоз",
       cardsData: [],
+      isDelete: false,
     };
   },
 
@@ -410,9 +413,14 @@ export default {
       axios.post("http://localhost:8080/order", order, {headers})
       .then(response => {
         console.log(response.data);
+        this.isDelete = true
+        this.clearCards()
       })
       .catch(error => console.log(error))
     },
+    clearCards() {
+    this.$refs.cardsBasket.clearCards(); // Вызов метода дочернего компонента через ref
+  }
   },
 
   mounted() {
