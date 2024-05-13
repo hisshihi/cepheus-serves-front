@@ -1,33 +1,81 @@
 <template>
   <div class="basket">
     <CardsBasketComponent
-      :cards="nameCard"
+      :cards="products"
       :url="url"
-      :totalElemetns="2"
+      :totalElemetns="totalElemetns"
+      @order-placed="handleOrderPlaced"
+      @product-count-changed="handleProductCountChanged"
     ></CardsBasketComponent>
     <div class="order">
       <h2 class="order-title">Оформление заказа</h2>
       <div class="form-order">
         <form action="" @submit.prevent="">
           <div class="city-and-user">
-            <div class="city"><input type="text" v-model="city" /></div>
-            <div class="user">
+            <div class="form-container city">
+              <label for="">Город доставки</label>
+              <input type="text" v-model="city" />
+            </div>
+            <div class="form-container user">
+              <label for="">Покупатель</label>
               <div class="mydict">
                 <div>
                   <label>
-                    <input type="radio" name="radio" checked="" />
+                    <input type="radio" name="radio1" checked="" />
                     <span>Частное лицо</span>
                   </label>
                   <label>
-                    <input type="radio" name="radio" />
+                    <input type="radio" name="radio1" />
                     <span>Организация</span>
                   </label>
                 </div>
               </div>
             </div>
           </div>
-          <div class="delivery"></div>
-          <div class="all-info"></div>
+          <h2 class="order-title">Способ доставки</h2>
+          <div class="delivery">
+            <div class="delivery-container">
+              <div class="delivery-container-text">
+                <div class="delivery-title">Пункт выдачи заказов</div>
+                <div class="delivery-text">от 250₽ / до 8 дней</div>
+              </div>
+              <div class="delivery-container-radio">
+                <input type="radio" name="radio2" class="radio-button__input" />
+              </div>
+            </div>
+            <div class="delivery-container">
+              <div class="delivery-container-text">
+                <div class="delivery-title">Самовывоз</div>
+                <div class="delivery-text">Бесплатно</div>
+              </div>
+              <div class="delivery-container-radio">
+                <input
+                  type="radio"
+                  name="radio2"
+                  checked
+                  class="radio-button__input"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="all-info">
+            <div class="info-container products-count-and-price">
+              <div class="products">Ваши товары ({{ allCount }})</div>
+              <div class="price">{{ makeMoney(allPriceNumber) }}₽</div>
+            </div>
+            <div class="info-container delivery-method">
+              <div class="method-title">Способ получения</div>
+              <div class="method">Самовывоз</div>
+            </div>
+            <hr />
+            <div class="info-container payment-all">
+              <div class="payment-title">Итого к оплате:</div>
+              <div class="payment">{{ makeMoney(allPriceNumber) }}₽</div>
+            </div>
+            <div class="button-info">
+              <button-component :name="'Оформить заказ'"></button-component>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -37,17 +85,18 @@
 <script>
 import axios from "axios";
 import CardsBasketComponent from "./../components/CardsBasketComponent.vue";
+import ButtonComponent from "./../components/ButtonComponent.vue";
 
 export default {
   name: "Basket",
 
   components: {
     CardsBasketComponent,
+    ButtonComponent,
   },
 
   data() {
     return {
-      links: [],
       baskets: [],
       products: [],
       totalElemetns: 0,
@@ -55,8 +104,11 @@ export default {
       nameCard: "baskets",
       city: "",
       cities: [],
+      allPriceNumber: 0,
+      allCount: 0,
     };
   },
+
   methods: {
     async responseData() {
       try {
@@ -68,28 +120,31 @@ export default {
         const response = await axios.get("http://localhost:8080/baskets", {
           headers,
         });
-        // console.log(response.data.page)
+
         this.totalElemetns = response.data.page.totalElemetns;
-        const baskets = response.data._embedded.baskets;
+        this.baskets = response.data._embedded.baskets;
 
         const products = await Promise.all(
-          baskets.map(async (item) => {
-            const productLink = item._links.product.href;
+          this.baskets.map(async (basket) => {
+            const productLink = basket._links.product.href;
             const productResponse = await axios.get(productLink, { headers });
-            return productResponse.data;
+
+            const product = productResponse.data;
+
+            return {
+              ...product,
+              count: basket.count,
+            };
           })
         );
 
-        // Store the products in a Vuex store or a Pinia store
-        // For simplicity, I'll just assign it to a data property
         this.products = products;
-
-        // You can now use this.products in your Vue 3 component
+        this.allPrice();
       } catch (error) {
-        // Handle error more robustly, e.g., using a centralized error handler
         console.error("Error fetching data:", error);
       }
     },
+
     startGeo() {
       axios
         .get(
@@ -117,7 +172,131 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+
+    handleOrderPlaced(data) {
+      const { productIds, productPrices } = data;
+
+      console.log(productIds);
+    },
+    handleProductCountChanged(data) {
+
+      if (data.operation == "plus") {
+        this.allPriceNumber += data.price
+        this.allCount++
+      } else if (data.operation == "minus") {
+        this.allPriceNumber -= data.price
+        this.allCount--
+      } else if (data.operation == "delete") {
+        const price = data.price;
+        const count = data.count
+        this.allPriceNumber -= price * count
+        this.allCount -= count
+      }
+    },
+
+    makeMoney(n) {
+      return parseFloat(n)
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+\.)/g, "$1 ");
+    },
+
+    placeOrder() {
+      const productIds = this.products.map((product) => product.id);
+      const productPrices = this.products.map((product) => product.price);
+
+      this.$emit("order-placed", { productIds, productPrices });
+    },
+
+    // Добавление единицы товара в корзину
+    async addBasket(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      const formData = new FormData();
+      formData.append("productId", id);
+
+      try {
+        await axios.post("http://localhost:8080/basket", formData, { headers });
+
+        const product = this.products.find((product) => product.id === id);
+        if (product) {
+          product.count++;
+        }
+
+        this.$forceUpdate(); // Обновляем отображение
+      } catch (error) {
+        console.error("Error adding product to basket:", error);
+      }
+    },
+
+    // Уменьшение единицы товара в корзине
+    async decreaseProduct(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const basketItem = this.baskets.find((item) => item.productId === id);
+
+      if (!basketItem) return;
+
+      try {
+        await axios.patch(
+          `http://localhost:8080/basket/decrease/${basketItem.id}`,
+          {},
+          { headers }
+        );
+
+        const product = this.products.find((product) => product.id === id);
+        if (product && product.count > 1) {
+          product.count--;
+        } else if (product) {
+          this.products = this.products.filter((p) => p.id !== id);
+        }
+
+        this.$forceUpdate(); // Обновляем отображение
+      } catch (error) {
+        console.error("Error decreasing product count:", error);
+      }
+    },
+
+    // Удаление корзины
+    async deleteCard(id) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const basketItem = this.baskets.find((item) => item.productId === id);
+
+      if (!basketItem) return;
+
+      try {
+        await axios.delete(`http://localhost:8080/basket/${basketItem.id}`, {
+          headers,
+        });
+
+        this.products = this.products.filter((product) => product.id !== id);
+
+        this.$forceUpdate(); // Обновляем отображение
+      } catch (error) {
+        console.error("Error deleting product from basket:", error);
+      }
+    },
+    allPrice() {
+      this.allPriceNumber = this.products.reduce(
+        (total, product) => total + product.price * product.count,
+        0
+      );
+
+      this.allCount = this.products.reduce((total, product) => total + product.count, 0);
+
+    },
   },
+
   mounted() {
     this.responseData();
     this.startGeo();
@@ -142,14 +321,93 @@ input {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: baseline;
+}
+
+.form-container {
+  display: grid;
+}
+
+.delivery-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border: 1px solid #dee7ff;
+  border-radius: 5px;
+}
+
+.delivery {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 70px;
+}
+
+.delivery-container-text {
+  margin-right: 177px;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  align-items: center;
+}
+
+.payment-all {
+  margin-top: 28px;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.button-info {
+  display: grid;
+  justify-items: end;
+}
+
+.all-info {
+  border: rgba(0, 0, 0, 0.5) 1px solid;
+  padding: 40px;
+  border-radius: 5px;
+  margin-bottom: 140px;
+}
+
+button {
+  max-width: 176px;
+}
+
+.delivery-title {
+  font-weight: 300;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.delivery-text {
+  font-weight: 300;
+  font-size: 15px;
+}
+
+/* radio */
+.radio-button__input:checked + .radio-button__label .radio-button__custom {
+  transform: translateY(-50%) scale(0.9);
+  border: 5px solid #4c8bf5;
+  color: #4c8bf5;
+}
+
+.radio-button__input:checked + .radio-button__label {
+  color: #4c8bf5;
+}
+
+.radio-button__label:hover .radio-button__custom {
+  transform: translateY(-50%) scale(1.2);
+  border-color: #4c8bf5;
+  box-shadow: 0 0 10px #4c8bf580;
 }
 
 /* Форма для выбора доставки */
 :focus {
   outline: 0;
   border-color: #2260ff;
-  box-shadow: 0 0 0 4px #b5c9fc;
+  /* box-shadow: 0 0 0 4px #b5c9fc; */
 }
 
 .mydict div {
