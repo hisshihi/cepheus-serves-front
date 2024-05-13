@@ -6,26 +6,46 @@
       :totalElemetns="totalElemetns"
       @order-placed="handleOrderPlaced"
       @product-count-changed="handleProductCountChanged"
+      @product-info="updateCardsData"
     ></CardsBasketComponent>
     <div class="order">
       <h2 class="order-title">Оформление заказа</h2>
       <div class="form-order">
-        <form action="" @submit.prevent="">
+        <form action="" @submit.prevent="responseDataUser">
           <div class="city-and-user">
             <div class="form-container city">
               <label for="">Город доставки</label>
-              <input type="text" v-model="city" />
+              <select name="" id="" v-model="userCity" required>
+                <option :value="city" selected>{{ city }}</option>
+                <option
+                  :value="city.node.name"
+                  v-for="city in cities"
+                  :key="city.id"
+                >
+                  {{ city.node.name }}
+                </option>
+              </select>
             </div>
             <div class="form-container user">
               <label for="">Покупатель</label>
               <div class="mydict">
                 <div>
                   <label>
-                    <input type="radio" name="radio1" checked="" />
+                    <input
+                      type="radio"
+                      name="radio1"
+                      :checked="!user.inOrganization"
+                      required
+                    />
                     <span>Частное лицо</span>
                   </label>
                   <label>
-                    <input type="radio" name="radio1" />
+                    <input
+                      type="radio"
+                      name="radio1"
+                      :checked="user.inOrganization"
+                      required
+                    />
                     <span>Организация</span>
                   </label>
                 </div>
@@ -40,7 +60,14 @@
                 <div class="delivery-text">от 250₽ / до 8 дней</div>
               </div>
               <div class="delivery-container-radio">
-                <input type="radio" name="radio2" class="radio-button__input" />
+                <input
+                  type="radio"
+                  name="radio2"
+                  class="radio-button__input"
+                  value="Пункт выдачи заказов"
+                  v-model="deliveryMethod"
+                  required
+                />
               </div>
             </div>
             <div class="delivery-container">
@@ -54,6 +81,9 @@
                   name="radio2"
                   checked
                   class="radio-button__input"
+                  value="Самовывоз"
+                  v-model="deliveryMethod"
+                  required
                 />
               </div>
             </div>
@@ -65,7 +95,7 @@
             </div>
             <div class="info-container delivery-method">
               <div class="method-title">Способ получения</div>
-              <div class="method">Самовывоз</div>
+              <div class="method">{{ deliveryMethod }}</div>
             </div>
             <hr />
             <div class="info-container payment-all">
@@ -106,6 +136,10 @@ export default {
       cities: [],
       allPriceNumber: 0,
       allCount: 0,
+      userCity: "",
+      user: [],
+      deliveryMethod: "Самовывоз",
+      cardsData: [],
     };
   },
 
@@ -139,7 +173,8 @@ export default {
         );
 
         this.products = products;
-        this.allPrice();
+        this.allPrice(products);
+        this.updateCardsData();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -152,6 +187,7 @@ export default {
         )
         .then((response) => {
           this.city = response.data.city;
+          this.userCity = this.city;
         })
         .catch((error) => {
           console.log(error);
@@ -180,17 +216,22 @@ export default {
     },
     handleProductCountChanged(data) {
 
+      const cardIndex = this.cardsData.findIndex((card) => card.id === data.id);
+
       if (data.operation == "plus") {
-        this.allPriceNumber += data.price
-        this.allCount++
+        this.cardsData[cardIndex].count++;
+        this.allPriceNumber += data.price;
+        this.allCount++;
       } else if (data.operation == "minus") {
-        this.allPriceNumber -= data.price
-        this.allCount--
+        this.cardsData[cardIndex].count--;
+        this.allPriceNumber -= data.price;
+        this.allCount--;
       } else if (data.operation == "delete") {
         const price = data.price;
-        const count = data.count
-        this.allPriceNumber -= price * count
-        this.allCount -= count
+        const count = data.count;
+        this.allPriceNumber -= price * count;
+        this.allCount -= count;
+        this.cardsData.splice(cardIndex, 1);
       }
     },
 
@@ -198,6 +239,37 @@ export default {
       return parseFloat(n)
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+\.)/g, "$1 ");
+    },
+
+    updateCardsData(data) {
+      const cardsData = [];
+
+      console.log(this.products);
+
+      for (const product of data) {
+        const matchingData = this.products.find(
+          (item) => item.title === product.title
+        );
+
+        if (matchingData) {
+          cardsData.push({
+            id: product.id,
+            name: product.title,
+            count: matchingData.count,
+            price: product.price,
+          });
+        } else {
+          cardsData.push({
+            id: product.id,
+            name: product.title,
+            count: 0,
+            price: product.price,
+          });
+        }
+      }
+
+      this.cardsData = cardsData;
+      console.log(this.cardsData);
     },
 
     placeOrder() {
@@ -226,6 +298,7 @@ export default {
           product.count++;
         }
 
+        this.updateCardsData();
         this.$forceUpdate(); // Обновляем отображение
       } catch (error) {
         console.error("Error adding product to basket:", error);
@@ -286,20 +359,66 @@ export default {
         console.error("Error deleting product from basket:", error);
       }
     },
-    allPrice() {
-      this.allPriceNumber = this.products.reduce(
+    allPrice(products) {
+      this.allPriceNumber = products.reduce(
         (total, product) => total + product.price * product.count,
         0
       );
+      console.log(this.allPriceNumber);
 
-      this.allCount = this.products.reduce((total, product) => total + product.count, 0);
+      this.allCount = products.reduce(
+        (total, product) => total + product.count,
+        0
+      );
+    },
+    // Получаем пользователя
+    getUser() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/users/name", { headers })
+        .then((response) => {
+          this.user = response.data;
+        })
+        .catch((error) => console.log(error));
+    },
+    // Отправка данных
+    responseDataUser() {
+      console.log(this.cardsData);
 
+      const order = {
+        city: this.userCity,
+        deliveryMethod: this.deliveryMethod,
+        allPrice: this.allPriceNumber,
+        buyer: this.user.inOrganization ? "Частное лицо" : "Организация",
+        allCountProduct: this.allCount,
+        orderProducts: this.cardsData.map((product) => ({
+          product: {
+            id: product.id,
+          },
+          productCounts: product.count,
+        })),
+      };
+      console.log(order);
+
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios.post("http://localhost:8080/order", order, {headers})
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => console.log(error))
     },
   },
 
   mounted() {
     this.responseData();
     this.startGeo();
+    this.getUser();
   },
 };
 </script>

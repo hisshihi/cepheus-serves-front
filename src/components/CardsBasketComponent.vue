@@ -252,6 +252,7 @@ export default {
         const cards = await Promise.all(cardPromises);
 
         this.cards = cards.map((card) => card.data);
+        this.getCardInfo();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -379,11 +380,15 @@ export default {
           );
           let newCount = this.counts[findIndex] = this.counts[findIndex] - 1;
           this.emitProductCountChanged(id, newCount, price, "minus");
+          if (newCount < 1) this.cards = this.cards.filter((card) => card.id !== id);
         })
         .catch((error) => console.log(error));
     },
     emitProductCountChanged(id, count, price, operation) {
       this.$emit("product-count-changed", {id: id, count: count, price: price, operation: operation});
+    },
+    getCardInfo() {
+      this.$emit("product-info", this.cards)
     },
     getCardCount(productId) {
     const link = this.links.find(link => link.productId === productId);
