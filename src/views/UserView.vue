@@ -14,22 +14,25 @@
         <div class="user-info">
           <div class="name">{{ firstname }} {{ lastname }}</div>
           <div class="user-change-data">
-            <button-component :name="'Редактировать'" @click="modalLastAndFirstVisible = true"></button-component>
+            <button-component
+              :name="'Редактировать'"
+              @click="modalLastAndFirstVisible = true"
+            ></button-component>
           </div>
         </div>
       </div>
       <!-- Заказы пользователя -->
       <div class="user-orders">
-        <div class="orders orders-success">
-          <div class="order-number">3</div>
+        <div class="orders orders-success" @click="openModal('DONE')">
+          <div class="order-number">{{ orderDone.length }}</div>
           <div class="order-text">Выполненные</div>
         </div>
-        <div class="orders orders-in-waiting">
-          <div class="order-number">5</div>
+        <div class="orders orders-in-waiting" @click="openModal('PENDING')">
+          <div class="order-number">{{ orderPending.length }}</div>
           <div class="order-text">В ожидании</div>
         </div>
-        <div class="orders orders-rejected">
-          <div class="order-number">1</div>
+        <div class="orders orders-rejected" @click="openModal('REJECTED')">
+          <div class="order-number">{{ orderRejected.length }}</div>
           <div class="order-text">Отклонённые</div>
         </div>
       </div>
@@ -59,7 +62,10 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'" @click="modalChangeInfo = true"></button-component>
+              <button-component
+                :name="'Редактировать'"
+                @click="modalChangeInfo = true"
+              ></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -84,7 +90,10 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'" @click="modalChangeInfo = true"></button-component>
+              <button-component
+                :name="'Редактировать'"
+                @click="modalChangeInfo = true"
+              ></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -113,7 +122,10 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'" @click="modalChangeInfo = true"></button-component>
+              <button-component
+                :name="'Редактировать'"
+                @click="modalChangeInfo = true"
+              ></button-component>
             </div>
           </div>
         </div>
@@ -146,7 +158,10 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'" @click="modalChangeOrg = true"></button-component>
+              <button-component
+                :name="'Редактировать'"
+                @click="modalChangeOrg = true"
+              ></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -311,7 +326,10 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'" @click="modalChangeOrg = true"></button-component>
+              <button-component
+                :name="'Редактировать'"
+                @click="modalChangeOrg = true"
+              ></button-component>
             </div>
           </div>
           <div class="contant-container">
@@ -370,25 +388,39 @@
               </div>
             </div>
             <div class="contact-button">
-              <button-component :name="'Редактировать'" @click="modalChangeOrg = true"></button-component>
+              <button-component
+                :name="'Редактировать'"
+                @click="modalChangeOrg = true"
+              ></button-component>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <modal-change-user-name v-if="modalLastAndFirstVisible" @modal-closed="handleModalClose"></modal-change-user-name>
-  <modal-change-user-info v-if="modalChangeInfo" @modal-closed-info="handleModalCloseInfo"></modal-change-user-info>
-  <modal-change-user-org v-if="modalChangeOrg" @modal-closed-org="handleModalCloseOrg"></modal-change-user-org>
+  <modal-change-user-name
+    v-if="modalLastAndFirstVisible"
+    @modal-closed="handleModalClose"
+  ></modal-change-user-name>
+  <modal-change-user-info
+    v-if="modalChangeInfo"
+    @modal-closed-info="handleModalCloseInfo"
+  ></modal-change-user-info>
+  <modal-change-user-org
+    v-if="modalChangeOrg"
+    @modal-closed-org="handleModalCloseOrg"
+  ></modal-change-user-org>
+  <modal-orders @close-modal="show = false" :orders="orders" v-if="show"></modal-orders>
 </template>
 
 <script>
 import axios from "axios";
 import NavbarPureComponent from "@/components/NavbarPureComponent.vue";
 import ButtonComponent from "@/components/ButtonComponent.vue";
-import ModalChangeUserName from './../components/ModalChangeUserName.vue'
-import ModalChangeUserInfo from './../components/ModalChangeUserInfo.vue'
-import ModalChangeUserOrg from '@/components/ModalChangeUserOrg.vue';
+import ModalChangeUserName from "./../components/ModalChangeUserName.vue";
+import ModalChangeUserInfo from "./../components/ModalChangeUserInfo.vue";
+import ModalChangeUserOrg from "@/components/ModalChangeUserOrg.vue";
+import ModalOrders from "./../components/ModalOrders.vue";
 
 export default {
   components: {
@@ -396,7 +428,8 @@ export default {
     ButtonComponent,
     ModalChangeUserName,
     ModalChangeUserInfo,
-    ModalChangeUserOrg
+    ModalChangeUserOrg,
+    ModalOrders,
   },
 
   data() {
@@ -413,11 +446,18 @@ export default {
       modalLastAndFirstVisible: false,
       modalChangeInfo: false,
       modalChangeOrg: false,
+
+      orders: [],
+      orderDone: [],
+      orderPending: [],
+      orderRejected: [],
+      show: false,
     };
   },
 
   mounted() {
     this.getUser();
+    this.getOrder();
   },
 
   methods: {
@@ -430,7 +470,7 @@ export default {
         .post("http://localhost:8080/users/" + token, {}, { headers })
         .then((response) => {
           const user = response.data;
-          console.log(user);
+          // console.log(user);
           this.firstname = user.firstname;
           this.lastname = user.lastname;
           this.email = user.email;
@@ -459,7 +499,42 @@ export default {
       this.orgName = data.orgName;
       this.orgAddress = data.orgAddress;
       this.orgINN = data.orgINN;
-    }
+    },
+
+    // Получение заказов
+    getOrder() {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get("http://localhost:8080/order", { headers })
+        .then((response) => {
+          const data = response.data;
+          data.forEach((element) => {
+            if (element.statuses == "PENDING") {
+              this.orderPending.push(element);
+            } else if (element.statuses == "DONE") {
+              this.orderDone.push(element);
+            } else {
+              this.orderRejected.push(element);
+            }
+          });
+        })
+        .catch((error) => console.log(error));
+    },
+    openModal(status) {
+      console.log(status);
+      if (status == "PENDING") {
+        this.orders = this.orderPending;
+        console.log(this.orders);
+      } else if (status == "DONE") {
+        this.orders = this.orderDone;
+      } else {
+        this.orders = this.orderRejected;
+      }
+      this.show = true;
+    },
   },
 };
 </script>
@@ -508,6 +583,7 @@ export default {
   display: grid;
   align-items: center;
   justify-items: center;
+  cursor: pointer;
 }
 
 .user-orders {

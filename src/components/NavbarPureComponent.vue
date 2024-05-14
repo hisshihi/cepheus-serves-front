@@ -10,16 +10,16 @@
         />
       </div>
       <ul class="sidebar-navlink">
-        <li>
+        <!-- <li>
           <a href="#">
             <i class="fa-solid fa-house"
               ><img src="../assets/acc.svg" alt="acc"
             /></i>
             <span>Профиль</span>
           </a>
-        </li>
+        </li> -->
         <li>
-          <a href="#">
+          <a href="/favorites">
             <i class="fa-solid fa-chart-simple"
               ><img src="../assets/favorite.png" alt="favorite"
             /></i>
@@ -27,21 +27,21 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/basket">
             <i class="fa-solid fa-clock-rotate-left"
               ><img src="../assets/busket.png" alt="busket"
             /></i>
             <span>Корзина</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="#">
             <i class="fa-solid fa-list-check"
               ><img src="../assets/img.png" alt="notifications"
             /></i>
             <span>Уведомления</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="#" @click="logout()">
             <i class="fa-solid fa-users"
@@ -87,7 +87,7 @@ section {
 .sidebar {
   max-width: 300px;
   /* height: 100vh; */
-  max-height: 800px;
+  max-height: 500px;
   /* background-color: var(--white); */
   background-color: rgb(239, 238, 238);
   border-right: 1px solid var(--gray);

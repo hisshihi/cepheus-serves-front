@@ -44,7 +44,7 @@
             <router-link to="/admin/products" class="li">
               <li class="li"><a class="link" href="#">Товары</a></li>
             </router-link>
-            <router-link to="/admin/products" class="li">
+            <router-link to="/admin/orders" class="li">
               <li class="li"><a class="link" href="#">Заказы</a></li>
             </router-link>
             <router-link to="/admin/products" class="li">

@@ -8,15 +8,22 @@
   <span class="four"><span class="screen-reader-text">4</span></span>
 </section>
 <div class="link-container">
-  <a href="/" class="more-link">Главная</a>
+
+    <router-link to="/">
+      <button-component :name="'На главную'" style="max-width: 200px;"></button-component>
+    </router-link>
+
 </div>
 
 </template>
 
 <script>
+import ButtonComponent from './../components/ButtonComponent.vue'
     name: 'notFound'
 export default {
-    
+    components: {
+      ButtonComponent
+    }
 }
 </script>
 
@@ -41,7 +48,7 @@ export default {
   background:
     linear-gradient(140deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 43%, transparent 44%, transparent 100%),
     linear-gradient(105deg, transparent 0%, transparent 40%, rgba(0, 0, 0, 0.06) 41%, rgba(0, 0, 0, 0.07) 76%, transparent 77%, transparent 100%),
-    linear-gradient(to right, #d89ca4, #e27b7e);
+    linear-gradient(to right, #26A9F3, #1A80E5);
 }
 .error-container > span.four:before,
 .error-container > span.four:after {
@@ -58,7 +65,7 @@ export default {
   background:
     linear-gradient(128deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 40%, transparent 41%, transparent 100%),
     linear-gradient(116deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 50%, transparent 51%, transparent 100%),
-    linear-gradient(to top, #99749D, #B895AB, #CC9AA6, #D7969E, #E0787F);
+    linear-gradient(to top, #1A80E5, #26A9F3, #009CFF, #1A80E5, #009CFF);
 }
 .error-container > span.four:after {
   width: 137px;
@@ -66,7 +73,7 @@ export default {
   transform: rotate(-49.5deg);
   left: -18px;
   bottom: 36px;
-  background: linear-gradient(to right, #99749D, #B895AB, #CC9AA6, #D7969E, #E0787F);
+  background: linear-gradient(to right, #1A80E5, #26A9F3, #009CFF, #1A80E5, #009CFF);
 }
 
 .error-container > span.zero {
@@ -75,7 +82,7 @@ export default {
   height: 156px;
   border-radius: 999px;
   background: linear-gradient(-45deg, transparent 0%, rgba(0, 0, 0, 0.06) 50%,  transparent 51%, transparent 100%),
-    linear-gradient(to top right, #99749D, #99749D, #B895AB, #CC9AA6, #D7969E, #ED8687, #ED8687);
+    linear-gradient(to top right, #1A80E5, #1A80E5, #26A9F3, #26A9F3, #009CFF, #26A9F3, #26A9F3);
   overflow: hidden;
   animation: bgshadow 5s infinite;
 }
@@ -153,7 +160,7 @@ h1 {
 }
 .link-container {
   text-align: center;
-  margin-bottom: 340px;
+  margin-bottom: 375px;
 }
 a.more-link {
   text-transform: uppercase;

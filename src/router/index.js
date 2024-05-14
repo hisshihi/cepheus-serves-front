@@ -117,6 +117,25 @@ const routes = [
     },
   },
   {
+    path: "/admin/orders",
+    name: "adminOrders",
+    component: () =>
+      import(
+        /* webpackChunkName: "adminProducts" */ "../views/AdminOrdersView.vue"
+      ),
+    meta: {
+      requiresAuth: true,
+    },
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      const tokenDecoder = jwtDecode(token);
+      const role = tokenDecoder.role;
+      if (role != "[ADMIN]") {
+        next({ path: "/" });
+      } else next();
+    },
+  },
+  {
     path: "/admin/slider",
     name: "adminSlider",
     component: () =>
