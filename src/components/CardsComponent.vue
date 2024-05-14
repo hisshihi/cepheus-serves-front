@@ -260,14 +260,26 @@ export default {
       };
       const formData = new FormData();
       formData.append("productId", id);
-      axios
-        .post("http://localhost:8080/favorite", formData, { headers })
-        .then((response) => {
-          this.isAddInFavorite[id] = true;
-          this.favorites.add(id); // Добавляем ID в набор
-          this.inFavorite.add(id); // Обновляем inFavorite как множество
-        })
-        .catch((error) => console.log(error));
+
+      if (this.inFavorite.has(id)) {
+        axios
+          .delete("http://localhost:8080/favorite/" + id, { headers })
+          .then((response) => {
+            this.isAddInFavorite[id] = false;
+            this.favorites.delete(id); // Удаляем ID из набора
+            this.inFavorite.delete(id); // Обновляем inFavorite как множество
+          })
+          .catch((error) => console.log(error));
+      } else {
+        axios
+          .post("http://localhost:8080/favorite", formData, { headers })
+          .then((response) => {
+            this.isAddInFavorite[id] = true;
+            this.favorites.add(id); // Добавляем ID в набор
+            this.inFavorite.add(id); // Обновляем inFavorite как множество
+          })
+          .catch((error) => console.log(error));
+      }
     },
     getResponseFavorite() {
       const token = localStorage.getItem("token");
@@ -311,6 +323,9 @@ export default {
           });
         })
         .catch((error) => console.log(error));
+    },
+    favoriteDelete(id) {
+      console.log(id);
     },
   },
 };
