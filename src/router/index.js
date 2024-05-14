@@ -98,6 +98,23 @@ const routes = [
     },
   },
   {
+    path: "/admin/statistics",
+    name: "adminStatistics",
+    component: () =>
+      import(/* webpackChunkName: "adminUser" */ "../views/StatisticsView.vue"),
+    meta: {
+      requiresAuth: true,
+    }, // Укажите, что требуется авторизация
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      const tokenDecoder = jwtDecode(token);
+      const role = tokenDecoder.role;
+      if (role != "[ADMIN]") {
+        next({ path: "/" });
+      } else next();
+    },
+  },
+  {
     path: "/admin/products",
     name: "adminProducts",
     component: () =>
