@@ -30,6 +30,9 @@
             <router-link to="/company" class="li">
               <p>Компания</p>
             </router-link>
+            <router-link to="/orders" class="li" v-if="!token">
+              <p>Заказы</p>
+            </router-link>
           </div>
           <!-- Админ -->
           <div v-else class="navigation">
