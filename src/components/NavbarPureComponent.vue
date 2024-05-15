@@ -13,9 +13,15 @@
         <ul class="sidebar-navlink">
           <!-- Не админ -->
           <div v-if="role != '[ADMIN]'" class="navigation">
-            <li class="li"><a class="" href="/">Главная</a></li>
-            <li class="li"><a class="" href="/products">Товары</a></li>
-            <li class="li"><a class="" href="/company">Компания</a></li>
+            <li class="li"><router-link to="/">
+              <span>Главная</span>
+            </router-link></li>
+            <li class="li"><router-link to="/products">
+              <span>Товары</span>
+            </router-link></li>
+            <li class="li"><router-link to="/company">
+              <span>Компания</span>
+            </router-link></li>
             <!-- <router-link to="/company" class="li link">
               <p>Компания</p>
             </router-link> -->
@@ -41,14 +47,9 @@
             </router-link>
           </div>
 
-          <li>
-            <a href="/favorites">
-              <i class="fa-solid fa-chart-simple"></i>
+          <li class="li"><router-link to="/favorites">
               <span>Избранное</span>
-              <!-- <img src="../assets/favorite.png" alt="favorite"
-            /> -->
-            </a>
-          </li>
+            </router-link></li>
 
           <li class="li" v-if="token">
             <router-link to="/authenticate">
@@ -77,14 +78,9 @@
             </router-link>
           </li>
 
-          <li>
-            <a href="/basket">
-              <i class="fa-solid fa-clock-rotate-left"></i>
-              <span>Корзина</span>
-              <!-- <img src="../assets/busket.png" alt="busket"
-            /> -->
-            </a>
-          </li>
+          <li class="li"><router-link to="/basket">
+              <span>Коризна</span>
+            </router-link></li>
         </ul>
       </div>
       <div class="open-button" @click="toggleSidebar()">
