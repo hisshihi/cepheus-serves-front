@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "apexcharts": "^3.49.1",
     "axios": "^1.6.7",
     "core-js": "^3.8.3",
     "gsap": "^3.12.5",
@@ -18,8 +19,12 @@
     "splitting": "^1.0.6",
     "swiper": "^11.0.5",
     "vue": "^3.4.27",
+    "vue-apexcharts": "^1.6.2",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.0.3",
-    "vuex": "^4.1.0"
+    "vuex": "^4.1.0",
+    "zingchart": "^2.9.13",
+    "zingchart-vue": "^3.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

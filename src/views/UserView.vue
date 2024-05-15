@@ -1,9 +1,9 @@
 <template>
   <div class="user-container">
     <!-- Панель навигации -->
-    <div class="nav-bar">
+    <!-- <div class="nav-bar">
       <navbar-pure-component></navbar-pure-component>
-    </div>
+    </div> -->
     <!-- Информация о пользователе -->
     <div class="user">
       <!-- Изображение и другие данные -->
