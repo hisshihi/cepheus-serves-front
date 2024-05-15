@@ -34,12 +34,7 @@
     <!-- Местоположение -->
     <h1 class="title">Контакты</h1>
 
-    <iframe
-      src="https://yandex.ru/map-widget/v1/?um=constructor%3A0201f9fe642cd65bb35fc85fb59fc70ab61c4d8545c11c041125a51413f61df6&amp;source=constructor"
-      width="500"
-      height="400"
-      frameborder="0"
-    ></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d336.512231942568!2d65.34110180354921!3d55.431709880062535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43b7bc4736caa097%3A0x12561b7e44d9d0bd!2z0YPQuy4g0JrQuNGA0L7QstCwLCA1MSwg0JrRg9GA0LPQsNC9LCDQmtGD0YDQs9Cw0L3RgdC60LDRjyDQvtCx0LsuLCA2NDAwMDA!5e0!3m2!1sru!2sru!4v1715803257223!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
     <div class="contact-container">
       <div class="svg-container">

@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkfront"]=self["webpackChunkfront"]||[]).push([[130],{3316:function(n,e,t){t.r(e),t.d(e,{default:function(){return i}});var s=t(3396);const r={class:"basket"};function a(n,e,t,a,u,c){return(0,s.wg)(),(0,s.iD)("div",r," This is basket page ")}var u={name:"Basket"},c=t(89);const f=(0,c.Z)(u,[["render",a]]);var i=f}}]);
-//# sourceMappingURL=basket.9dee3583.js.map
