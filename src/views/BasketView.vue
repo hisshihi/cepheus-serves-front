@@ -1,7 +1,7 @@
 <template>
   <div class="basket">
     <CardsBasketComponent
-    ref="cardsBasket"
+      ref="cardsBasket"
       :cards="products"
       :url="url"
       :totalElemetns="totalElemetns"
@@ -154,9 +154,12 @@ export default {
           Authorization: `Bearer ${token}`,
         };
 
-        const response = await axios.get("http://localhost:8080/baskets", {
-          headers,
-        });
+        const response = await axios.get(
+          "https://cepheus-serves-spring-production.up.railway.app/baskets",
+          {
+            headers,
+          }
+        );
 
         this.totalElemetns = response.data.page.totalElemetns;
         this.baskets = response.data._embedded.baskets;
@@ -218,7 +221,6 @@ export default {
       console.log(productIds);
     },
     handleProductCountChanged(data) {
-
       const cardIndex = this.cardsData.findIndex((card) => card.id === data.id);
 
       if (data.operation == "plus") {
@@ -294,7 +296,11 @@ export default {
       formData.append("productId", id);
 
       try {
-        await axios.post("http://localhost:8080/basket", formData, { headers });
+        await axios.post(
+          "https://cepheus-serves-spring-production.up.railway.app/basket",
+          formData,
+          { headers }
+        );
 
         const product = this.products.find((product) => product.id === id);
         if (product) {
@@ -321,7 +327,7 @@ export default {
 
       try {
         await axios.patch(
-          `http://localhost:8080/basket/decrease/${basketItem.id}`,
+          `https://cepheus-serves-spring-production.up.railway.app/basket/decrease/${basketItem.id}`,
           {},
           { headers }
         );
@@ -351,9 +357,12 @@ export default {
       if (!basketItem) return;
 
       try {
-        await axios.delete(`http://localhost:8080/basket/${basketItem.id}`, {
-          headers,
-        });
+        await axios.delete(
+          `https://cepheus-serves-spring-production.up.railway.app/basket/${basketItem.id}`,
+          {
+            headers,
+          }
+        );
 
         this.products = this.products.filter((product) => product.id !== id);
 
@@ -381,7 +390,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/users/name", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/users/name",
+          { headers }
+        )
         .then((response) => {
           this.user = response.data;
         })
@@ -410,17 +422,22 @@ export default {
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      axios.post("http://localhost:8080/order", order, {headers})
-      .then(response => {
-        console.log(response.data);
-        this.isDelete = true
-        this.clearCards()
-      })
-      .catch(error => console.log(error))
+      axios
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/order",
+          order,
+          { headers }
+        )
+        .then((response) => {
+          console.log(response.data);
+          this.isDelete = true;
+          this.clearCards();
+        })
+        .catch((error) => console.log(error));
     },
     clearCards() {
-    this.$refs.cardsBasket.clearCards(); // Вызов метода дочернего компонента через ref
-  }
+      this.$refs.cardsBasket.clearCards(); // Вызов метода дочернего компонента через ref
+    },
   },
 
   mounted() {

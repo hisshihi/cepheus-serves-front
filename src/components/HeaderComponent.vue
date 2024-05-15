@@ -174,28 +174,25 @@
             </a>
           </li>
         </ul>
-        
-        
-        
       </nav>
     </div>
   </header>
   <div class="nav-bar">
-      <navbar-pure-component :role="role"></navbar-pure-component>
-    </div>
+    <navbar-pure-component :role="role"></navbar-pure-component>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import ButtonComponent from "./ButtonComponent.vue";
-import NavbarPureComponent from './NavbarPureComponent.vue'
+import NavbarPureComponent from "./NavbarPureComponent.vue";
 
 export default {
   name: "Header",
 
   components: {
     ButtonComponent,
-    NavbarPureComponent
+    NavbarPureComponent,
   },
 
   props: {
@@ -234,7 +231,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/baskets", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/baskets",
+          { headers }
+        )
         .then((response) => {
           const data = response.data._embedded.baskets.length;
           this.basketsLength = data;
@@ -333,7 +333,6 @@ header {
 }
 
 /* slidevar */
-
 
 @media screen and (max-width: 768px) {
   .header-ul {

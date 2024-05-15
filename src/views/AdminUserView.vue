@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <table class="table" style="margin-bottom: 600px;">
+    <table class="table" style="margin-bottom: 600px">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -71,7 +71,9 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/users", { headers })
+        .get("https://cepheus-serves-spring-production.up.railway.app/users", {
+          headers,
+        })
         .then((response) => {
           this.users = response.data;
         })
@@ -85,7 +87,11 @@ export default {
       };
       this.userId = id;
       axios
-        .delete("http://localhost:8080/users/" + this.userId, { headers })
+        .delete(
+          "https://cepheus-serves-spring-production.up.railway.app/users/" +
+            this.userId,
+          { headers }
+        )
         .then((response) => {
           this.users = this.users.filter((user) => user.id !== this.userId);
           const userToken = response.data;
@@ -101,7 +107,11 @@ export default {
       };
       const role = event.target.value;
       axios
-        .patch("http://localhost:8080/users/" + id, {role: role}, { headers })
+        .patch(
+          "https://cepheus-serves-spring-production.up.railway.app/users/" + id,
+          { role: role },
+          { headers }
+        )
         .then((response) => {
           // console.log(response);
         })
@@ -124,16 +134,18 @@ export default {
   text-align: left;
   border: none;
   padding: 10px 15px;
-  background: #EDEDED;
+  background: #ededed;
   font-size: 14px;
   border-top: 1px solid #ddd;
 }
 
-.table tr th:first-child, .table tr td:first-child {
+.table tr th:first-child,
+.table tr td:first-child {
   border-left: 1px solid #ddd;
 }
 
-.table tr th:last-child, .table tr td:last-child {
+.table tr th:last-child,
+.table tr td:last-child {
   border-right: 1px solid #ddd;
 }
 
@@ -154,7 +166,7 @@ export default {
 }
 
 .table tbody tr:nth-child(even) {
-  background: #F8F8F8;
+  background: #f8f8f8;
 }
 
 .table tbody tr:last-child td {
@@ -173,6 +185,5 @@ export default {
   .table-container {
     overflow-x: auto;
   }
-  
 }
 </style>

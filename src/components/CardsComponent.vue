@@ -164,7 +164,7 @@ export default {
       this.loading = true;
       axios
         .get(
-          `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
+          `https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=${this.currentPage}`
         )
         .then((response) => {
           this.previewLoading = false;
@@ -224,7 +224,11 @@ export default {
       const formData = new FormData();
       formData.append("productId", id);
       axios
-        .post("http://localhost:8080/basket", formData, { headers })
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/basket",
+          formData,
+          { headers }
+        )
         .then((response) => {
           // Прямое присваивание для обновления реактивного объекта
           this.addedToBasket[id] = true; // Обновляем состояние для конкретного ID
@@ -240,7 +244,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/baskets", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/baskets",
+          { headers }
+        )
         .then((response) => {
           this.baskets = new Set(
             response.data._embedded.baskets.map((basket) => basket.productId)
@@ -263,7 +270,11 @@ export default {
 
       if (this.inFavorite.has(id)) {
         axios
-          .delete("http://localhost:8080/favorite/" + id, { headers })
+          .delete(
+            "https://cepheus-serves-spring-production.up.railway.app/favorite/" +
+              id,
+            { headers }
+          )
           .then((response) => {
             this.isAddInFavorite[id] = false;
             this.favorites.delete(id); // Удаляем ID из набора
@@ -272,7 +283,11 @@ export default {
           .catch((error) => console.log(error));
       } else {
         axios
-          .post("http://localhost:8080/favorite", formData, { headers })
+          .post(
+            "https://cepheus-serves-spring-production.up.railway.app/favorite",
+            formData,
+            { headers }
+          )
           .then((response) => {
             this.isAddInFavorite[id] = true;
             this.favorites.add(id); // Добавляем ID в набор
@@ -287,7 +302,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/favorites", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/favorites",
+          { headers }
+        )
         .then((response) => {
           this.favorites = new Set(
             response.data._embedded.favorites.map(
@@ -304,7 +322,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/basket/in-basket", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/basket/in-basket",
+          { headers }
+        )
         .then((response) => {
           this.inBasket = response.data.map((basket) => basket.productId);
         })
@@ -316,7 +337,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/favorite/in-favorite", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/favorite/in-favorite",
+          { headers }
+        )
         .then((response) => {
           response.data.forEach((favorite) => {
             this.inFavorite.add(favorite.productId);
@@ -497,7 +521,6 @@ svg:hover {
     justify-content: center;
     margin-bottom: 10px;
     margin-top: 5px;
-    
   }
   .img {
     max-width: 200px;

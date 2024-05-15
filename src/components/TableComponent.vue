@@ -44,7 +44,7 @@ export default {
       this.loading = true;
       axios
         .get(
-          `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
+          `https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=${this.currentPage}`
         )
         .then((response) => {
           this.previewLoading = false;
@@ -101,7 +101,11 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .delete("http://localhost:8080/products/" + id, { headers })
+        .delete(
+          "https://cepheus-serves-spring-production.up.railway.app/products/" +
+            id,
+          { headers }
+        )
         .then((response) => {
           const index = this.cards.findIndex((card) => card.id === id);
           if (index !== -1) {
@@ -115,7 +119,10 @@ export default {
       this.id = id;
       console.log(this.id);
       axios
-        .get("http://localhost:8080/products/" + this.id)
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/products/" +
+            this.id
+        )
         .then((response) => {
           const data = response.data;
           this.card = data;
@@ -137,7 +144,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/category", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/category",
+          { headers }
+        )
         .then((response) => {
           this.categories = response.data;
         })
@@ -161,9 +171,14 @@ export default {
       formData.append("image", this.file);
       console.log(this.getCategory);
       axios
-        .patch("http://localhost:8080/products/" + this.id, formData, {
-          headers,
-        })
+        .patch(
+          "https://cepheus-serves-spring-production.up.railway.app/products/" +
+            this.id,
+          formData,
+          {
+            headers,
+          }
+        )
         .then((response) => {
           console.log(response);
           this.title = "";
@@ -185,29 +200,42 @@ export default {
 <template>
   <div class="table-container">
     <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Название</th>
-        <th>Категория</th>
-        <th>Цена</th>
-        <th>Осталось</th>
-        <th>Кол-во продаж</th>
-        <th>Подробнее</th>
-        <th>Обновить</th>
-        <th>Удалить</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="card in cards" :key="card.id">
-        <td>{{ card.id }}</td>
-        <td>{{ card.title }}</td>
-        <td>{{ card.categoryDto.title }}</td>
-        <td>{{ card.price }} ₽</td>
-        <td>{{ card.count }}</td>
-        <td>{{ card.countSales }}</td>
-        <td class="button">
-          <router-link :to="{ name: 'show-card', params: { id: card.id } }">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Название</th>
+          <th>Категория</th>
+          <th>Цена</th>
+          <th>Осталось</th>
+          <th>Кол-во продаж</th>
+          <th>Подробнее</th>
+          <th>Обновить</th>
+          <th>Удалить</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="card in cards" :key="card.id">
+          <td>{{ card.id }}</td>
+          <td>{{ card.title }}</td>
+          <td>{{ card.categoryDto.title }}</td>
+          <td>{{ card.price }} ₽</td>
+          <td>{{ card.count }}</td>
+          <td>{{ card.countSales }}</td>
+          <td class="button">
+            <router-link :to="{ name: 'show-card', params: { id: card.id } }">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 -960 960 960"
+                width="24"
+              >
+                <path
+                  d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"
+                />
+              </svg>
+            </router-link>
+          </td>
+          <td class="button" @click="showModal(card.id)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -215,117 +243,104 @@ export default {
               width="24"
             >
               <path
-                d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"
+                d="M480-120q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-480q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-840q82 0 155.5 35T760-706v-94h80v240H600v-80h110q-41-56-101-88t-129-32q-117 0-198.5 81.5T200-480q0 117 81.5 198.5T480-200q105 0 183.5-68T756-440h82q-15 137-117.5 228.5T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z"
               />
             </svg>
-          </router-link>
-        </td>
-        <td class="button" @click="showModal(card.id)">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 -960 960 960"
-            width="24"
-          >
-            <path
-              d="M480-120q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-480q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-840q82 0 155.5 35T760-706v-94h80v240H600v-80h110q-41-56-101-88t-129-32q-117 0-198.5 81.5T200-480q0 117 81.5 198.5T480-200q105 0 183.5-68T756-440h82q-15 137-117.5 228.5T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z"
-            />
-          </svg>
-        </td>
+          </td>
 
-        <div :style="style" class="modal-mask" v-if="show">
-          <div class="modal-wrapper">
-            <div class="modal-container">
-              <div class="modal-header">
-                <h2>Смена данных товара</h2>
-                <button @click="closeModal" class="modal-close-button">
-                  &times;
-                </button>
-              </div>
-              <form @submit.prevent="putData">
-                <label for="">Название</label>
-                <input
-                  v-model="title"
-                  type="text"
-                  name=""
-                  id=""
-                  autocomplete="title"
-                  autofocus
-                />
-                <label for="">Описание</label>
-                <textarea
-                  v-model="text"
-                  type="text"
-                  name=""
-                  id=""
-                  autocomplete="text"
-                  autofocus
-                  cols="1180"
-                ></textarea>
-                <label for="">Характеристики товара</label>
-                <span
-                  >Указывайте характеристики через ; (Название:
-                  содержание;)</span
-                >
-                <textarea
-                  v-model="specificationsProduct"
-                  type="text"
-                  name=""
-                  id=""
-                  autocomplete="text"
-                  autofocus
-                  required
-                  cols="1180"
-                ></textarea>
-                <label for="">Цена</label>
-                <input
-                  v-model="price"
-                  type="number"
-                  name=""
-                  id=""
-                  autocomplete="price"
-                  autofocus
-                />
-                <label for="">Изображение</label>
-                <input
-                  type="file"
-                  name=""
-                  id=""
-                  autofocus
-                  @change="previewFile"
-                />
-                <label for="">Категория</label>
-                <select name="" id="" v-model="getCategory">
-                  <option value="" disabled selected>Категории</option>
-                  <option
-                    v-for="category in categories"
-                    :key="category"
-                    :value="category.id"
+          <div :style="style" class="modal-mask" v-if="show">
+            <div class="modal-wrapper">
+              <div class="modal-container">
+                <div class="modal-header">
+                  <h2>Смена данных товара</h2>
+                  <button @click="closeModal" class="modal-close-button">
+                    &times;
+                  </button>
+                </div>
+                <form @submit.prevent="putData">
+                  <label for="">Название</label>
+                  <input
+                    v-model="title"
+                    type="text"
+                    name=""
+                    id=""
+                    autocomplete="title"
+                    autofocus
+                  />
+                  <label for="">Описание</label>
+                  <textarea
+                    v-model="text"
+                    type="text"
+                    name=""
+                    id=""
+                    autocomplete="text"
+                    autofocus
+                    cols="1180"
+                  ></textarea>
+                  <label for="">Характеристики товара</label>
+                  <span
+                    >Указывайте характеристики через ; (Название:
+                    содержание;)</span
                   >
-                    {{ category.title }}
-                  </option>
-                </select>
-                <button-component :name="'Создать'"></button-component>
-              </form>
+                  <textarea
+                    v-model="specificationsProduct"
+                    type="text"
+                    name=""
+                    id=""
+                    autocomplete="text"
+                    autofocus
+                    required
+                    cols="1180"
+                  ></textarea>
+                  <label for="">Цена</label>
+                  <input
+                    v-model="price"
+                    type="number"
+                    name=""
+                    id=""
+                    autocomplete="price"
+                    autofocus
+                  />
+                  <label for="">Изображение</label>
+                  <input
+                    type="file"
+                    name=""
+                    id=""
+                    autofocus
+                    @change="previewFile"
+                  />
+                  <label for="">Категория</label>
+                  <select name="" id="" v-model="getCategory">
+                    <option value="" disabled selected>Категории</option>
+                    <option
+                      v-for="category in categories"
+                      :key="category"
+                      :value="category.id"
+                    >
+                      {{ category.title }}
+                    </option>
+                  </select>
+                  <button-component :name="'Создать'"></button-component>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
 
-        <td class="button" @click="deleteCard(card.id)">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 -960 960 960"
-            width="24"
-          >
-            <path
-              d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
-            />
-          </svg>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td class="button" @click="deleteCard(card.id)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 -960 960 960"
+              width="24"
+            >
+              <path
+                d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+              />
+            </svg>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 

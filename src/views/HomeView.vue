@@ -5,37 +5,39 @@
       <slider class="slider"></slider>
     </div>
     <!-- Раздел о нас -->
-<!--    <h2>О нас</h2>-->
-<!--    <div class="about">-->
-<!--      <div class="about-img">-->
-<!--        <img src="../assets/logo.png" alt="about image" />-->
-<!--      </div>-->
-<!--      <div class="about-text">-->
-<!--        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum id soluta,-->
-<!--        eius a error unde eos commodi, cum incidunt sint libero autem-->
-<!--        accusantium eveniet, reiciendis modi voluptatem quaerat quas neque?-->
-<!--        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil autem-->
-<!--        placeat optio cum sunt ut expedita, ex mollitia blanditiis obcaecati! Et-->
-<!--        sequi voluptatum suscipit reprehenderit rerum accusantium assumenda-->
-<!--        repudiandae.-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--    <h2>О нас</h2>-->
+    <!--    <div class="about">-->
+    <!--      <div class="about-img">-->
+    <!--        <img src="../assets/logo.png" alt="about image" />-->
+    <!--      </div>-->
+    <!--      <div class="about-text">-->
+    <!--        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum id soluta,-->
+    <!--        eius a error unde eos commodi, cum incidunt sint libero autem-->
+    <!--        accusantium eveniet, reiciendis modi voluptatem quaerat quas neque?-->
+    <!--        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nihil autem-->
+    <!--        placeat optio cum sunt ut expedita, ex mollitia blanditiis obcaecati! Et-->
+    <!--        sequi voluptatum suscipit reprehenderit rerum accusantium assumenda-->
+    <!--        repudiandae.-->
+    <!--      </div>-->
+    <!--    </div>-->
     <!-- Блок с товарами -->
     <h2>Самые продаваемые продукты</h2>
     <div v-if="previewLoading">
-      <load-data-component/>
+      <load-data-component />
     </div>
     <div class="products">
-      <cards-component :cards="products" :url="url" :totalElements="totalElements"></cards-component>
+      <cards-component
+        :cards="products"
+        :url="url"
+        :totalElements="totalElements"
+      ></cards-component>
     </div>
     <div class="reviews">
       <h2 class="reviews-title">Ваши отзывы</h2>
-      <reviews-component/>
+      <reviews-component />
     </div>
-<!--    Раздел отзывов-->
-
+    <!--    Раздел отзывов-->
   </div>
-  
 </template>
 
 <script>
@@ -46,13 +48,12 @@ import CardsComponent from "@/components/CardsComponent.vue";
 import LoadDataComponent from "@/components/LoadDataComponent.vue";
 import ReviewsComponent from "@/components/ReviewsComponent.vue";
 
-
 export default {
   components: {
     Slider,
     CardsComponent,
     LoadDataComponent,
-    ReviewsComponent
+    ReviewsComponent,
   },
 
   data() {
@@ -75,7 +76,11 @@ export default {
   methods: {
     addPosts() {
       axios
-        .get("http://localhost:8080/" + this.url + "?size=6&page=0")
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/" +
+            this.url +
+            "?size=6&page=0"
+        )
         .then((response) => {
           this.previewLoading = false;
           const data = response.data;
@@ -88,15 +93,14 @@ export default {
     },
     progressLoading() {
       if (this.products.length <= 0) {
-        this.loading = true
+        this.loading = true;
       }
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-
 /* Настройка блока о нас */
 .about {
   display: flex;
@@ -133,5 +137,4 @@ h2 {
     padding: 0 20px;
   }
 }
-
 </style>

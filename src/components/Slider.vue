@@ -41,7 +41,7 @@ export default {
   methods: {
     responseData() {
       axios
-        .get("http://localhost:8080/slider")
+        .get("https://cepheus-serves-spring-production.up.railway.app/slider")
         .then((response) => {
           const data = response.data;
           this.sliderData = data;
@@ -84,12 +84,11 @@ export default {
         </p>
         <router-link :to="{ name: 'show-card', params: { id: item.link_id } }">
           <button-component
-          name="Подробнее"
-          type="button"
-          class="buttonMiniDefault"
-        />  
+            name="Подробнее"
+            type="button"
+            class="buttonMiniDefault"
+          />
         </router-link>
-        
       </div>
 
       <div></div>
@@ -136,7 +135,7 @@ img {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
-  padding: 1px
+  padding: 1px;
 }
 
 .swiper .swiper-slide {

@@ -10,24 +10,15 @@
         </div>
         <form @submit.prevent="putData">
           <label for="">Имя</label>
-          <input
-            v-model="firstname"
-            type="text"
-            name=""
-            id=""
-            autofocus
-          />
+          <input v-model="firstname" type="text" name="" id="" autofocus />
 
           <label for="">Фамилия</label>
-          <input
-            v-model="lastname"
-            type="text"
-            name=""
-            id=""
-            autofocus
-          />
-          
-          <button-component :name="'Редактировать'" @click="patchData"></button-component>
+          <input v-model="lastname" type="text" name="" id="" autofocus />
+
+          <button-component
+            :name="'Редактировать'"
+            @click="patchData"
+          ></button-component>
         </form>
       </div>
     </div>
@@ -35,7 +26,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import ButtonComponent from "./ButtonComponent.vue";
 
 export default {
@@ -55,37 +46,46 @@ export default {
       this.show = false;
     },
     getUsersData() {
-        const token = localStorage.getItem("token");
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        }
-        axios.get("http://localhost:8080/users/name", {headers})
-        .then(response => {
-            this.firstname = response.data.firstname
-            this.lastname = response.data.lastname
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/users/name",
+          { headers }
+        )
+        .then((response) => {
+          this.firstname = response.data.firstname;
+          this.lastname = response.data.lastname;
         })
-        .catch(error => console.log(error))
+        .catch((error) => console.log(error));
     },
     patchData() {
-        const token = localStorage.getItem("token");
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        }
-        axios.patch("http://localhost:8080/users/editing", {firstname: this.firstname, lastname: this.lastname}, {headers})
-        .then(response => {
-            this.show = false;
-            this.$emit('modal-closed', {
-              show: this.show,
-              firstname: this.firstname,
-              lastname: this.lastname,
-            });
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .patch(
+          "https://cepheus-serves-spring-production.up.railway.app/users/editing",
+          { firstname: this.firstname, lastname: this.lastname },
+          { headers }
+        )
+        .then((response) => {
+          this.show = false;
+          this.$emit("modal-closed", {
+            show: this.show,
+            firstname: this.firstname,
+            lastname: this.lastname,
+          });
         })
-        .catch(error => console.log(error))
-    }
+        .catch((error) => console.log(error));
+    },
   },
   mounted() {
-    this.getUsersData()
-  }
+    this.getUsersData();
+  },
 };
 </script>
 

@@ -8,7 +8,6 @@
           :src="'data:image/png;base64,' + image?.bytes"
           :alt="image?.name"
         />
-        
       </div>
       <div class="data">
         <div class="price-and-count">
@@ -16,7 +15,11 @@
           <p class="price">В наличи: {{ count }} шт.</p>
         </div>
         <div class="specifications-and-buttons">
-          <span class="specification" v-for="(specification, index) in specifications" :key="index">
+          <span
+            class="specification"
+            v-for="(specification, index) in specifications"
+            :key="index"
+          >
             {{ specification }}
           </span>
         </div>
@@ -46,7 +49,10 @@ export default {
     showCard() {
       const route = this.$route.params.id;
       axios
-        .get("http://localhost:8080/products/" + route)
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/products/" +
+            route
+        )
         .then((response) => {
           const data = response.data;
           this.title = data.title;
@@ -55,7 +61,7 @@ export default {
           this.category = data.categoryDto.title;
           this.price = data.price;
           this.count = data.count;
-          this.specifications = data.specifications.split(';');
+          this.specifications = data.specifications.split(";");
         })
         .catch((error) => console.log(error));
     },
@@ -129,7 +135,7 @@ p {
 }
 
 .specification {
-    display: grid;
-    margin-bottom: 10px;
+  display: grid;
+  margin-bottom: 10px;
 }
 </style>

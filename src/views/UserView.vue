@@ -410,7 +410,11 @@
     v-if="modalChangeOrg"
     @modal-closed-org="handleModalCloseOrg"
   ></modal-change-user-org>
-  <modal-orders @close-modal="show = false" :orders="orders" v-if="show"></modal-orders>
+  <modal-orders
+    @close-modal="show = false"
+    :orders="orders"
+    v-if="show"
+  ></modal-orders>
 </template>
 
 <script>
@@ -467,7 +471,12 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post("http://localhost:8080/users/" + token, {}, { headers })
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/users/" +
+            token,
+          {},
+          { headers }
+        )
         .then((response) => {
           const user = response.data;
           // console.log(user);
@@ -508,7 +517,9 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/order", { headers })
+        .get("https://cepheus-serves-spring-production.up.railway.app/order", {
+          headers,
+        })
         .then((response) => {
           const data = response.data;
           data.forEach((element) => {

@@ -34,7 +34,7 @@
         required
         cols="1180"
       ></textarea>
-      
+
       <label for="">Характеристики товара</label>
       <span>Указывайте характеристики через ; (Название: содержание;)</span>
       <textarea
@@ -47,7 +47,7 @@
         required
         cols="1180"
       ></textarea>
-      
+
       <label for="">Цена</label>
       <input
         v-model="price"
@@ -174,7 +174,7 @@
   <div v-if="previewLoading">
     <load-data-component />
   </div>
-   <!-- <cards-component-->
+  <!-- <cards-component-->
   <!--      :url="url"-->
   <!--      :totalElements="totalElements"-->
   <!--      :cards="products"-->
@@ -221,7 +221,6 @@ export default {
       showChangeCategory: false,
       changeTitle: "",
       categoryId: null,
-      
     };
   },
   mounted() {
@@ -231,7 +230,9 @@ export default {
   methods: {
     addProducts() {
       axios
-        .get(`http://localhost:8080/${this.url}`)
+        .get(
+          `https://cepheus-serves-spring-production.up.railway.app/${this.url}`
+        )
         .then((response) => {
           this.previewLoading = false;
           const data = response.data;
@@ -253,7 +254,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/category", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/category",
+          { headers }
+        )
         .then((response) => {
           this.categories = response.data;
         })
@@ -265,7 +269,7 @@ export default {
       const formData = new FormData();
       formData.append("title", this.title);
       formData.append("text", this.text);
-      formData.append("specifications", this.specifications)
+      formData.append("specifications", this.specifications);
       formData.append("price", this.price);
       formData.append("category_id", this.getCategory);
       formData.append("image", this.file);
@@ -276,7 +280,11 @@ export default {
       };
 
       axios
-        .post("http://localhost:8080/products", formData, { headers })
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/products",
+          formData,
+          { headers }
+        )
         .then((response) => {
           const newCard = response.data;
           this.products.push(newCard);
@@ -296,7 +304,7 @@ export default {
       };
       axios
         .post(
-          "http://localhost:8080/category",
+          "https://cepheus-serves-spring-production.up.railway.app/category",
           { title: this.inputCategory },
           { headers }
         )
@@ -314,7 +322,11 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .delete("http://localhost:8080/category/" + id, { headers })
+        .delete(
+          "https://cepheus-serves-spring-production.up.railway.app/category/" +
+            id,
+          { headers }
+        )
         .then((response) => {
           const index = this.categories.findIndex(
             (category) => category.id === id
@@ -332,7 +344,11 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/category/" + id, { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/category/" +
+            id,
+          { headers }
+        )
         .then((response) => {
           this.showChangeCategory = true;
           this.changeTitle = response.data.title;
@@ -347,7 +363,8 @@ export default {
       };
       axios
         .put(
-          "http://localhost:8080/category/" + this.categoryId,
+          "https://cepheus-serves-spring-production.up.railway.app/category/" +
+            this.categoryId,
           { title: this.changeTitle },
           { headers }
         )
@@ -391,6 +408,5 @@ span {
   .table-container {
     overflow-x: auto;
   }
-  
 }
 </style>

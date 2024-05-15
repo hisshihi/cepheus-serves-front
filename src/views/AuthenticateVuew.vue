@@ -66,7 +66,10 @@ export default {
       };
 
       axios
-        .post("http://localhost:8080/authenticate", data)
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/authenticate",
+          data
+        )
         .then((response) => {
           const token = response.data.token;
           localStorage.setItem("token", token);
