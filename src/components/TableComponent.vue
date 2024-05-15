@@ -183,7 +183,8 @@ export default {
 </script>
 
 <template>
-  <table class="table">
+  <div class="table-container">
+    <table class="table">
     <thead>
       <tr>
         <th>#</th>
@@ -325,6 +326,7 @@ export default {
       </tr>
     </tbody>
   </table>
+  </div>
 </template>
 
 <style>

@@ -80,4 +80,10 @@ footer p {
 a {
   text-decoration: revert !important;
 }
+
+@media screen and (max-width: 425px) {
+  .links {
+    flex-wrap: wrap;
+  }
+}
 </style>

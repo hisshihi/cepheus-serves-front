@@ -582,4 +582,19 @@ label:first-child span {
 label:last-child span {
   border-radius: 0 0.375em 0.375em 0;
 }
+
+@media screen and (max-width: 425px) {
+  .delivery {
+    flex-wrap: wrap;
+  }
+  .delivery-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .all-info {
+    width: 300px;
+  }
+}
 </style>

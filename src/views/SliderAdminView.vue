@@ -27,7 +27,8 @@
 
   <!-- Подробности о слайдере -->
   <h2>О слайдере</h2>
-  <table class="table">
+  <div class="table-container">
+    <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -86,6 +87,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 
   <div :style="style" class="modal-mask" v-if="show">
     <div class="modal-wrapper">
@@ -328,5 +330,12 @@ export default {
 
 select {
   width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+  
 }
 </style>

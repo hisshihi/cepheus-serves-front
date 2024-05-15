@@ -223,4 +223,16 @@ select {
   color: #888;
   width: 40px;
 }
+
+@media screen and (max-width: 425px) {
+  .filters {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .container-select {
+    flex-wrap: wrap;
+  }
+}
 </style>

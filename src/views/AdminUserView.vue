@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table-container">
     <table class="table" style="margin-bottom: 600px;">
       <thead>
         <tr>
@@ -167,5 +167,12 @@ export default {
 
 .table tbody tr:last-child td:last-child {
   border-radius: 0 0 20px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+  
 }
 </style>

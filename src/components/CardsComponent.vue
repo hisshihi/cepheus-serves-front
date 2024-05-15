@@ -464,4 +464,44 @@ svg:hover {
 .img-button-basket {
   margin-right: 3px;
 }
+
+@media screen and (max-width: 769px) {
+  .img {
+    max-width: 120px;
+    max-height: 120px;
+  }
+  .title {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .id-and-hot {
+    font-size: 16px;
+  }
+  .title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+  .basket-button > p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .card {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    
+  }
+  .img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
 </style>

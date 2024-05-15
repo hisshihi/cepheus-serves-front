@@ -22,6 +22,7 @@
     "vue-apexcharts": "^1.6.2",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.0.3",
+    "vuesax": "^4.0.1-alpha.25",
     "vuex": "^4.1.0",
     "zingchart": "^2.9.13",
     "zingchart-vue": "^3.0.0"

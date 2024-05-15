@@ -176,4 +176,30 @@ iframe {
   width: 100%;
   margin-bottom: 51px;
 }
+
+@media screen and (max-width: 425px) {
+  .info {
+    flex-wrap: wrap;
+  }
+  .info-block {
+    max-width: 100%;
+    
+  }
+  .contact-block {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .contact-block {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .contact-block {
+    margin-top: 120px;
+  }
+}
 </style>

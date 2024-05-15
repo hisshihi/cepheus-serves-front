@@ -22,7 +22,7 @@
           <li class="li"><a class="link" href="#">Заказы</a></li>
           <li class="li"><a class="link" href="#">Статистика</a></li>
         </ul> -->
-        <ul class="ul">
+        <ul class="ul header-ul">
           <!-- не админ -->
           <div v-if="role != '[ADMIN]'" class="navigation">
             <li class="li"><a class="link" href="/">Главная</a></li>
@@ -156,16 +156,47 @@
             </a>
           </li>
         </ul>
+        <ul class="ul header-mini">
+          <li v-if="!token" class="li" @click="logout()">
+            <a class="link" href="#">
+              <div class="svg-container">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  viewBox="0 -960 960 960"
+                  width="24"
+                >
+                  <path
+                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"
+                  />
+                </svg>
+              </div>
+            </a>
+          </li>
+        </ul>
+        
+        
+        
       </nav>
     </div>
   </header>
+  <div class="nav-bar">
+      <navbar-pure-component :role="role"></navbar-pure-component>
+    </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
+import ButtonComponent from "./ButtonComponent.vue";
+import NavbarPureComponent from './NavbarPureComponent.vue'
 
 export default {
   name: "Header",
+
+  components: {
+    ButtonComponent,
+    NavbarPureComponent
+  },
 
   props: {
     role: {
@@ -177,13 +208,13 @@ export default {
   data() {
     return {
       token: true,
-      basketsLength: 0
+      basketsLength: 0,
     };
   },
 
   mounted() {
     this.checkToken();
-    this.getResponseBasket()
+    this.getResponseBasket();
   },
 
   methods: {
@@ -201,15 +232,15 @@ export default {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
-      }
-      axios.get("http://localhost:8080/baskets", {headers})
-      .then(response => {
-        const data = response.data._embedded.baskets.length
-        this.basketsLength = data;
-      })
-      .catch(error => console.log(error))
+      };
+      axios
+        .get("http://localhost:8080/baskets", { headers })
+        .then((response) => {
+          const data = response.data._embedded.baskets.length;
+          this.basketsLength = data;
+        })
+        .catch((error) => console.log(error));
     },
-    
   },
 };
 </script>
@@ -288,12 +319,28 @@ svg {
   top: 0;
   right: 0;
   padding: 2px;
-  color: #1A80E5;
+  color: #1a80e5;
   border-radius: 50%;
 }
 
 header {
   border-bottom: 1px #e5e8eb solid;
   /* max-height: 65px; */
+}
+
+.header-mini {
+  display: none;
+}
+
+/* slidevar */
+
+
+@media screen and (max-width: 768px) {
+  .header-ul {
+    display: none;
+  }
+  .header-mini {
+    display: block;
+  }
 }
 </style>

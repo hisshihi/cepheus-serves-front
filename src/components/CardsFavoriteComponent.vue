@@ -30,6 +30,25 @@
       </div>
     </div>
   </div> -->
+  <!-- Если в избранном ничего нет -->
+  <div class="favorite-null" v-if="allCards.length == 0">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M4.45067 13.9082L11.4033 20.4395C11.6428 20.6644 11.7625 20.7769 11.9037 20.8046C11.9673 20.8171 12.0327 20.8171 12.0963 20.8046C12.2375 20.7769 12.3572 20.6644 12.5967 20.4395L19.5493 13.9082C21.5055 12.0706 21.743 9.0466 20.0978 6.92607L19.7885 6.52734C17.8203 3.99058 13.8696 4.41601 12.4867 7.31365C12.2913 7.72296 11.7087 7.72296 11.5133 7.31365C10.1304 4.41601 6.17972 3.99058 4.21154 6.52735L3.90219 6.92607C2.25695 9.0466 2.4945 12.0706 4.45067 13.9082Z"
+          stroke="#33363F"
+          stroke-width="2"
+        ></path>
+      </g>
+    </svg>
+    <h1 style="text-align: center">Ничего нет</h1>
+  </div>
 
   <!-- Выбрать всё, в корзину или удалить -->
   <div class="choose">
@@ -50,7 +69,10 @@
 
   <!-- Карточки -->
 
-  <div class="cards">
+  <div
+    class="cards"
+    :style="'margin-bottom: 120px' ? allCards.length == 1 : ''"
+  >
     <div class="cards-container" v-for="card in allCards" :key="card.id">
       <div class="card">
         <div class="select">
@@ -60,71 +82,73 @@
             v-model="selected[card.id]"
           />
         </div>
-        <div class="card-img">
-          <img
-            class="img lazyload"
-            :src="'data:image/png;base64,' + card.imageProductDto?.bytes"
-            :alt="card.imageProductDto?.name"
-          />
-        </div>
-
-        <div class="card-text">
-          <div class="id-and-hot">
-            <div class="id">ID:{{ card.id }}</div>
-            <!-- <div class="hot">Хит продаж</div> -->
+        <div class="card-data">
+          <div class="card-img">
+            <img
+              class="img lazyload"
+              :src="'data:image/png;base64,' + card.imageProductDto?.bytes"
+              :alt="card.imageProductDto?.name"
+            />
           </div>
-          <div class="title-and-subtitle">
-            <div class="title">{{ card.title }}</div>
-            <!-- <div class="subtitle">{{ card.text }}</div> -->
 
-            <router-link :to="{ name: 'show-card', params: { id: card.id } }">
-              <button-component
-                :name="'Подробнее'"
-                :class="'buttonMiniDefaultGray'"
-              ></button-component>
-            </router-link>
+          <div class="card-text">
+            <div class="id-and-hot">
+              <div class="id">ID:{{ card.id }}</div>
+              <!-- <div class="hot">Хит продаж</div> -->
+            </div>
+            <div class="title-and-subtitle">
+              <div class="title">{{ card.title }}</div>
+              <!-- <div class="subtitle">{{ card.text }}</div> -->
+
+              <router-link :to="{ name: 'show-card', params: { id: card.id } }">
+                <button-component
+                  :name="'Подробнее'"
+                  :class="'buttonMiniDefaultGray'"
+                ></button-component>
+              </router-link>
+            </div>
           </div>
-        </div>
 
-        <div class="card-button-and-price">
-          <div class="price">{{ makeMoney(card.price) }} ₽</div>
-          <div class="card-button">
-            <button class="basket-button" @click="addBasket(card.id)">
-              <img
-                class="img-button-basket"
-                src="../assets/image 49.png"
-                alt="basket"
-              />
-              <p v-if="addedToBasket[card.id]">Добавлено</p>
-              <p v-else-if="baskets.has(card.id)">В корзине</p>
-              <p v-else>В корзину</p>
-            </button>
-            <div class="delete-button" @click="deleteCard(card.id)">
-              <svg
-                viewBox="0 0 1024 1024"
-                fill="#000000"
-                class="icon"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                stroke="#000000"
-              >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  <path
-                    d="M32 241.6c-11.2 0-20-8.8-20-20s8.8-20 20-20l940 1.6c11.2 0 20 8.8 20 20s-8.8 20-20 20L32 241.6zM186.4 282.4c0-11.2 8.8-20 20-20s20 8.8 20 20v688.8l585.6-6.4V289.6c0-11.2 8.8-20 20-20s20 8.8 20 20v716.8l-666.4 7.2V282.4z"
-                    fill=""
-                  ></path>
-                  <path
-                    d="M682.4 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM367.2 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM524.8 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM655.2 213.6v-48.8c0-17.6-14.4-32-32-32H418.4c-18.4 0-32 14.4-32 32.8V208h-40v-42.4c0-40 32.8-72.8 72.8-72.8H624c40 0 72.8 32.8 72.8 72.8v48.8h-41.6z"
-                    fill=""
-                  ></path>
-                </g>
-              </svg>
+          <div class="card-button-and-price">
+            <div class="price">{{ makeMoney(card.price) }} ₽</div>
+            <div class="card-button">
+              <button class="basket-button" @click="addBasket(card.id)">
+                <img
+                  class="img-button-basket"
+                  src="../assets/image 49.png"
+                  alt="basket"
+                />
+                <p v-if="addedToBasket[card.id]">Добавлено</p>
+                <p v-else-if="baskets.has(card.id)">В корзине</p>
+                <p v-else>В корзину</p>
+              </button>
+              <div class="delete-button" @click="deleteCard(card.id)">
+                <svg
+                  viewBox="0 0 1024 1024"
+                  fill="#000000"
+                  class="icon"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  stroke="#000000"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M32 241.6c-11.2 0-20-8.8-20-20s8.8-20 20-20l940 1.6c11.2 0 20 8.8 20 20s-8.8 20-20 20L32 241.6zM186.4 282.4c0-11.2 8.8-20 20-20s20 8.8 20 20v688.8l585.6-6.4V289.6c0-11.2 8.8-20 20-20s20 8.8 20 20v716.8l-666.4 7.2V282.4z"
+                      fill=""
+                    ></path>
+                    <path
+                      d="M682.4 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM367.2 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM524.8 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM655.2 213.6v-48.8c0-17.6-14.4-32-32-32H418.4c-18.4 0-32 14.4-32 32.8V208h-40v-42.4c0-40 32.8-72.8 72.8-72.8H624c40 0 72.8 32.8 72.8 72.8v48.8h-41.6z"
+                      fill=""
+                    ></path>
+                  </g>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -263,9 +287,10 @@ export default {
       };
 
       const findId = this.links.filter((item) => item.productId == id);
-
       axios
-        .delete("http://localhost:8080/favorite/" + findId[0].id, { headers })
+        .delete("http://localhost:8080/favorite/" + findId[0].productId, {
+          headers,
+        })
         .then((response) => {
           this.allCards = this.allCards.filter((card) => card.id !== id);
         })
@@ -280,12 +305,12 @@ export default {
         const selectedIds = Object.keys(this.selected).filter(
           (id) => this.selected[id]
         );
-
+        console.log(selectedIds);
         // Получаем все соответствующие идентификаторы `favorite`
         const idsToDelete = selectedIds
           .map((id) => {
             const link = this.links.find((item) => item.productId == id);
-            return link ? link.id : null;
+            return link ? link.productId : null;
           })
           .filter(Boolean);
 
@@ -337,9 +362,11 @@ export default {
     // Фильтры
     filterByCategory(event) {
       const selectedCategoryId = event.target.value;
-      console.log(selectedCategoryId)
+      console.log(selectedCategoryId);
       console.log(this.allCards[0].categoryDto.id);
-      this.allCards = this.allCards.filter(card => card.categoryDto.id === selectedCategoryId);
+      this.allCards = this.allCards.filter(
+        (card) => card.categoryDto.id === selectedCategoryId
+      );
     },
   },
 
@@ -377,6 +404,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px black solid;
+}
+
+.card-data {
+  display: flex;
+  align-items: center;
 }
 
 /* Изображение карточки */
@@ -438,8 +470,8 @@ export default {
 }
 
 svg {
-  width: 40px;
-  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
   cursor: pointer;
   /* fill: white; */
   transition: fill cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s;
@@ -493,6 +525,11 @@ svg:hover {
 h1 {
   margin-top: 16px;
   margin-bottom: 26px;
+}
+
+.delete-button > svg {
+  width: 40px;
+  height: 40px;
 }
 /* Фильтры */
 .filters {
@@ -674,5 +711,35 @@ h1 {
   box-shadow: none;
   transition: none;
   opacity: 1;
+}
+
+.favorite-null > svg {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.favorite-null {
+  display: grid;
+  justify-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .favorite {
+    padding: 16px;
+  }
+  .img {
+    width: 120px;
+    height: 120px;
+  }
+  .title {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .card-data {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 </style>

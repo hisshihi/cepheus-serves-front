@@ -157,4 +157,73 @@ img {
     display: grid;
   }
 }
+
+@media screen and (max-width: 768px) {
+  img {
+    width: 600px;
+    margin: 0 auto;
+    display: grid;
+  }
+  .text {
+    left: 70px;
+  }
+  .text > h2 {
+    font-size: 30px;
+  }
+  .text > .description {
+    max-width: 450px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  img {
+    width: 450px;
+    margin: 0 auto;
+    display: grid;
+  }
+  .text {
+    left: 70px;
+    bottom: 40px;
+  }
+  .text > h2 {
+    font-size: 20px;
+  }
+  .text > .description {
+    max-width: 450px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  img {
+    width: 350px;
+    margin: 0 auto;
+    display: grid;
+  }
+  .text {
+    left: 40px;
+    bottom: 20px;
+  }
+  .text > h2 {
+    font-size: 16px;
+  }
+  .text > .description {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  img {
+    width: 300px;
+    margin: 0 auto;
+    display: grid;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  img {
+    width: 250px;
+    margin: 0 auto;
+    display: grid;
+  }
+}
 </style>

@@ -127,7 +127,7 @@
       :name="'Создать'"
       @click.prevent="sendCategory"
     ></button-component>
-    <div>
+    <div class="table-container">
       <table class="table">
         <thead>
           <tr>
@@ -385,5 +385,12 @@ span {
   color: red;
   font-weight: 700;
   margin-top: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+  
 }
 </style>

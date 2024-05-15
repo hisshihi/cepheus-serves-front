@@ -619,4 +619,13 @@ h1 {
 .svgFill {
   fill: #26a9f3;
 }
+
+@media screen and (max-width: 640px) {
+  .card {
+    flex-wrap: wrap;
+    justify-content: center
+  }
+}
+
+
 </style>

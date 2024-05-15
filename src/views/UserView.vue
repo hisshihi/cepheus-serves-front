@@ -649,4 +649,21 @@ svg {
 .contact-container-data {
   display: flex;
 }
+
+@media screen and (max-width: 768px) {
+  .user-contact {
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .user-orders {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .orders {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
 </style>

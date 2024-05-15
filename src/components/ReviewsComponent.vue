@@ -528,4 +528,37 @@ textarea:focus {
 .button-reviews {
   margin: 10px 27px;
 }
+
+@media screen and (max-width: 640px) {
+  .evaluations {
+    flex-wrap: wrap;
+  }
+  .progress {
+    width: 90vw; /* Процент ширины экрана или любое другое значение, подходящее для мобильных устройств */
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .progress {
+    width: 75vw; /* Процент ширины экрана или любое другое значение, подходящее для мобильных устройств */
+  }
+}
+
+@media screen and (max-width: 375px) {
+  textarea {
+    min-width: 300px;
+  }
+  .progress {
+    width: 70vw; /* Процент ширины экрана или любое другое значение, подходящее для мобильных устройств */
+  }
+}
+
+@media screen and (max-width: 320px) {
+  textarea {
+    min-width: 200px;
+  }
+  .progress {
+    width: 69vw; /* Процент ширины экрана или любое другое значение, подходящее для мобильных устройств */
+  }
+}
 </style>
