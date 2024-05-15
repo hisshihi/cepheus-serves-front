@@ -93,13 +93,13 @@ export default {
   /* width: 100%; */
 }
 
-@media screen and (max-width: 640px) {
+/* @media screen and (max-width: 640px) {
   .button, .buttonGray {
     width: auto;
     font-size: 14px;
     padding: 0 5px;
   }
-}
+} */
 
 
 
