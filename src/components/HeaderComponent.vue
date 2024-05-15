@@ -25,8 +25,12 @@
         <ul class="ul header-ul">
           <!-- не админ -->
           <div v-if="role != '[ADMIN]'" class="navigation">
-            <li class="li"><a class="link" href="/">Главная</a></li>
-            <li class="li"><a class="link" href="/products">Товары</a></li>
+            <router-link to="/" class="li">
+              <p>Главная</p>
+            </router-link>
+            <router-link to="/products" class="li">
+              <p>Товары</p>
+            </router-link>
             <router-link to="/company" class="li">
               <p>Компания</p>
             </router-link>

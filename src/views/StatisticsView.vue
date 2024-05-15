@@ -42,7 +42,9 @@ export default {
         };
         const response = await axios.get(
           "https://cepheus-serves-spring-production.up.railway.app/products/hot",
-          { headers }
+          {
+            headers,
+          }
         );
         const products = response.data.content;
 

@@ -35,9 +35,9 @@
     <h1 class="title">Контакты</h1>
 
     <iframe
-      src="https://yandex.ru/map-widget/v1/?um=constructor%3A86de75172731b95a7243df95989410e94116e28aa3fa2706b22e060b3a403465&amp;source=constructor"
-      width="1200"
-      height="395"
+      src="https://yandex.ru/map-widget/v1/?um=constructor%3A0201f9fe642cd65bb35fc85fb59fc70ab61c4d8545c11c041125a51413f61df6&amp;source=constructor"
+      width="500"
+      height="400"
       frameborder="0"
     ></iframe>
 
@@ -102,10 +102,10 @@
 <script>
 export default {
   mounted() {
-    if (this.$route.path == '/company') {
+    if (this.$route.path == "/company") {
       console.log("yes");
     }
-  }
+  },
 };
 </script>
 
@@ -157,7 +157,8 @@ export default {
   max-width: 359px;
 }
 
-a, .time {
+a,
+.time {
   text-decoration: revert !important;
   font-size: 19px;
   font-weight: 400;
@@ -183,7 +184,6 @@ iframe {
   }
   .info-block {
     max-width: 100%;
-    
   }
   .contact-block {
     max-width: 100%;
