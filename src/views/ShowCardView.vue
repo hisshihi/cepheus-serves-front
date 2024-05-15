@@ -116,6 +116,7 @@ p {
 
 .img-and-data {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .price {
@@ -137,5 +138,26 @@ p {
 .specification {
   display: grid;
   margin-bottom: 10px;
+}
+
+@media screen and (max-width: 640px) {
+  .img {
+    max-width: 400px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .img {
+    max-width: 300px;
+  }
+  h1 {
+    font-size: 20px;
+  }
+  .title {
+    font-size: 18px;
+  }
+  .data {
+    margin-left: 0px;
+  }
 }
 </style>
