@@ -293,7 +293,7 @@ export default {
           this.title = "";
           this.text = "";
           this.price = "";
-          this.getCategory = "";
+          this.this.specifications = ""
         })
         .catch((error) => console.log(error));
     },
