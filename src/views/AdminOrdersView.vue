@@ -13,6 +13,9 @@
           <th scope="col"># товара</th>
           <th scope="col">Кол-во</th>
           <th scope="col">Название</th>
+          <th scope="col">Email пользователя</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Фамилия</th>
         </tr>
       </thead>
       <tbody>
@@ -98,6 +101,9 @@
               }}
             </tr>
           </td>
+          <td>{{ order.userEmailImpl }}</td>
+          <td>{{ order.userFirstNameImpl }}</td>
+          <td>{{ order.userLastNameImpl }}</td>
         </tr>
       </tbody>
     </table>
@@ -135,7 +141,11 @@ export default {
       };
       const status = event.target.value;
       axios
-        .patch("http://localhost:8080/order/" + id, {statuses: status}, { headers })
+        .patch(
+          "http://localhost:8080/order/" + id,
+          { statuses: status },
+          { headers }
+        )
         .then((response) => {
           // console.log(response);
         })
@@ -212,6 +222,5 @@ export default {
   .table-container {
     overflow-x: auto;
   }
-  
 }
 </style>
