@@ -79,7 +79,7 @@
           </li>
 
           <li class="li"><router-link to="/basket">
-              <span>Коризна</span>
+              <span>Корзина</span>
             </router-link></li>
         </ul>
       </div>
