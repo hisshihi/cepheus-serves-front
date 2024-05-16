@@ -168,13 +168,14 @@ export default {
         const products = await Promise.all(
           this.baskets.map(async (basket) => {
             const productLink = basket._links.product.href;
+            const relativePath = productLink.replace(/^https?:\/\/[^\/]+/, "");
+            console.log(relativePath); // Выведет: /baskets/50/product
             const productResponse = await axios.get(productLink, { headers });
-
             const product = productResponse.data;
-
             return {
               ...product,
               count: basket.count,
+              path: relativePath, // Если вы хотите сохранить относительный путь в результатах
             };
           })
         );
