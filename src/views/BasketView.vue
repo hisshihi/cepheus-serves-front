@@ -155,7 +155,7 @@ export default {
         };
 
         const response = await axios.get(
-          "https://cepheus-serves-spring-production.up.railway.app/basket",
+          "https://cepheus-serves-spring-production.up.railway.app/baskets",
           {
             headers,
           }
@@ -163,6 +163,7 @@ export default {
 
         this.totalElemetns = response.data.page.totalElemetns;
         this.baskets = response.data._embedded.baskets;
+        console.log(this.baskets);
 
         const products = await Promise.all(
           this.baskets.map(async (basket) => {
