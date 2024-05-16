@@ -155,7 +155,7 @@ export default {
         };
 
         const response = await axios.get(
-          "https://cepheus-serves-spring-production.up.railway.app/baskets",
+          "https://cepheus-serves-spring-production.up.railway.app/basket",
           {
             headers,
           }
