@@ -170,7 +170,7 @@ export default {
             const productLink = basket._links.product.href;
             const relativePath = productLink.replace(/^https?:\/\/[^\/]+/, "");
             console.log(relativePath); // Выведет: /baskets/50/product
-            const productResponse = await axios.get("https://cepheus-serves-spring-production.up.railway.app/" + relativePath, { headers });
+            const productResponse = await axios.get("https://cepheus-serves-spring-production.up.railway.app" + relativePath, { headers });
             const product = productResponse.data;
             return {
               ...product,
