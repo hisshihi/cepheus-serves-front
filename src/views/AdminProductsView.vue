@@ -183,7 +183,6 @@
     :url="url"
     :totalElements="totalElements"
     :cards="products"
-    style="margin-bottom: 434px"
   ></table-component>
 </template>
 
@@ -230,9 +229,7 @@ export default {
   methods: {
     addProducts() {
       axios
-        .get(
-          `https://cepheus-serves-spring-production.up.railway.app/${this.url}`
-        )
+        .get(`http://localhost:8080/${this.url}`)
         .then((response) => {
           this.previewLoading = false;
           const data = response.data;
@@ -254,10 +251,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/category",
-          { headers }
-        )
+        .get("http://localhost:8080/category", { headers })
         .then((response) => {
           this.categories = response.data;
         })
@@ -280,11 +274,7 @@ export default {
       };
 
       axios
-        .post(
-          "https://cepheus-serves-spring-production.up.railway.app/products",
-          formData,
-          { headers }
-        )
+        .post("http://localhost:8080/products", formData, { headers })
         .then((response) => {
           const newCard = response.data;
           this.products.push(newCard);
@@ -304,7 +294,7 @@ export default {
       };
       axios
         .post(
-          "https://cepheus-serves-spring-production.up.railway.app/category",
+          "http://localhost:8080/category",
           { title: this.inputCategory },
           { headers }
         )
@@ -322,11 +312,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .delete(
-          "https://cepheus-serves-spring-production.up.railway.app/category/" +
-            id,
-          { headers }
-        )
+        .delete("http://localhost:8080/category/" + id, { headers })
         .then((response) => {
           const index = this.categories.findIndex(
             (category) => category.id === id
@@ -344,11 +330,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/category/" +
-            id,
-          { headers }
-        )
+        .get("http://localhost:8080/category/" + id, { headers })
         .then((response) => {
           this.showChangeCategory = true;
           this.changeTitle = response.data.title;
@@ -363,8 +345,7 @@ export default {
       };
       axios
         .put(
-          "https://cepheus-serves-spring-production.up.railway.app/category/" +
-            this.categoryId,
+          "http://localhost:8080/category/" + this.categoryId,
           { title: this.changeTitle },
           { headers }
         )

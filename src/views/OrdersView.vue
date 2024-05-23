@@ -16,7 +16,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/order", {
+        .get("http://localhost:8080/order", {
           headers,
         })
         .then((response) => {
@@ -32,10 +32,7 @@ export default {
       };
       this.orders.forEach((order) => {
         axios
-          .get(
-            `https://cepheus-serves-spring-production.up.railway.app/order/product/${order.id}`,
-            { headers }
-          )
+          .get(`http://localhost:8080/order/product/${order.id}`, { headers })
           .then((response) => {
             console.log(response);
           })

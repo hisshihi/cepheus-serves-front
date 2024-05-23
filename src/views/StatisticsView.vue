@@ -40,12 +40,9 @@ export default {
         const headers = {
           Authorization: `Bearer ${token}`,
         };
-        const response = await axios.get(
-          "https://cepheus-serves-spring-production.up.railway.app/products/hot",
-          {
-            headers,
-          }
-        );
+        const response = await axios.get("http://localhost:8080/products/hot", {
+          headers,
+        });
         const products = response.data.content;
 
         this.productLabels = products.map((product) => product.title);

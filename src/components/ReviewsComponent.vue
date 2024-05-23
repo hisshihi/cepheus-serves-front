@@ -32,7 +32,7 @@ export default {
   methods: {
     getReviews() {
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/reviews")
+        .get("http://localhost:8080/reviews")
         .then((response) => {
           // console.log(response);
 
@@ -96,7 +96,7 @@ export default {
       };
       axios
         .post(
-          "https://cepheus-serves-spring-production.up.railway.app/reviews",
+          "http://localhost:8080/reviews",
           { text: this.userText, rating: this.userRating },
           { headers }
         )
@@ -111,10 +111,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/reviews/exists",
-          { headers }
-        )
+        .get("http://localhost:8080/reviews/exists", { headers })
         .then((response) => (this.reviewsUserBoolean = response.data))
         .catch((error) => console.log(error));
     },

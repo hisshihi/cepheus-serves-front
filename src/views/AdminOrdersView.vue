@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <table class="table" style="margin-bottom: 600px">
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -127,10 +127,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/order/all",
-          { headers }
-        )
+        .get("http://localhost:8080/order/all", { headers })
         .then((response) => {
           this.orders = response.data;
           console.log(this.orders);
@@ -145,7 +142,7 @@ export default {
       const status = event.target.value;
       axios
         .patch(
-          "https://cepheus-serves-spring-production.up.railway.app/order/" + id,
+          "http://localhost:8080/order/" + id,
           { statuses: status },
           { headers }
         )

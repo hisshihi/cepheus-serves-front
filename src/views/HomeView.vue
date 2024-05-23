@@ -76,11 +76,7 @@ export default {
   methods: {
     addPosts() {
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/" +
-            this.url +
-            "?size=6&page=0"
-        )
+        .get("http://localhost:8080/" + this.url + "?size=6&page=0")
         .then((response) => {
           this.previewLoading = false;
           const data = response.data;

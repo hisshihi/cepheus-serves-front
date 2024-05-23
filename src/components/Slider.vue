@@ -41,7 +41,7 @@ export default {
   methods: {
     responseData() {
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/slider")
+        .get("http://localhost:8080/slider")
         .then((response) => {
           const data = response.data;
           this.sliderData = data;

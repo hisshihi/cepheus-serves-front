@@ -49,10 +49,7 @@ export default {
     showCard() {
       const route = this.$route.params.id;
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/products/" +
-            route
-        )
+        .get("http://localhost:8080/products/" + route)
         .then((response) => {
           const data = response.data;
           this.title = data.title;

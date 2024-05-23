@@ -210,17 +210,14 @@ export default {
         };
 
         const response = await axios.get(
-          "https://cepheus-serves-spring-production.up.railway.app/" +
-            this.urlString,
+          "http://localhost:8080/" + this.urlString,
           {
             headers,
           }
         );
         this.links = response.data;
         const cardPromises = response.data.map((card) => {
-          return axios.get(
-            `https://cepheus-serves-spring-production.up.railway.app/products/${card.productId}`
-          );
+          return axios.get(`http://localhost:8080/products/${card.productId}`);
         });
 
         const cards = await Promise.all(cardPromises);
@@ -243,11 +240,7 @@ export default {
       const formData = new FormData();
       formData.append("productId", id);
       axios
-        .post(
-          "https://cepheus-serves-spring-production.up.railway.app/basket",
-          formData,
-          { headers }
-        )
+        .post("http://localhost:8080/basket", formData, { headers })
         .then((response) => {
           // Прямое присваивание для обновления реактивного объекта
           this.addedToBasket[id] = true;
@@ -261,10 +254,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/baskets",
-          { headers }
-        )
+        .get("http://localhost:8080/baskets", { headers })
         .then((response) => {
           this.baskets = new Set(
             response.data._embedded.baskets.map((basket) => basket.productId)
@@ -298,13 +288,9 @@ export default {
 
       const findId = this.links.filter((item) => item.productId == id);
       axios
-        .delete(
-          "https://cepheus-serves-spring-production.up.railway.app/favorite/" +
-            findId[0].productId,
-          {
-            headers,
-          }
-        )
+        .delete("http://localhost:8080/favorite/" + findId[0].productId, {
+          headers,
+        })
         .then((response) => {
           this.allCards = this.allCards.filter((card) => card.id !== id);
         })
@@ -331,10 +317,7 @@ export default {
         // Удаляем все выбранные элементы на сервере
         await Promise.all(
           idsToDelete.map((id) =>
-            axios.delete(
-              `https://cepheus-serves-spring-production.up.railway.app/favorite/${id}`,
-              { headers }
-            )
+            axios.delete(`http://localhost:8080/favorite/${id}`, { headers })
           )
         );
 
@@ -370,10 +353,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/category",
-          { headers }
-        )
+        .get("http://localhost:8080/category", { headers })
         .then((response) => {
           this.categories = response.data;
         })

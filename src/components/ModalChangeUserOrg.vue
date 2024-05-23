@@ -55,10 +55,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/users/name",
-          { headers }
-        )
+        .get("http://localhost:8080/users/name", { headers })
         .then((response) => {
           this.orgName = response.data.orgName;
           this.orgAddress = response.data.orgAddress;
@@ -73,7 +70,7 @@ export default {
       };
       axios
         .patch(
-          "https://cepheus-serves-spring-production.up.railway.app/users/editing",
+          "http://localhost:8080/users/editing",
           {
             orgName: this.orgName,
             orgAddress: this.orgAddress,

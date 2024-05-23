@@ -51,10 +51,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/users/name",
-          { headers }
-        )
+        .get("http://localhost:8080/users/name", { headers })
         .then((response) => {
           this.firstname = response.data.firstname;
           this.lastname = response.data.lastname;
@@ -68,7 +65,7 @@ export default {
       };
       axios
         .patch(
-          "https://cepheus-serves-spring-production.up.railway.app/users/editing",
+          "http://localhost:8080/users/editing",
           { firstname: this.firstname, lastname: this.lastname },
           { headers }
         )

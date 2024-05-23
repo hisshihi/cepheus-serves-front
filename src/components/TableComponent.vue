@@ -44,7 +44,7 @@ export default {
       this.loading = true;
       axios
         .get(
-          `https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=${this.currentPage}`
+          `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
         )
         .then((response) => {
           this.previewLoading = false;
@@ -101,11 +101,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .delete(
-          "https://cepheus-serves-spring-production.up.railway.app/products/" +
-            id,
-          { headers }
-        )
+        .delete("http://localhost:8080/products/" + id, { headers })
         .then((response) => {
           const index = this.cards.findIndex((card) => card.id === id);
           if (index !== -1) {
@@ -119,10 +115,7 @@ export default {
       this.id = id;
       console.log(this.id);
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/products/" +
-            this.id
-        )
+        .get("http://localhost:8080/products/" + this.id)
         .then((response) => {
           const data = response.data;
           this.card = data;
@@ -144,10 +137,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/category",
-          { headers }
-        )
+        .get("http://localhost:8080/category", { headers })
         .then((response) => {
           this.categories = response.data;
         })
@@ -171,14 +161,9 @@ export default {
       formData.append("image", this.file);
       console.log(this.getCategory);
       axios
-        .patch(
-          "https://cepheus-serves-spring-production.up.railway.app/products/" +
-            this.id,
-          formData,
-          {
-            headers,
-          }
-        )
+        .patch("http://localhost:8080/products/" + this.id, formData, {
+          headers,
+        })
         .then((response) => {
           console.log(response);
           this.title = "";

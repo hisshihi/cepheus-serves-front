@@ -255,8 +255,7 @@ export default {
         };
 
         const response = await axios.get(
-          "https://cepheus-serves-spring-production.up.railway.app/" +
-            this.urlString,
+          "http://localhost:8080/" + this.urlString,
           {
             headers,
           }
@@ -264,9 +263,7 @@ export default {
         this.links = response.data;
         const cardPromises = response.data.map((card) => {
           this.counts.push(card.count);
-          return axios.get(
-            `https://cepheus-serves-spring-production.up.railway.app/products/${card.productId}`
-          );
+          return axios.get(`http://localhost:8080/products/${card.productId}`);
         });
 
         const cards = await Promise.all(cardPromises);
@@ -288,11 +285,7 @@ export default {
       formData.append("productId", id);
       if (this.favorites.has(id)) {
         axios
-          .delete(
-            "https://cepheus-serves-spring-production.up.railway.app/favorite/" +
-              id,
-            { headers }
-          )
+          .delete("http://localhost:8080/favorite/" + id, { headers })
           .then((response) => {
             this.isAddInFavorite[id] = false;
             this.favorites.delete(id); // Удаляем ID из набора
@@ -301,11 +294,7 @@ export default {
           .catch((error) => console.log(error));
       } else {
         axios
-          .post(
-            "https://cepheus-serves-spring-production.up.railway.app/favorite",
-            formData,
-            { headers }
-          )
+          .post("http://localhost:8080/favorite", formData, { headers })
           .then((response) => {
             this.isAddInFavorite[id] = true;
             this.favorites.add(id); // Добавляем ID в набор
@@ -320,10 +309,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/favorites",
-          { headers }
-        )
+        .get("http://localhost:8080/favorites", { headers })
         .then((response) => {
           this.favorites = new Set(
             response.data._embedded.favorites.map(
@@ -339,10 +325,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/favorite/in-favorite",
-          { headers }
-        )
+        .get("http://localhost:8080/favorite/in-favorite", { headers })
         .then((response) => {
           this.inFavorite = response.data.map((favorite) => favorite.productId);
         })
@@ -372,11 +355,7 @@ export default {
       const findId = this.links.filter((item) => item.productId == id);
 
       axios
-        .delete(
-          "https://cepheus-serves-spring-production.up.railway.app/basket/" +
-            findId[0].id,
-          { headers }
-        )
+        .delete("http://localhost:8080/basket/" + findId[0].id, { headers })
         .then((response) => {
           this.cards = this.cards.filter((card) => card.id !== id);
 
@@ -399,11 +378,7 @@ export default {
       formData.append("productId", id);
 
       axios
-        .post(
-          "https://cepheus-serves-spring-production.up.railway.app/basket",
-          formData,
-          { headers }
-        )
+        .post("http://localhost:8080/basket", formData, { headers })
         .then((response) => {
           const findIndex = this.links.findIndex(
             (item) => item.productId == id
@@ -423,7 +398,7 @@ export default {
 
       axios
         .patch(
-          `https://cepheus-serves-spring-production.up.railway.app/basket/decrease/${findId[0].id}`,
+          `http://localhost:8080/basket/decrease/${findId[0].id}`,
           {},
           { headers }
         )

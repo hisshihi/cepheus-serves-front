@@ -3,12 +3,12 @@
     <nav>
       <header-component :role="$store.state.role"></header-component>
     </nav>
+    <div class="container-xxl">
       <div class="container">
-        <!-- <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> -->
         <router-view />
       </div>
-    <footer-component :hasScroll = "scrollBoolean"></footer-component>
+    </div>
+    <footer-component :hasScroll="scrollBoolean"></footer-component>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      scrollBoolean: false
+      scrollBoolean: false,
     };
   },
   methods: {
@@ -37,9 +37,8 @@ export default {
       }
     },
     handleHeight() {
-      const container = document.querySelector(".wrapper")
+      const container = document.querySelector(".wrapper");
       // console.log(container.clientHeight)
-
     },
   },
   mounted() {
@@ -47,9 +46,8 @@ export default {
     this.handleHeight();
   },
   watch: {
-    '$route.path': 'handleHeight'
+    "$route.path": "handleHeight",
   },
-
 };
 </script>
 
@@ -63,7 +61,9 @@ body {
   font-family: play;
 }
 
-*, ::after, ::before {
+*,
+::after,
+::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -87,10 +87,6 @@ a {
   list-style-type: none;
 }
 
-html {
-  height: 100%;
-}
-
 h2 {
   margin-bottom: 20px;
 }
@@ -99,22 +95,40 @@ h1 {
   margin-top: 20px;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* display: flex; */
+}
+
+.container-xxl {
+  display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  flex: 1;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1200px; /* Убедитесь, что контейнер использует всю доступную ширину */
+  width: 100%; /* Добавьте это, чтобы элементы внутри могли занимать всю ширину контейнера */
   margin: 0 auto;
-  flex-grow: 1;
   padding: 0 10px;
-  /* min-height: 773px; */
+  flex-grow: 1;
+  box-sizing: border-box; /* Добавьте это, чтобы padding не влиял на ширину контейнера */
 }
+
+.container > * {
+  width: 100%; /* Элементы внутри контейнера будут занимать всю доступную ширину */
+  box-sizing: border-box; /* Padding и border не будут влиять на ширину */
+}
+
 
 /* Центрирование объекта */
 .center {
@@ -132,7 +146,7 @@ h1 {
 .swiper-pagination-bullet {
   background-color: black !important;
   width: 12px !important;
-  height: 12px !important;;
+  height: 12px !important;
 }
 
 .swiper-slide {
@@ -140,9 +154,9 @@ h1 {
   justify-content: center;
 }
 
-
 /* Стили для формы */
-input, textarea {
+input,
+textarea {
   margin-bottom: 20px;
   margin-top: 10px;
   border-radius: 12px;
@@ -152,16 +166,19 @@ input, textarea {
   transition: border 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-input:hover, textarea:hover {
+input:hover,
+textarea:hover {
   border: 1px #6583a2 solid;
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: #6583a2;
   font-size: 16px;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border-color: #6583a2;
   outline: none;
   color: #6583a2;
@@ -269,7 +286,7 @@ form {
 }
 
 input[type="file"]::-moz-file-upload-button {
-    background-color: #26a8f2;
+  background-color: #26a8f2;
   border-radius: 12px;
   border: none;
   text-align: center;
@@ -284,7 +301,7 @@ input[type="file"]::-moz-file-upload-button {
 }
 
 input[type="file"]::-webkit-file-upload-button {
-    background-color: #26a8f2;
+  background-color: #26a8f2;
   border-radius: 12px;
   border: none;
   text-align: center;
@@ -322,5 +339,4 @@ select:focus {
   outline: none;
   color: #6583a2;
 }
-
 </style>

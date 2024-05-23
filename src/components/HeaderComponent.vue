@@ -235,10 +235,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get(
-          "https://cepheus-serves-spring-production.up.railway.app/baskets",
-          { headers }
-        )
+        .get("http://localhost:8080/baskets", { headers })
         .then((response) => {
           const data = response.data._embedded.baskets.length;
           this.basketsLength = data;

@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <table class="table" style="margin-bottom: 600px">
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -71,7 +71,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("https://cepheus-serves-spring-production.up.railway.app/users", {
+        .get("http://localhost:8080/users", {
           headers,
         })
         .then((response) => {
@@ -87,11 +87,7 @@ export default {
       };
       this.userId = id;
       axios
-        .delete(
-          "https://cepheus-serves-spring-production.up.railway.app/users/" +
-            this.userId,
-          { headers }
-        )
+        .delete("http://localhost:8080/users/" + this.userId, { headers })
         .then((response) => {
           this.users = this.users.filter((user) => user.id !== this.userId);
           const userToken = response.data;
@@ -107,11 +103,7 @@ export default {
       };
       const role = event.target.value;
       axios
-        .patch(
-          "https://cepheus-serves-spring-production.up.railway.app/users/" + id,
-          { role: role },
-          { headers }
-        )
+        .patch("http://localhost:8080/users/" + id, { role: role }, { headers })
         .then((response) => {
           // console.log(response);
         })
