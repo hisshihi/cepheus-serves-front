@@ -122,10 +122,9 @@
             </div>
 
             <div class="favorite-button" @click="addFavorite(card.id)">
-              <!-- :fill="inFavorite.includes(card.id) ? '#26A9F3' : 'none'" -->
               <svg
                 viewBox="0 0 24 24"
-                fill="#26A9F3"
+                :fill="inFavorite.has(card.id) ? '#26A9F3' : 'none'"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="#26A9F3"
                 stroke-width="1.8"
@@ -239,7 +238,7 @@ export default {
       totalElemetnsCards: 0,
       isAddInFavorite: {},
       favorites: new Set(),
-      inFavorite: false,
+      inFavorite: new Set(),
       fillBoolean: false,
       counts: [],
       isDelete: false,
@@ -283,7 +282,8 @@ export default {
       };
       const formData = new FormData();
       formData.append("productId", id);
-      if (this.favorites.has(id)) {
+
+      if (this.inFavorite.has(id)) {
         axios
           .delete("http://localhost:8080/favorite/" + id, { headers })
           .then((response) => {
@@ -327,7 +327,9 @@ export default {
       axios
         .get("http://localhost:8080/favorite/in-favorite", { headers })
         .then((response) => {
-          this.inFavorite = response.data.map((favorite) => favorite.productId);
+          response.data.forEach((favorite) => {
+            this.inFavorite.add(favorite.productId);
+          });
         })
         .catch((error) => console.log(error));
     },

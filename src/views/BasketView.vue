@@ -147,48 +147,78 @@ export default {
   },
 
   methods: {
-    async responseData() {
+    async responseDataTest() {
       try {
         const token = localStorage.getItem("token");
         const headers = {
           Authorization: `Bearer ${token}`,
         };
 
-        const response = await axios.get("http://localhost:8080/baskets", {
-          headers,
-        });
+        // Запрос для получения всех корзин пользователя
+        const response = await axios.get(
+          "http://localhost:8080/basket/in-basket",
+          { headers }
+        );
 
-        this.totalElemetns = response.data.page.totalElemetns;
-        this.baskets = response.data._embedded.baskets;
-        console.log(this.baskets);
+        console.log("Корзины пользователя:", response.data);
 
+        const productList = [];
+
+        // Запрос для получения данных о каждом товаре в корзине
         const products = await Promise.all(
-          this.baskets.map(async (basket) => {
-            const productLink = basket._links.product.href;
-            const relativePath = productLink.replace(/^https?:\/\/[^\/]+/, "");
-            console.log(relativePath); // Выведет: /baskets/50/product
-            // https://cepheus-serves-spring-production.up.railway.app
+          response.data.map(async (basket) => {
             const productResponse = await axios.get(
-              "http://localhost:8080" +
-                relativePath,
+              `http://localhost:8080/products/${basket.productId}`,
               { headers }
             );
-            const product = productResponse.data;
-            return {
-              ...product,
-              count: basket.count,
-              path: relativePath, // Если вы хотите сохранить относительный путь в результатах
-            };
+            productList.push(productResponse.data);
           })
         );
 
-        this.products = products;
-        this.allPrice(products);
-        this.updateCardsData();
+        // Вывод всех товаров на консоль
+        console.log("Товары в корзине:", productList);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     },
+
+    async responseData() {
+  try {
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Запрос для получения всех корзин пользователя
+    const response = await axios.get("http://localhost:8080/basket/in-basket", { headers });
+
+    console.log("Корзины пользователя:", response.data);
+
+    const productList = [];
+
+    // Запрос для получения данных о каждом товаре в корзине
+    const products = await Promise.all(
+      response.data.map(async (basket) => {
+        const productResponse = await axios.get(`http://localhost:8080/products/${basket.productId}`, { headers });
+        const product = productResponse.data;
+        return {
+          ...product,
+          count: basket.count,
+          // Добавляем любую дополнительную информацию, если необходимо
+        };
+      })
+    );
+
+    this.products = products;
+    console.log("Товары в корзине:", this.products);
+
+    this.allPrice(products);
+    this.updateCardsData();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+},
+
 
     startGeo() {
       axios
@@ -222,7 +252,7 @@ export default {
     handleOrderPlaced(data) {
       const { productIds, productPrices } = data;
 
-      console.log(productIds);
+      console.log(productIds, productPrices);
     },
     handleProductCountChanged(data) {
       const cardIndex = this.cardsData.findIndex((card) => card.id === data.id);
@@ -434,6 +464,7 @@ export default {
     this.responseData();
     this.startGeo();
     this.getUser();
+    this.responseDataTest();
   },
 };
 </script>
