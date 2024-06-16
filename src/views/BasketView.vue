@@ -183,42 +183,47 @@ export default {
     },
 
     async responseData() {
-  try {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    // Запрос для получения всех корзин пользователя
-    const response = await axios.get("http://localhost:8080/basket/in-basket", { headers });
-
-    console.log("Корзины пользователя:", response.data);
-
-    const productList = [];
-
-    // Запрос для получения данных о каждом товаре в корзине
-    const products = await Promise.all(
-      response.data.map(async (basket) => {
-        const productResponse = await axios.get(`http://localhost:8080/products/${basket.productId}`, { headers });
-        const product = productResponse.data;
-        return {
-          ...product,
-          count: basket.count,
-          // Добавляем любую дополнительную информацию, если необходимо
+      try {
+        const token = localStorage.getItem("token");
+        const headers = {
+          Authorization: `Bearer ${token}`,
         };
-      })
-    );
 
-    this.products = products;
-    console.log("Товары в корзине:", this.products);
+        // Запрос для получения всех корзин пользователя
+        const response = await axios.get(
+          "http://localhost:8080/basket/in-basket",
+          { headers }
+        );
 
-    this.allPrice(products);
-    this.updateCardsData();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-},
+        console.log("Корзины пользователя:", response.data);
 
+        const productList = [];
+
+        // Запрос для получения данных о каждом товаре в корзине
+        const products = await Promise.all(
+          response.data.map(async (basket) => {
+            const productResponse = await axios.get(
+              `http://localhost:8080/products/${basket.productId}`,
+              { headers }
+            );
+            const product = productResponse.data;
+            return {
+              ...product,
+              count: basket.count,
+              // Добавляем любую дополнительную информацию, если необходимо
+            };
+          })
+        );
+
+        this.products = products;
+        console.log("Товары в корзине:", this.products);
+
+        this.allPrice(products);
+        this.updateCardsData();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
 
     startGeo() {
       axios

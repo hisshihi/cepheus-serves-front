@@ -1,6 +1,6 @@
 <template>
 
-<h1>404 Страница не найдена</h1>
+<h1>Страница не найдена</h1>
 <!-- <p class="zoom-area"><b>CSS</b> animations to make a cool 404 page. </p> -->
 <section class="error-container">
   <span class="four"><span class="screen-reader-text">4</span></span>
@@ -176,5 +176,11 @@ a.more-link {
     text-decoration: none;
   margin-top: 50px;
   letter-spacing: 1px;
+}
+
+@media screen and (max-width: 425px){
+  .four, .zero {
+    width: 100px !;
+  }
 }
 </style>

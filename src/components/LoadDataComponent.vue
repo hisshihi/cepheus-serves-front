@@ -46,7 +46,7 @@ setTimeout(() => {
 .container {
   margin: 20px 0;
   display: grid;
-  justify-items: center;
+  justify-content: center;
 }
 
 .box {

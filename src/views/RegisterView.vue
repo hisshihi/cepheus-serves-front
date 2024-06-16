@@ -127,7 +127,7 @@
       <button-component
         @click.prevent="submitReg"
         :disabled="checkPasswordReturn !== 1"
-        :name="'Зарегестрироваться'"
+        :name="'Зарегистрироваться'"
         :type="submit"
       ></button-component>
       <p class="error">{{ message }}</p>

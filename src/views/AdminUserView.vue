@@ -9,7 +9,7 @@
           <th scope="col">Email</th>
           <th scope="col">Телефон</th>
           <th scope="col">Роль</th>
-          <th scope="col">Удалить</th>
+          <!-- <th scope="col">Удалить</th> -->
         </tr>
       </thead>
       <tbody>
@@ -31,13 +31,13 @@
               </option>
             </select>
           </td>
-          <td>
+          <!-- <td>
             <button-component
               :name="'Удалить'"
               :type="'button'"
               @click="deleteUser(user.id)"
             ></button-component>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -56,7 +56,7 @@ export default {
     return {
       users: [],
       userId: null,
-      userRoles: ["ADMIN", "USER", "MANAGER"],
+      userRoles: ["ADMIN", "USER"],
     };
   },
 

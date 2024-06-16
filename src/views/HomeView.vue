@@ -33,7 +33,7 @@
       ></cards-component>
     </div>
     <div class="reviews">
-      <h2 class="reviews-title">Ваши отзывы</h2>
+      <h2 class="reviews-title">Ваши отзывы о нас</h2>
       <reviews-component />
     </div>
     <!--    Раздел отзывов-->
