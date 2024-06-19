@@ -31,10 +31,10 @@
               <option
                 v-for="orderStatus in orderStatuses"
                 :key="orderStatus"
-                :selected="order.statuses == orderStatus"
-                :value="orderStatus"
+                :selected="order.statuses == orderStatus.value"
+                :value="orderStatus.value"
               >
-                {{ orderStatus }}
+                {{ orderStatus.label }}
               </option>
             </select>
           </td>
@@ -117,7 +117,11 @@ export default {
   data() {
     return {
       orders: [],
-      orderStatuses: ["DONE", "PENDING", "REJECTED"],
+      orderStatuses: [
+        { value: "DONE", label: "Выполнен" },
+        { value: "PENDING", label: "В ожидании" },
+        { value: "REJECTED", label: "Отклонен" }
+      ]
     };
   },
   methods: {
