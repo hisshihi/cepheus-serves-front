@@ -132,7 +132,9 @@ export default {
     },
     getProductsByCategory() {
       this.previewLoading = true;
-      if (this.getCategory === "all") {
+      console.log(this.getCategory);
+      if (this.getCategory == "all") {
+        this.url = "products";
         this.getProducts(); // Загружаем все продукты
         this.previewLoading = false;
       } else {
@@ -174,7 +176,8 @@ export default {
     getProductsBySearch() {
       this.previewLoading = true;
       //   console.log(this.getInputSearch.length < 2);
-      if (this.getInputSearch.length == 0) {
+      if (!this.getInputSearch) {
+        this.url = "products";
         this.getProducts(); // Загружаем все продукты
         this.previewLoading = false;
       } else {
