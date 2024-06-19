@@ -156,7 +156,7 @@ export default {
 
         // Запрос для получения всех корзин пользователя
         const response = await axios.get(
-          "http://localhost:8080/basket/in-basket",
+          "https://cepheus-serves-spring-production.up.railway.app/basket/in-basket",
           { headers }
         );
 
@@ -168,7 +168,7 @@ export default {
         const products = await Promise.all(
           response.data.map(async (basket) => {
             const productResponse = await axios.get(
-              `http://localhost:8080/products/${basket.productId}`,
+              `https://cepheus-serves-spring-production.up.railway.app/products/${basket.productId}`,
               { headers }
             );
             productList.push(productResponse.data);
@@ -191,7 +191,7 @@ export default {
 
         // Запрос для получения всех корзин пользователя
         const response = await axios.get(
-          "http://localhost:8080/basket/in-basket",
+          "https://cepheus-serves-spring-production.up.railway.app/basket/in-basket",
           { headers }
         );
 
@@ -203,7 +203,7 @@ export default {
         const products = await Promise.all(
           response.data.map(async (basket) => {
             const productResponse = await axios.get(
-              `http://localhost:8080/products/${basket.productId}`,
+              `https://cepheus-serves-spring-production.up.railway.app/products/${basket.productId}`,
               { headers }
             );
             const product = productResponse.data;
@@ -335,7 +335,11 @@ export default {
       formData.append("productId", id);
 
       try {
-        await axios.post("http://localhost:8080/basket", formData, { headers });
+        await axios.post(
+          "https://cepheus-serves-spring-production.up.railway.app/basket",
+          formData,
+          { headers }
+        );
 
         const product = this.products.find((product) => product.id === id);
         if (product) {
@@ -362,7 +366,7 @@ export default {
 
       try {
         await axios.patch(
-          `http://localhost:8080/basket/decrease/${basketItem.id}`,
+          `https://cepheus-serves-spring-production.up.railway.app/basket/decrease/${basketItem.id}`,
           {},
           { headers }
         );
@@ -392,9 +396,12 @@ export default {
       if (!basketItem) return;
 
       try {
-        await axios.delete(`http://localhost:8080/basket/${basketItem.id}`, {
-          headers,
-        });
+        await axios.delete(
+          `https://cepheus-serves-spring-production.up.railway.app/basket/${basketItem.id}`,
+          {
+            headers,
+          }
+        );
 
         this.products = this.products.filter((product) => product.id !== id);
 
@@ -422,7 +429,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/users/name", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/users/name",
+          { headers }
+        )
         .then((response) => {
           this.user = response.data;
         })
@@ -452,7 +462,11 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post("http://localhost:8080/order", order, { headers })
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/order",
+          order,
+          { headers }
+        )
         .then((response) => {
           console.log(response.data);
           this.isDelete = true;

@@ -108,7 +108,7 @@ export default {
     getProducts() {
       axios
         .get(
-          `http://localhost:8080/${this.url}?size=6&page=${this.currentPage}`
+          `https://cepheus-serves-spring-production.up.railway.app/${this.url}?size=6&page=${this.currentPage}`
         )
         .then((response) => {
           const data = response.data;
@@ -124,7 +124,7 @@ export default {
     },
     getCategories() {
       axios
-        .get("http://localhost:8080/category")
+        .get("https://cepheus-serves-spring-production.up.railway.app/category")
         .then((response) => {
           this.categories = response.data;
         })
@@ -140,7 +140,7 @@ export default {
       } else {
         axios
           .get(
-            `http://localhost:8080/products/filter/category/${this.getCategory}?size=6&page=${this.currentPage}`
+            `https://cepheus-serves-spring-production.up.railway.app/products/filter/category/${this.getCategory}?size=6&page=${this.currentPage}`
           )
           .then((response) => {
             const data = response.data;
@@ -161,7 +161,7 @@ export default {
       } else {
         axios
           .get(
-            `http://localhost:8080/products/${this.getBasicFilter}?size=6&page=${this.currentPage}`
+            `https://cepheus-serves-spring-production.up.railway.app/products/${this.getBasicFilter}?size=6&page=${this.currentPage}`
           )
           .then((response) => {
             const data = response.data;
@@ -183,7 +183,7 @@ export default {
       } else {
         axios
           .get(
-            `http://localhost:8080/products/name/${this.getInputSearch}?size=6&page=${this.currentPage}`
+            `https://cepheus-serves-spring-production.up.railway.app/products/name/${this.getInputSearch}?size=6&page=${this.currentPage}`
           )
           .then((response) => {
             const data = response.data;

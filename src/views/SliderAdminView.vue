@@ -160,7 +160,7 @@ export default {
   methods: {
     responseData() {
       axios
-        .get("http://localhost:8080/slider")
+        .get("https://cepheus-serves-spring-production.up.railway.app/slider")
         .then((response) => {
           const data = response.data;
           this.sliderData = data;
@@ -173,7 +173,11 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .delete("http://localhost:8080/admin/slider/" + id, { headers })
+        .delete(
+          "https://cepheus-serves-spring-production.up.railway.app/admin/slider/" +
+            id,
+          { headers }
+        )
         .then((response) => {
           const index = this.sliderData.findIndex((slider) => slider.id === id);
           if (index !== -1) {
@@ -198,7 +202,11 @@ export default {
       formData.append("link", this.link);
       formData.append("image", this.file);
       axios
-        .post("http://localhost:8080/admin/slider", formData, { headers })
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/admin/slider",
+          formData,
+          { headers }
+        )
         .then((response) => {
           this.title = "";
           this.text = "";
@@ -216,7 +224,11 @@ export default {
         "Content-Type": "multipart/form-data",
       };
       axios
-        .get("http://localhost:8080/admin/slider/" + this.id, { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/admin/slider/" +
+            this.id,
+          { headers }
+        )
         .then((response) => {
           const data = response.data;
           this.modalText = data.text;
@@ -240,15 +252,20 @@ export default {
       formData.append("link", this.modalLink);
       formData.append("image", this.file);
       axios
-        .patch("http://localhost:8080/admin/slider/" + this.id, formData, {
-          headers,
-        })
+        .patch(
+          "https://cepheus-serves-spring-production.up.railway.app/admin/slider/" +
+            this.id,
+          formData,
+          {
+            headers,
+          }
+        )
         .then((response) => (this.show = false))
         .catch((error) => console.log(error));
     },
     getAllProducts() {
       axios
-        .get("http://localhost:8080/products")
+        .get("https://cepheus-serves-spring-production.up.railway.app/products")
         .then((response) => {
           this.allProducts = response.data.content;
           console.log(this.allProducts);

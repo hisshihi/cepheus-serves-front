@@ -471,7 +471,12 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post("http://localhost:8080/users/" + token, {}, { headers })
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/users/" +
+            token,
+          {},
+          { headers }
+        )
         .then((response) => {
           const user = response.data;
           // console.log(user);
@@ -512,7 +517,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/order", {
+        .get("https://cepheus-serves-spring-production.up.railway.app/order", {
           headers,
         })
         .then((response) => {

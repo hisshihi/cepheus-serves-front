@@ -89,7 +89,7 @@ export default {
       users: [],
       userId: null,
       userRoles: ["ADMIN", "USER"],
-      getInputSearch: null
+      getInputSearch: null,
     };
   },
 
@@ -104,7 +104,7 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/users", {
+        .get("https://cepheus-serves-spring-production.up.railway.app/users", {
           headers,
         })
         .then((response) => {
@@ -120,7 +120,11 @@ export default {
       };
       this.userId = id;
       axios
-        .delete("http://localhost:8080/users/" + this.userId, { headers })
+        .delete(
+          "https://cepheus-serves-spring-production.up.railway.app/users/" +
+            this.userId,
+          { headers }
+        )
         .then((response) => {
           this.users = this.users.filter((user) => user.id !== this.userId);
           const userToken = response.data;
@@ -136,7 +140,11 @@ export default {
       };
       const role = event.target.value;
       axios
-        .patch("http://localhost:8080/users/" + id, { role: role }, { headers })
+        .patch(
+          "https://cepheus-serves-spring-production.up.railway.app/users/" + id,
+          { role: role },
+          { headers }
+        )
         .then((response) => {
           // console.log(response);
         })
@@ -149,16 +157,17 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       if (!this.getInputSearch) {
-        this.getUsers()
+        this.getUsers();
       }
       axios
         .get(
-          `http://localhost:8080/user/${this.getInputSearch}`, {headers}
+          `https://cepheus-serves-spring-production.up.railway.app/user/${this.getInputSearch}`,
+          { headers }
         )
         .then((response) => {
           const data = response.data;
           console.log(data);
-          this.users = data
+          this.users = data;
           // this.users = data.content;
           // this.totalElements = data.totalElements;
           // this.url = "user/" + this.getInputSearch;

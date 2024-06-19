@@ -55,7 +55,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/users/name", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/users/name",
+          { headers }
+        )
         .then((response) => {
           this.email = response.data.email;
           this.phone = response.data.phone;
@@ -70,7 +73,7 @@ export default {
       };
       axios
         .patch(
-          "http://localhost:8080/users/editing",
+          "https://cepheus-serves-spring-production.up.railway.app/users/editing",
           { email: this.email, phone: this.phone, address: this.address },
           { headers }
         )

@@ -198,7 +198,10 @@ export default {
       };
 
       axios
-        .post("http://localhost:8080/register", data)
+        .post(
+          "https://cepheus-serves-spring-production.up.railway.app/register",
+          data
+        )
         .then((response) => {
           // console.log(response.data.token);
           console.log(response);

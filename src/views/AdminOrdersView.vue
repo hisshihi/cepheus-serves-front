@@ -120,8 +120,8 @@ export default {
       orderStatuses: [
         { value: "DONE", label: "Выполнен" },
         { value: "PENDING", label: "В ожидании" },
-        { value: "REJECTED", label: "Отклонен" }
-      ]
+        { value: "REJECTED", label: "Отклонен" },
+      ],
     };
   },
   methods: {
@@ -131,7 +131,10 @@ export default {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .get("http://localhost:8080/order/all", { headers })
+        .get(
+          "https://cepheus-serves-spring-production.up.railway.app/order/all",
+          { headers }
+        )
         .then((response) => {
           this.orders = response.data;
           console.log(this.orders);
@@ -146,7 +149,7 @@ export default {
       const status = event.target.value;
       axios
         .patch(
-          "http://localhost:8080/order/" + id,
+          "https://cepheus-serves-spring-production.up.railway.app/order/" + id,
           { statuses: status },
           { headers }
         )

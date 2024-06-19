@@ -37,7 +37,7 @@ export default {
         scales: {
           x: {
             ticks: {
-              display: false // Отключает подписи на оси X
+              display: false, // Отключает подписи на оси X
             },
           },
           y: {
@@ -47,7 +47,7 @@ export default {
         plugins: {
           legend: {
             display: true,
-            position: 'top',
+            position: "top",
           },
         },
       };
@@ -58,9 +58,12 @@ export default {
         const headers = {
           Authorization: `Bearer ${token}`,
         };
-        const response = await axios.get("http://localhost:8080/products/hot", {
-          headers,
-        });
+        const response = await axios.get(
+          "https://cepheus-serves-spring-production.up.railway.app/products/hot",
+          {
+            headers,
+          }
+        );
         const products = response.data.content;
         console.log(products);
 
@@ -82,13 +85,13 @@ export default {
       };
 
       const colors = this.productLabels.map(randomColor);
-      const borderColors = colors.map(color => color.replace('0.2)', '1)'));
+      const borderColors = colors.map((color) => color.replace("0.2)", "1)"));
 
       return {
         labels: this.productLabels,
         datasets: [
           {
-            label: 'Продано',
+            label: "Продано",
             data: this.productSalesData,
             backgroundColor: colors,
             borderColor: borderColors,
