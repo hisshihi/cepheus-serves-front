@@ -179,8 +179,44 @@ a.more-link {
 }
 
 @media screen and (max-width: 425px){
-  .four, .zero {
-    width: 100px !;
+  .error-container {
+    font-size: 72px; /* уменьшаем размер шрифта */
+  }
+  
+  .error-container > .four {
+    width: 100px !important;
+    height: 20px !important;
+  }
+
+  .error-container > .four:before {
+    height: 100px !important;
+    width: 20px !important;
+  }
+
+  .error-container > .four::after {
+    width: 100px !important;
+    height: 20px !important;
+  }
+
+  .error-container > span.zero {
+    width: 90px;
+    height: 90px;
+    margin-right: 5px;
+  }
+  .error-container > span.zero:after {
+    width: 50px;
+    height: 50px;
+    left: 20px;
+    bottom: 20px;
+  }
+  .link-container {
+    margin-bottom: 50px; /* уменьшаем отступ снизу */
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .error-container {
+    margin: 0 0 30px 0;
   }
 }
 </style>
