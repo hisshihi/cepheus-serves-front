@@ -11,7 +11,6 @@
           <th scope="col">Город</th>
           <th scope="col">Статус</th>
           <th scope="col"># товара</th>
-          <th scope="col">Кол-во</th>
           <th scope="col">Название</th>
           <th scope="col">Email пользователя</th>
           <th scope="col">Имя</th>
@@ -85,13 +84,6 @@
                   </svg>
                 </div>
               </router-link>
-            </tr>
-          </td>
-          <td>
-            <tr v-for="product in order.orderProductDto" :key="product.id">
-              {{
-                product.productCounts
-              }}
             </tr>
           </td>
           <td>

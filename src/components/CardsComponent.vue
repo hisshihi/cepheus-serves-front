@@ -356,8 +356,8 @@ export default {
     isHotSaleUrl() {
       // Проверяем, соответствует ли текущий путь маршрута целевому пути
       return this.$route.path === "/";
-    }
-  }
+    },
+  },
 };
 </script>
 
