@@ -17,7 +17,7 @@
         <div class="card-text">
           <div class="id-and-hot">
             <div class="id">ID:{{ card.id }}</div>
-            <div class="hot">Хит продаж</div>
+            <div class="hot" v-if="isHotSaleUrl">Хит продаж</div>
           </div>
           <div class="title-and-subtitle">
             <div class="title">{{ card.title }}</div>
@@ -352,6 +352,12 @@ export default {
       console.log(id);
     },
   },
+  computed: {
+    isHotSaleUrl() {
+      // Проверяем, соответствует ли текущий путь маршрута целевому пути
+      return this.$route.path === "/";
+    }
+  }
 };
 </script>
 
