@@ -3,6 +3,7 @@ import axios from "axios";
 import StarRatingComponent from "@/components/StarRatingComponent";
 import AddStarRatingComponent from "@/components/AddStarRatingComponent";
 import ButtonComponent from "./ButtonComponent.vue";
+import moment from "moment-timezone";
 
 export default {
   components: {
@@ -119,12 +120,13 @@ export default {
         .catch((error) => console.log(error));
     },
     formattedDate(date) {
-      const inputDate = new Date(date);
-      const day = inputDate.getDate().toString().padStart(2, "0");
-      const month = (inputDate.getMonth() + 1).toString().padStart(2, "0");
-      const hours = inputDate.getHours().toString().padStart(2, "0");
-      const minutes = inputDate.getMinutes().toString().padStart(2, "0");
-      const formattedDate = `${day}.${month} ${hours}:${minutes}`;
+      // Парсим дату как UTC
+      const inputDate = moment.utc(date).tz("Europe/Moscow");
+
+      // Добавляем 2 часа к московскому времени
+      inputDate.add(2, "hours");
+
+      const formattedDate = inputDate.format("DD.MM HH:mm");
       return formattedDate;
     },
   },
